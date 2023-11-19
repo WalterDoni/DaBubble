@@ -1,0 +1,52 @@
+<div class="menu" >
+    <div class="channel-name-container"><img src="./assets/img/mainboard/channelname.png" alt="ChannelNameIMG">
+        <p>Code learning</p><img src="./assets/img/mainboard/edit.png" alt="edit">
+    </div>
+    <div class="channels-container">
+        <section class="channels-content">
+            <div><span class="hover-menu"><img src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
+                        class="gap10"><img src="/assets/img/mainboard/workspaces.png" alt="">
+                        <p>Channels</p>
+                    </span>
+                </span ><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
+            </div>
+            <div class="list">
+                <li><p>#</p><p>1Entwicklerteams</p></li>
+                <li><p>#</p><p>2Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>Entwicklerteams</p></li>
+                <li><p>#</p><p>3Entwicklerteams</p></li>
+                <li><p>#</p><p>4Entwicklerteams</p></li>
+                
+                
+            </div>
+            <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png" alt="add">Channel hinzufügen
+            </li>
+        </section>
+    </div>
+    
+    <div class="directmessages-container"></div>
+
+    <section class="contacts-content">
+        <div class="hover-menu"><span><img src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
+                    class="gap10"><img src="/assets/img/mainboard/account_circle.png" alt="">
+                    <p>Direktnachrichten</p>
+                </span>
+            </span></div>
+        <div class="contact-list">
+            <li><img src="/assets/img/signup/avatar6.png" alt="add">Frederik Beck (Du)</li>
+            <li><img src="/assets/img/signup/avatar1.png" alt="add">Sofia Müller</li>
+            <li><img src="/assets/img/signup/avatar2.png" alt="add">Noah Braun</li>
+            <li><img src="/assets/img/signup/avatar3.png" alt="add">Elise Roth</li>
+            <li><img src="/assets/img/signup/avatar4.png" alt="add">Elias Neumann</li>
+            <li><img src="/assets/img/signup/avatar5.png" alt="add">Steffen Hoffmann</li>
+        </div>
+    </section>
+</div>
+
+<div *ngIf="toggleCreateChannel"><app-create-channel></app-create-channel></div>
+

@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="headline" >
+        <span><img src="./assets/img/login/logo.png" alt="logo">
+            <p>DABubble</p>
+        </span>
+    </div>
+    <div class="signup-container" #firstPartNewAccount>
+        <img src="./assets/img/signup/arrow_back.png" alt="" class="arrow" (click)="goToLoginPage()">
+        <div class="headline-container">
+            <h1>Konto erstellen</h1>
+            <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
+        </div>
+        <div class="inputfields-container">
+            <input  class="name-input"type="text" placeholder="Name und Nachname">
+            <input  class="email-input" type="email" #emailInput placeholder="Beispielname@email.com">
+            <input  class="password-input"type="password" #passwordInput placeholder="Passwort">
+            <div class="checkbox"><input type="checkbox"><p style="padding-left: 4px;">Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p></div>
+          
+        </div>
+        <div class="btn-container">
+            <button (click)="showSecondPart()">Weiter</button>   
+        </div>
+    </div>
+
+    <div class="choose-avatar-container d-none" #secondPartNewAccount>
+        <img src="./assets/img/signup/arrow_back.png" alt="" class="arrow-avatar" (click)="showFirstPart()">
+        <div class="avatar-headline-container ">
+            <h1>Wähle deinen Avatar</h1>
+            <img src="./assets/img/signup/profile.png" alt="profile">
+            <p>Max Mustermann</p>
+         
+        </div>
+     <div class="avatars-container">
+        <p>Aus der Liste wählen:</p>
+        <div class="avatars"><img  *ngFor=" let avatar of avatars" src="./assets/img/signup/{{avatar}}"></div>
+         <div class="own-img"><p>eigenes Bild verwenden</p> <button>Datei hochladen</button></div>
+     </div>
+        <div class="btn-container pt-30">
+            <button (click)="signUp()">Erstellen</button>   
+        </div>
+    </div>
+
+    <div class="footer"><a href="">Impressum</a><a href="">Datenschutz</a></div>
+</div>

@@ -1,0 +1,26 @@
+html {
+    background-color: #ECEEFE;
+    font-family: 'Nunito', sans-serif;
+ }
+
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 30px;
+  }
+
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ADB0D9;
+    border-radius: 20px;
+
+  }
+  

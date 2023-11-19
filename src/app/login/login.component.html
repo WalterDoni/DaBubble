@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="headline">
+        <span><img src="./assets/img/login/logo.png" alt="logo">
+            <p>DABubble</p>
+        </span><span>
+            <p>Neu bei DABubble?</p><a class="hover-effect" (click)="createAccount()">Konto erstellen</a>
+        </span>
+    </div>
+    <div class="login-container">
+        <div class="headline-container">
+            <h1>Anmeldung</h1>
+            <p>Ich empfehle dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
+        </div>
+        <div class="inputfields-container">
+            <input type="email" #emailInput placeholder="Beispielname@email.com">
+            <input type="text" #passwordInput placeholder="Passwort">
+            <a (click)="forgotPassword()">Passwort vergessen?</a>
+        </div>
+        <div class="seperator-container">
+            <span class="sep-1"></span><span>ODER</span><span class="sep-2"></span>
+        </div>
+        <button class="google-btn" (click)="loginWithGoogle()"><img src="./assets/img/login/google.png" alt="google">Anmelden mit Google</button>
+        <div class="btn-container">
+            <button (click)="loginWithEmailAndPassword()">Anmelden</button>
+            <button (click)="guestLogin()">Gäste-Login</button>
+        </div>
+    </div>
+
+    <div class="footer"><a (click)="showImprint()">Impressum</a><a (click)="showDataProtection()">Datenschutz</a></div>
+</div>

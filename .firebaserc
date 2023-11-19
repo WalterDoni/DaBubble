@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "dabub-3dde6": {
+      "hosting": {
+        "DaBubble": [
+          "dabub-3dde6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "dabub-3dde6"
+  }
+}
