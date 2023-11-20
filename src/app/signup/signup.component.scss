@@ -345,6 +345,8 @@
     }
 
     img {
+        width: 140px;
+        height: 140px;
         padding: 20px 0px;
 
         @media(max-width: 665px) {
@@ -374,11 +376,27 @@
     }
 }
 
+.selected-Img{
+    width: 140px!important;
+    height: 140px;
+ 
+
+    @media(max-width: 665px) {
+        width: 110px!important;
+        height: 110px;
+    }
+
+    @media(max-width: 370px) {
+        width: 90px!important;
+        height: 90px;
+    }
+}
+
 .avatars-container {
     font-size: 20px;
     padding: 10px 0px;
 
-    button {
+    input {
         width: 190px;
         height: 50px;
         background-color: white;
@@ -423,7 +441,7 @@
 .avatars {
     display: flex;
     gap: 16px;
-    padding: 25px 0px;
+    padding: 25px 3px;
     overflow-x: auto;
 
 

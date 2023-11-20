@@ -1,14 +1,20 @@
 export class User {
 
-    name!: string;
+    username!: string;
     email!: string;
     password!: string;
 
     toJSON(): any {
         return {
-            name: this.name,
+            username: this.username,
             email: this.email,
             password: this.password,
         }
+    }
+
+    constructor(object?: any){
+        this.username = object ? object.username: ''; //fast if / else request --> if object exist object.name else ''
+        this.email = object ? object.email : '';
+        this.password = object ? object.password : '';
     }
 }

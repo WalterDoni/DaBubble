@@ -1,8 +1,14 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firestore';
+import { User } from '../models/user';
+import { Storage, ref, getDownloadURL, uploadBytesResumable } from "@angular/fire/storage";
+
+
+
+
 
 @Component({
   selector: 'app-signup',
@@ -10,30 +16,41 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+  selectedUsername: string = 'Kein Benutzername angegeben.';
+  selectedImg: string = 'profile.png';
+  selectedUrl: any;
+  customizedImg: boolean = false;
+  avatars: Array<string> = ['avatar0.png', 'avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png'];
 
   registerForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required)
+    password: new FormControl('', Validators.required),
+    username: new FormControl('', Validators.required)
   })
 
   @ViewChild('firstPartNewAccount') firstPartNewAccount!: ElementRef;
   @ViewChild('secondPartNewAccount') secondPartNewAccount!: ElementRef;
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
-
-  avatars: Array<string> = ['avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png', 'avatar6.png'];
+  @ViewChild('usernameInput') usernameInput!: ElementRef;
 
   firestore: Firestore = inject(Firestore);
   unsubUsers;
+  newUser = new User();
+  uploadedImg: any = {};
 
-  constructor(private router: Router, private authService: AuthService) {
+
+  constructor(private router: Router, private authService: AuthService, public storage: Storage, private cdr: ChangeDetectorRef) {
+
     this.unsubUsers = this.subUsers();
   }
 
+  //----Subscribe-Functions----//
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       list.forEach(element => {
-        console.log(element.data());})
+        console.log(element.data());
+      })
     })
   }
 
@@ -44,26 +61,87 @@ export class SignupComponent {
   ngonDestroy() {
     this.unsubUsers();
   }
-  signUp() {
-    let userData = Object.assign(this.registerForm.value, { email: this.emailInput.nativeElement.value, password: this.passwordInput.nativeElement.value });
-    this.authService.registerWithEmailAndPassword(userData).then((res: any) => {
-      console.log('Erfolgreich registriert');
-      this.router.navigateByUrl('mainboard');
+
+  //----SignUp-Function----//
+  async signUp() {
+    let userData = Object.assign(this.registerForm.value,
+      {
+        email: this.emailInput.nativeElement.value,
+        password: this.passwordInput.nativeElement.value,
+        username: this.usernameInput.nativeElement.value
+      });
+    this.authService.registerWithEmailAndPassword(userData).then(async (res: any) => {
+      this.newUser = userData;
+      await addDoc(this.usersRef(), this.newUser).catch((error) => {
+        console.log(error);
+      }).then(() => {
+        console.log('Erfolgreich registriert');
+        this.router.navigateByUrl('mainboard');
+      })
     }).catch((error: any) => {
       console.log(error);
-
     })
   }
 
+  //----Img Upload----//*css*/`
+  uploadImg(event: any) {
+    this.uploadedImg = event.target.files[0];
+    this.saveInStorage()
+    
+  }
+
+ saveInStorage() {
+    let storageRef = ref(this.storage, this.uploadedImg.name);
+    let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    }, 
+    (error) => {
+    }, 
+    () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          debugger
+          console.log('File available at', downloadURL);
+        
+          if (downloadURL) {
+            this.customizedImg = true;
+            this.selectedUrl = downloadURL;
+            this.cdr.detectChanges();
+          }
+      });
+    }
+  );
+  }
+
+  //----Help-Functions----//
+
+  changeImgSignUp(index: number) {
+    this.customizedImg = false;
+    this.selectedImg = 'avatar' + index + '.png'
+  }
   goToLoginPage() {
     this.router.navigateByUrl('');
   }
 
   showFirstPart() {
+    this.selectedImg = 'profile.png';
     this.secondPartNewAccount.nativeElement.classList.add('d-none');
     this.firstPartNewAccount.nativeElement.classList.remove('d-none');
   }
   showSecondPart() {
+    if (this.usernameInput.nativeElement.value >= 1) {
+      this.selectedUsername = this.usernameInput.nativeElement.value;
+    }
     this.firstPartNewAccount.nativeElement.classList.add('d-none');
     this.secondPartNewAccount.nativeElement.classList.remove('d-none');
   }

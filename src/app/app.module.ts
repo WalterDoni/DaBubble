@@ -24,7 +24,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire/compat';
-
+import { provideStorage, getStorage } from "@angular/fire/storage";
 
 
 
@@ -49,8 +49,7 @@ import { AngularFireModule } from '@angular/fire/compat';
    ProfileDetailsComponent,
    ImprintComponent,
    DataprotectionComponent,
-
-
+  
 
  
   
@@ -64,6 +63,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
+    provideStorage(() => getStorage()),
 
    
   ],
