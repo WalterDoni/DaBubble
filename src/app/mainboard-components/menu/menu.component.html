@@ -11,18 +11,7 @@
                 </span ><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
             </div>
             <div class="list">
-                <li><p>#</p><p>1Entwicklerteams</p></li>
-                <li><p>#</p><p>2Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>Entwicklerteams</p></li>
-                <li><p>#</p><p>3Entwicklerteams</p></li>
-                <li><p>#</p><p>4Entwicklerteams</p></li>
-                
-                
+                <li *ngFor="let channel of channelsArray"><p>#</p><p>{{channel}}</p></li>
             </div>
             <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png" alt="add">Channel hinzufügen
             </li>
@@ -38,12 +27,12 @@
                 </span>
             </span></div>
         <div class="contact-list">
-            <li><img src="/assets/img/signup/avatar6.png" alt="add">Frederik Beck (Du)</li>
-            <li><img src="/assets/img/signup/avatar1.png" alt="add">Sofia Müller</li>
-            <li><img src="/assets/img/signup/avatar2.png" alt="add">Noah Braun</li>
-            <li><img src="/assets/img/signup/avatar3.png" alt="add">Elise Roth</li>
-            <li><img src="/assets/img/signup/avatar4.png" alt="add">Elias Neumann</li>
-            <li><img src="/assets/img/signup/avatar5.png" alt="add">Steffen Hoffmann</li>
+            <li><img src="/assets/img/signup/avatar2.png" alt="add">Frederik Beck (Du)</li>
+            <li><img src="/assets/img/signup/avatar4.png" alt="add">Sofia Müller</li>
+            <li><img src="/assets/img/signup/avatar5.png" alt="add">Noah Braun</li>
+            <li><img src="/assets/img/signup/avatar0.png" alt="add">Elise Roth</li>
+            <li><img src="/assets/img/signup/avatar1.png" alt="add">Elias Neumann</li>
+            <li><img src="/assets/img/signup/avatar3.png" alt="add">Steffen Hoffmann</li>
         </div>
     </section>
 </div>

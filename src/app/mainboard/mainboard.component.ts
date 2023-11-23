@@ -1,5 +1,8 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
+import { Firestore, collection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { onSnapshot } from '@firebase/firestore';
+import { MenuComponent } from '../mainboard-components/menu/menu.component';
 
 
 
@@ -27,6 +30,63 @@ export class MainboardComponent {
     this.checkWindowWidth1400();
 
   }
+
+  firestore: Firestore = inject(Firestore);
+  channelsArray: Array<string> = [];
+  userArray: Array<string> = [];
+  unsubUsers;
+  unsubChannels;
+
+
+  constructor() {
+    this.unsubUsers = this.subUsers();
+    this.unsubChannels = this.subChannels();
+  }
+
+
+  subUsers() {
+    return onSnapshot(this.usersRef(), (list) => {
+      list.forEach(element => {
+        let array = element.data();
+        this.userArray.push(array['username'])
+      })
+    })
+  }
+
+  subChannels() {
+
+    return onSnapshot(this.channelsRef(), (list) => {
+      list.forEach(element => {
+        let array = element.data();
+        this.channelsArray.push(array['name']);
+  
+      });
+    });
+  }
+
+
+  usersRef() {
+    return collection(this.firestore, 'users');
+  }
+
+  channelsRef() {
+    return collection(this.firestore, 'channels');
+  }
+
+  ngonDestroy() {
+    this.unsubUsers();
+    this.unsubChannels();
+  }
+
+
+
+
+
+
+
+
+
+
 
   //--Helpfunctions--//
   toggleMenuVisibility() {

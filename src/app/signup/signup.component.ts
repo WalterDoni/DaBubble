@@ -6,10 +6,6 @@ import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firesto
 import { User } from '../models/user';
 import { Storage, ref, getDownloadURL, uploadBytesResumable } from "@angular/fire/storage";
 
-
-
-
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -18,14 +14,16 @@ import { Storage, ref, getDownloadURL, uploadBytesResumable } from "@angular/fir
 export class SignupComponent {
   selectedUsername: string = 'Kein Benutzername angegeben.';
   selectedImg: string = 'profile.png';
-  selectedUrl: any;
+  selectedUrl: string | null = null;
   customizedImg: boolean = false;
   avatars: Array<string> = ['avatar0.png', 'avatar1.png', 'avatar2.png', 'avatar3.png', 'avatar4.png', 'avatar5.png'];
 
   registerForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
-    username: new FormControl('', Validators.required)
+    username: new FormControl('', Validators.required),
+    defaultImg: new FormControl('', Validators.required),
+    personalImg: new FormControl('', Validators.required),
   })
 
   @ViewChild('firstPartNewAccount') firstPartNewAccount!: ElementRef;
@@ -35,43 +33,37 @@ export class SignupComponent {
   @ViewChild('usernameInput') usernameInput!: ElementRef;
 
   firestore: Firestore = inject(Firestore);
-  unsubUsers;
   newUser = new User();
   uploadedImg: any = {};
 
-
   constructor(private router: Router, private authService: AuthService, public storage: Storage, private cdr: ChangeDetectorRef) {
-
-    this.unsubUsers = this.subUsers();
-  }
-
-  //----Subscribe-Functions----//
-  subUsers() {
-    return onSnapshot(this.usersRef(), (list) => {
-      list.forEach(element => {
-        console.log(element.data());
-      })
-    })
-  }
-
-  usersRef() {
-    return collection(this.firestore, 'users');
-  }
-
-  ngonDestroy() {
-    this.unsubUsers();
   }
 
   //----SignUp-Function----//
+
   async signUp() {
-    let userData = Object.assign(this.registerForm.value,
-      {
-        email: this.emailInput.nativeElement.value,
-        password: this.passwordInput.nativeElement.value,
-        username: this.usernameInput.nativeElement.value
-      });
+    let userData: any;
+    debugger
+    if (this.selectedUrl && this.selectedUrl.length !== null) {
+      userData = Object.assign(this.registerForm.value,
+        {
+          email: this.emailInput.nativeElement.value,
+          password: this.passwordInput.nativeElement.value,
+          username: this.usernameInput.nativeElement.value,
+          personalImg: this.selectedUrl,
+        });
+    } else {
+      userData = Object.assign(this.registerForm.value,
+        {
+          email: this.emailInput.nativeElement.value,
+          password: this.passwordInput.nativeElement.value,
+          username: this.usernameInput.nativeElement.value,
+          defaultImg: './assets/img/signup/' + this.selectedImg,
+        });
+    }
     this.authService.registerWithEmailAndPassword(userData).then(async (res: any) => {
-      this.newUser = userData;
+      let user = new User(userData)
+      this.newUser = user.toJSON();
       await addDoc(this.usersRef(), this.newUser).catch((error) => {
         console.log(error);
       }).then(() => {
@@ -87,40 +79,39 @@ export class SignupComponent {
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
     this.saveInStorage()
-    
+
   }
 
- saveInStorage() {
+  saveInStorage() {
     let storageRef = ref(this.storage, this.uploadedImg.name);
     let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
-    uploadTask.on('state_changed', 
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
-          break;
-        case 'running':
-          console.log('Upload is running');
-          break;
-      }
-    }, 
-    (error) => {
-    }, 
-    () => {
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      },
+      (error) => {
+      },
+      () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           debugger
           console.log('File available at', downloadURL);
-        
           if (downloadURL) {
             this.customizedImg = true;
             this.selectedUrl = downloadURL;
             this.cdr.detectChanges();
           }
-      });
-    }
-  );
+        });
+      }
+    );
   }
 
   //----Help-Functions----//
@@ -138,11 +129,17 @@ export class SignupComponent {
     this.secondPartNewAccount.nativeElement.classList.add('d-none');
     this.firstPartNewAccount.nativeElement.classList.remove('d-none');
   }
+
   showSecondPart() {
-    if (this.usernameInput.nativeElement.value >= 1) {
+    if (this.usernameInput.nativeElement.value.length >= 1) {
       this.selectedUsername = this.usernameInput.nativeElement.value;
     }
     this.firstPartNewAccount.nativeElement.classList.add('d-none');
     this.secondPartNewAccount.nativeElement.classList.remove('d-none');
   }
+
+  usersRef() {
+    return collection(this.firestore, 'users');
+  }
+
 }

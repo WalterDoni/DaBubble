@@ -22,4 +22,13 @@ export class AuthService {
   signInWithEmailAndPassword(user: { email: string, password: string }) {
     return this.auth.signInWithEmailAndPassword(user.email, user.password);
   }
+
+  forgotPassword(email: string) {
+    this.auth.sendPasswordResetEmail(email).then(() => {
+      console.log('email has been sended');
+    }).catch((err) => {
+      console.log(err);
+
+    })
+  }
 }

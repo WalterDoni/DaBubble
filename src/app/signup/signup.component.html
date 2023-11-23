@@ -27,7 +27,7 @@
         <div class="avatar-headline-container ">
             <h1>Wähle deinen Avatar</h1>
             <img *ngIf="!customizedImg" src="./assets/img/signup/{{selectedImg}}" alt="profile">
-            <div *ngIf="customizedImg" [style.background-image]="'url(' + selectedUrl?.toString() + ')'"></div>
+            <img *ngIf="customizedImg" src="{{selectedUrl}}">
             <p>{{selectedUsername}}</p>
          
         </div>
@@ -37,10 +37,10 @@
         <img *ngFor=" let avatar of avatars; let i = index" (click)="changeImgSignUp(i)" src="./assets/img/signup/{{avatar}}">
        
     </div>
-         <div class="own-img"><p>eigenes Bild verwenden</p><span><input type="file" placeholder="Datei hochladen" (change)="uploadImg($event)"></span></div>
+         <div class="own-img"><p>eigenes Bild verwenden</p><span><input type="file" (change)="uploadImg($event)"></span></div>
      </div>
         <div class="btn-container pt-30">
-            <button (click)="saveInStorage()">Erstellen</button>   
+            <button (click)="signUp()">Erstellen</button>   
         </div>
     </div>
 
