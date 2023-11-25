@@ -14,9 +14,11 @@ import { ActivatedRoute } from '@angular/router';
   providedIn: 'root',
 })
 
-export class MainboardComponent{
+export class MainboardComponent {
 
   @ViewChild('thread') thread!: ElementRef;
+
+  userId: string = '';
 
   toggleMenu: boolean = true;
   toggleThread: boolean = false;
@@ -32,8 +34,14 @@ export class MainboardComponent{
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
 
+  selectedChannelTitle: string = 'Entwicklerteam';
+  selectedChannelDescription: string = 'Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und Unterhaltungen';
+
   firestore: Firestore = inject(Firestore);
-  channelsArray: Array<string> = [];
+
+  channelName: string = '';
+  channelDescription: string = '';
+  channelsArray: Array<any> = [];
 
   username: string = '';
   id: string = '';
@@ -43,7 +51,7 @@ export class MainboardComponent{
   unsubUsers;
   unsubChannels;
 
-  constructor(private route: ActivatedRoute, private menu: MenuComponent) {
+  constructor(private route: ActivatedRoute) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
@@ -52,7 +60,7 @@ export class MainboardComponent{
   onResize(): void {
     this.checkWindowWidth1400();
   }
- 
+
   //--Thread-Popup--//
   showPopupForThread(event: MouseEvent) {
     this.isPopupForThreadVisible = true;
@@ -104,7 +112,7 @@ export class MainboardComponent{
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let idParam = params.get('ref')
-      this.menu.userId = idParam !== null ? idParam : '';
+      this.userId = idParam !== null ? idParam : '';
     });
   }
 
@@ -118,7 +126,7 @@ export class MainboardComponent{
         } else {
           this.img = personalImg;
         }
-        if (element.id == this.menu.userId) {
+        if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
           this.loggedInUserImg = this.img;
         } else {
@@ -131,8 +139,7 @@ export class MainboardComponent{
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {
       list.forEach(element => {
-        let array = element.data();
-        this.channelsArray.push(array['name']);
+        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'] });
       });
     });
   }

@@ -28,7 +28,7 @@
                 <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
                     <app-edit-channel *ngIf="toggleEditChannel"></app-edit-channel>
                     <p>#</p>
-                    <p>Entwicklerteam</p><img src="/assets/img/mainboard/keyboard_arrow_down.png" alt="arrow-down">
+                    <p>{{selectedChannelTitle}}</p><img src="/assets/img/mainboard/keyboard_arrow_down.png" alt="arrow-down">
                 </span>
                 <span class="headline-right-span">
                     <div class="headline-right-span-contacts" (click)="openAddMembersPopUp(); overlayBackroundColor()">
@@ -48,9 +48,8 @@
 
             <div class="chat-content">
                 <div class="start-chat">
-                    <h2>Dies ist der Anfang vom Channel #Entwicklerteam</h2>
-                    <p>Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und
-                        Unterhaltungen</p>
+                    <h2>Dies ist der Anfang vom Channel #{{selectedChannelTitle}}</h2>
+                    <p>{{selectedChannelDescription}}</p>
                 </div>
                 <div class="chat-seperator-with-date">
                     <span class="seperator-chat"></span>

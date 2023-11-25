@@ -8,10 +8,10 @@
                         class="gap10"><img src="/assets/img/mainboard/workspaces.png" alt="">
                         <p>Channels</p>
                     </span>
-                </span ><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
+                </span><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
             </div>
             <div class="list">
-                <li *ngFor="let channel of channelsArray"><p>#</p><p>{{channel}}</p></li>
+                <li *ngFor="let channel of channelsArray; let i = index" (click)="selectChannel(i)"><p>#</p><p>{{channel.channelName}}</p></li>
             </div>
             <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png" alt="add">Channel hinzufügen
             </li>
@@ -27,7 +27,7 @@
                 </span>
             </span></div>
         <div class="contact-list">
-            <li><img src="/assets/img/signup/avatar2.png" alt="add">{{loggedInUserName}} (Du)</li>
+            <li><img src="{{loggedInUserImg}}" alt="add">{{loggedInUserName}} (Du)</li>
             <li *ngFor = "let user of userArray"><img src="{{user.img}}" alt="add">{{user.username}}</li>
           
         </div>

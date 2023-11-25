@@ -1,7 +1,7 @@
 import { Component, Injectable, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
-import { LoginComponent } from 'src/app/login/login.component';
+import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 
 @Component({
@@ -19,9 +19,12 @@ export class MenuComponent {
 
   userId: string = '';
   loggedInUserName!: string;
+  loggedInUserImg!: string;
  
   firestore: Firestore = inject(Firestore)
-  channelsArray: Array<string> = [];
+  channelName: string = '';
+  channelDescription: string = '';
+  channelsArray: Array<any> = [];
   
   username: string = '';
   id: string = '';
@@ -31,7 +34,7 @@ export class MenuComponent {
   unsubChannels;
   unsubUsers;
 
-  constructor(private route: ActivatedRoute, public loginComp: LoginComponent) {
+  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
@@ -47,6 +50,13 @@ export class MenuComponent {
     this.toggleCreateChannel = true;
   }
 
+  selectChannel(id: number){
+    let selectedChannelTitle = this.channelsArray[id].channelName;
+    let selectedChannelDescription = this.channelsArray[id].channelDescription;
+    this.mainboard.selectedChannelTitle = selectedChannelTitle;
+    this.mainboard.selectedChannelDescription = selectedChannelDescription;
+  }
+
   //----Subscribe-Functions----//
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
@@ -60,6 +70,7 @@ export class MenuComponent {
         }
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
+          this.loggedInUserImg = this.img;
       
         } else {
           this.userArray.push({ username: element.data()['username'], id: element.id, img: this.img });
@@ -77,7 +88,7 @@ export class MenuComponent {
       this.channelsArray = [];
       list.forEach(element => {
         let array = element.data();
-        this.channelsArray.push(array['name']);
+        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'] });
       });
     });
   }
