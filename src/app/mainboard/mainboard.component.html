@@ -3,14 +3,17 @@
     <div class="headline">
         <span class="headline-logo-till-w110px"><img src="./assets/img/login/logo.png" alt="logo">
             <p>DABubble</p>
-        </span> 
+        </span>
         <span class="headline-logo-under-w1110px" (click)="toggleMenuVisibility()">
-            <p style="width: 2px;"><</p><img src="/assets/img/mainboard/channelname.png" alt=""><p>Code learning</p>
+            <p style="width: 2px;">
+                < </p><img src="/assets/img/mainboard/channelname.png" alt="">
+                    <p>Code learning</p>
         </span>
 
         <span class="headline-span-input"><input type="text" placeholder="Code learning durchsuchen"></span>
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
-            <p>Frederik Beck</p><img src="./assets/img/signup/avatar2.png" alt="profile-image">
+            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px;" src="{{loggedInUserImg}}"
+                alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
         </span>
 
@@ -18,7 +21,7 @@
 
     <div class="content-container">
 
-        <app-menu  *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
+        <app-menu *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
 
         <div class="chat">
             <div class="chat-headline-container">
@@ -68,20 +71,20 @@
                         <div class="message-history">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad,
                             corporis sit nobis dolorum odit dolores corrupti ex, quaerat illum cupiditate repellat quas
                             temporibus voluptatibus minima deleniti reprehenderit architecto rem vitae.</div>
-                            <div class="reactions-container">
+                        <div class="reactions-container">
 
-                                <span class="reactions" (mouseenter)="showPopupForReactions($event)"
-                                    (mouseleave)="hidePopupForReactions()">
-                                    <app-popup-reactions #popup *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                    <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
-                                    <p> 1 </p>
-                                </span>
-                                <span class="reactions">
-                                    <img src="/assets/img/mainboard/checkEmoji.png" alt="">
-                                    <p> 1 </p>
-                                </span>
-                                <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
-                            </div>
+                            <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                (mouseleave)="hidePopupForReactions()">
+                                <app-popup-reactions #popup *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
+                                <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
+                                <p> 1 </p>
+                            </span>
+                            <span class="reactions">
+                                <img src="/assets/img/mainboard/checkEmoji.png" alt="">
+                                <p> 1 </p>
+                            </span>
+                            <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
+                        </div>
                         <div class="answers-message-history">
                             <span (click)="showThread()">2 Antworten</span><span>Letzte Antwort 17:00</span>
                         </div>

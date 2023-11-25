@@ -1,18 +1,20 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Injectable, OnInit, ViewChild, inject } from '@angular/core';
 import { Firestore, collection } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
-import { LoginComponent } from '../login/login.component';
-import { ActivatedRoute, Route } from '@angular/router';
-
+import { MenuComponent } from '../mainboard-components/menu/menu.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mainboard',
   templateUrl: './mainboard.component.html',
   styleUrls: ['./mainboard.component.scss']
 })
-export class MainboardComponent implements OnInit  {
 
-  userId!: string;
+@Injectable({
+  providedIn: 'root',
+})
+
+export class MainboardComponent{
 
   @ViewChild('thread') thread!: ElementRef;
 
@@ -27,43 +29,30 @@ export class MainboardComponent implements OnInit  {
   isPopupForThreadVisible: boolean = false;
   isPopupForReactionsVisible: boolean = false;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.checkWindowWidth1400();
-  }
+  loggedInUserName: string = '';
+  loggedInUserImg: string = '';
 
   firestore: Firestore = inject(Firestore);
   channelsArray: Array<string> = [];
 
   username: string = '';
   id: string = '';
+  img: string = '';
   userArray: Array<any> = [];
 
   unsubUsers;
   unsubChannels;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private menu: MenuComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
 
-  ngOnInit(){
-    debugger
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-      this.userId = idParam !== null ? idParam : '';
-      console.log(this.userId);
-    });
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.checkWindowWidth1400();
   }
-
-/* getNameOfLoggedInUser(){
-this.userArray.forEach(element => {
-  if(element.id === this.loginComp.loggedInUser){
-    this.loggedInUserName = element.username;
-  }
-});
-} */
-
+ 
   //--Thread-Popup--//
   showPopupForThread(event: MouseEvent) {
     this.isPopupForThreadVisible = true;
@@ -111,11 +100,30 @@ this.userArray.forEach(element => {
   }
 
 
-  //---Subscribee-Functions---//
+  //----Subscribee-Functions----//
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      let idParam = params.get('ref')
+      this.menu.userId = idParam !== null ? idParam : '';
+    });
+  }
+
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       list.forEach(element => {
-        this.userArray.push({ username: element.data()['username'], id: element.id })
+        let defaultImg = element.data()['defaultImg'];
+        let personalImg = element.data()['personalImg'];
+        if (defaultImg && defaultImg.length >= 1) {
+          this.img = defaultImg;
+        } else {
+          this.img = personalImg;
+        }
+        if (element.id == this.menu.userId) {
+          this.loggedInUserName = element.data()['username'];
+          this.loggedInUserImg = this.img;
+        } else {
+          this.userArray.push({ username: element.data()['username'], id: element.id, img: this.img });
+        }
       })
     })
   }
@@ -142,7 +150,8 @@ this.userArray.forEach(element => {
     this.unsubChannels();
   }
 
-  //--Helpfunctions--//
+
+  //----Helpfunctions----//
   toggleMenuVisibility() {
     if (!this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
       this.toggleThread = false;
@@ -169,5 +178,5 @@ this.userArray.forEach(element => {
     }
   }
 
-  
+
 }

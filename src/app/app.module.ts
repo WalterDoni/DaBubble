@@ -49,12 +49,9 @@ import { provideStorage, getStorage } from "@angular/fire/storage";
    ProfileDetailsComponent,
    ImprintComponent,
    DataprotectionComponent,
-  
-
- 
-  
   ],
   imports: [
+   
     BrowserModule,
     AppRoutingModule,
     AngularFireModule,
@@ -64,10 +61,9 @@ import { provideStorage, getStorage } from "@angular/fire/storage";
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideStorage(() => getStorage()),
-
-   
   ],
-  providers: [],
+
+  providers: [LoginComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

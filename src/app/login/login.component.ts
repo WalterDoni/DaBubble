@@ -46,7 +46,7 @@ export class LoginComponent {
   }
 
   guestLogin() {
-    let ref = 'F2a3aOV8hNL2BWFLrQ9F'
+    let ref = 'MA8WjoG3lxOo7G6FZO9L'
     let userData = Object.assign(this.loginForm.value, { email: "gast@gast.at", password: "Gast1234" });
     this.authService.signInWithEmailAndPassword(userData).then((res: any) => {
       this.loggedInUser = ref;
