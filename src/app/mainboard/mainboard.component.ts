@@ -1,8 +1,9 @@
 import { Component, ElementRef, HostListener, Injectable, OnInit, ViewChild, inject } from '@angular/core';
-import { Firestore, collection } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
-import { MenuComponent } from '../mainboard-components/menu/menu.component';
+import { doc } from "firebase/firestore";
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-mainboard',
@@ -54,6 +55,7 @@ export class MainboardComponent {
   constructor(private route: ActivatedRoute) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
+    this.test();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -137,9 +139,11 @@ export class MainboardComponent {
   }
 
   subChannels() {
+
     return onSnapshot(this.channelsRef(), (list) => {
       list.forEach(element => {
         this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'] });
+        console.log(this.channelsArray);
       });
     });
   }
@@ -150,6 +154,18 @@ export class MainboardComponent {
 
   channelsRef() {
     return collection(this.firestore, 'channels');
+  }
+
+  async test() {
+    let test = await getDocs(collection(this.firestore, 'channels', 'nq56l3iiTG4g3e1iNHHm', 'channelContent'));
+    test.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+
+  }
+
+  testref() {
+    return collection(this.firestore, 'channelContent')
   }
 
   ngonDestroy() {
