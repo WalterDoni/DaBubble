@@ -12,7 +12,6 @@ export class User {
             email: this.email,
             defaultImg: this.deafaultImg,
             personalImg: this.personalImg,
-   
         }
     }
 
@@ -21,6 +20,6 @@ export class User {
         this.email = object ? object.email : '';
         this.deafaultImg = object ? object.defaultImg : '';
         this.personalImg = object ? object.personalImg : '';
-     ;
+     
     }
 }

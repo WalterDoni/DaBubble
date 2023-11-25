@@ -29,9 +29,7 @@ export class CreateChannelComponent {
     })
       .catch((error) => {
         console.log(error)
-      }
-      )
-
+      })
   }
 
   closeWindow() {

@@ -9,7 +9,7 @@ import { DataprotectionComponent } from './dataprotection/dataprotection.compone
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
-  {path: 'mainboard', component: MainboardComponent},
+  {path: 'mainboard/:ref', component: MainboardComponent},
   {path: 'signUp', component: SignupComponent},
   {path: 'passwordReset', component: PasswordResetComponent},
   {path: 'imprint', component: ImprintComponent},

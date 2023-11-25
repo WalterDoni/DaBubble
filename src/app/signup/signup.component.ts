@@ -40,7 +40,6 @@ export class SignupComponent {
   }
 
   //----SignUp-Function----//
-
   async signUp() {
     let userData: any;
     debugger
@@ -66,10 +65,7 @@ export class SignupComponent {
       this.newUser = user.toJSON();
       await addDoc(this.usersRef(), this.newUser).catch((error) => {
         console.log(error);
-      }).then(() => {
-        console.log('Erfolgreich registriert');
-        this.router.navigateByUrl('mainboard');
-      })
+      }).then(() => {})
     }).catch((error: any) => {
       console.log(error);
     })
@@ -79,7 +75,6 @@ export class SignupComponent {
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
     this.saveInStorage()
-
   }
 
   saveInStorage() {
@@ -115,11 +110,11 @@ export class SignupComponent {
   }
 
   //----Help-Functions----//
-
   changeImgSignUp(index: number) {
     this.customizedImg = false;
     this.selectedImg = 'avatar' + index + '.png'
   }
+  
   goToLoginPage() {
     this.router.navigateByUrl('');
   }

@@ -14,7 +14,6 @@ export class AuthService {
     return this.auth.signInWithPopup(new GoogleAuthProvider())
   }
 
-
   registerWithEmailAndPassword(user: { email: string, password: string }) {
     return this.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
@@ -28,7 +27,6 @@ export class AuthService {
       console.log('email has been sended');
     }).catch((err) => {
       console.log(err);
-
     })
   }
 }

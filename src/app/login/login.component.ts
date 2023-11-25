@@ -1,7 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  loggedInUser: string = '';
+  email: string = '';
+  id: string = '';
+  loginArray: Array<any> = [];
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -18,46 +23,49 @@ export class LoginComponent {
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  firestore: Firestore = inject(Firestore)
+  unsubUsers;
 
-
+  constructor(private router: Router, private authService: AuthService) {
+    this.unsubUsers = this.subUsers();
+  }
 
   loginWithEmailAndPassword() {
     let userData = Object.assign(this.loginForm.value, { email: this.emailInput.nativeElement.value, password: this.passwordInput.nativeElement.value });
     this.authService.signInWithEmailAndPassword(userData).then((res: any) => {
       console.log('Erfolgreich mit Account angemeldet');
-      this.router.navigateByUrl('mainboard');
+      this.loginArray.forEach((user) => {
+        if (user.email == this.emailInput.nativeElement.value) {
+          this.loggedInUser = user.id;
+          this.router.navigateByUrl('mainboard/' + user.id);
+        }
+      })
     }).catch((error: any) => {
       alert('Fehler, kein Account gefunden.')
     })
-
   }
 
-
   guestLogin() {
+    let ref = 'F2a3aOV8hNL2BWFLrQ9F'
     let userData = Object.assign(this.loginForm.value, { email: "gast@gast.at", password: "Gast1234" });
     this.authService.signInWithEmailAndPassword(userData).then((res: any) => {
-      this.router.navigateByUrl('mainboard');
-      console.log('Erfolgreich als Gast angemeldet');
-
+      this.loggedInUser = ref;
+      this.router.navigateByUrl('mainboard/' + ref);
     }).catch((error: any) => {
       console.log(error);
       alert('Kein Account gefunden')
     })
   }
 
-
   loginWithGoogle() {
     this.authService.signInWithGoogle().then((res: any) => {
-      console.log('Erfolgreich mit Google eingeloggt');
       this.router.navigateByUrl('mainboard');
-      
     }).catch((error: any) => {
       console.error(error);
     })
   }
-  //---Navigate-Functions---//
 
+  //---Navigate-Functions---//
   forgotPassword() {
     this.router.navigateByUrl('passwordReset');
   }
@@ -72,6 +80,23 @@ export class LoginComponent {
 
   showDataProtection() {
     this.router.navigateByUrl('dataProtection');
+  }
+
+  //---Subscribe-Functions---// 
+  subUsers() {
+    return onSnapshot(this.usersRef(), (list) => {
+      list.forEach(element => {
+        this.loginArray.push({ email: element.data()['email'], id: element.id });
+      })
+    })
+  }
+
+  usersRef() {
+    return collection(this.firestore, 'users');
+  }
+
+  ngOnDestroy() {
+    this.unsubUsers;
   }
 
 }

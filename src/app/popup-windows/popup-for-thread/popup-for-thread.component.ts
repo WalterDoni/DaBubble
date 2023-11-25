@@ -15,7 +15,6 @@ export class PopupForThreadComponent {
     if (this.mainboardComponent.toggleMenu && this.mainboardComponent.toggleThread && window.innerWidth < 1400) {
       this.mainboardComponent.toggleMenu = false;
     }
-
   }
 
 }

@@ -9,12 +9,10 @@ import { MainboardComponent } from '../../mainboard/mainboard.component';
 export class MembersMainboardHeadlineComponent {
 
   constructor(private mainboard: MainboardComponent){
-
   }
 
   closeAddMembersPopUp(event: Event){
     event.stopPropagation();
-
     this.mainboard.toggleEditMembers = false;
     this.mainboard.toggleBackground = false;
   }

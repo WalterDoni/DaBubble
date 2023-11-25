@@ -10,7 +10,6 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 export class ThreadComponent {
 
   constructor( private mainboard: MainboardComponent){
-
   }
 
   closeThread(){

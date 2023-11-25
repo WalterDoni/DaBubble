@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component,inject } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
-import { CreateChannelComponent } from 'src/app/create-channel/create-channel.component';
-import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
+
 
 
 @Component({
@@ -19,7 +18,6 @@ export class MenuComponent {
   constructor(){
     this.unsubChannels = this.subChannels();
   }
-
 
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {
@@ -39,11 +37,8 @@ export class MenuComponent {
     this.unsubChannels();
   }
 
-
   openCreateChannelPopUp(){
      this.toggleCreateChannel = true;
   }
-
-
 
 }

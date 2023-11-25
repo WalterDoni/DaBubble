@@ -11,7 +11,6 @@ export class PasswordResetComponent {
   @ViewChild('email') email!: ElementRef;
 
   constructor(private router: Router, private authService: AuthService) {
-
   }
 
   sendResetMail(){
