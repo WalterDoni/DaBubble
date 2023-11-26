@@ -25,10 +25,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideStorage, getStorage } from "@angular/fire/storage";
-
-
-
-
+import { EmojiPickerComponent } from './emoji-picker/emoji-picker.component';
+import { PickerModule } from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
   declarations: [
@@ -45,18 +43,21 @@ import { provideStorage, getStorage } from "@angular/fire/storage";
     CreateChannelComponent,
     EditChannelComponent,
     MembersMainboardHeadlineComponent,
-   AddMembersMainboardHeadlineComponent,
-   ProfileDetailsComponent,
-   ImprintComponent,
-   DataprotectionComponent,
+    AddMembersMainboardHeadlineComponent,
+    ProfileDetailsComponent,
+    ImprintComponent,
+    DataprotectionComponent,
+    EmojiPickerComponent,
+
   ],
+
   imports: [
-   
+    PickerModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule,
-    AngularFireModule.initializeApp({"projectId":"dabub-3dde6","appId":"1:1069097652276:web:078a0f97d1be6bdf697a61","storageBucket":"dabub-3dde6.appspot.com","apiKey":"AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0","authDomain":"dabub-3dde6.firebaseapp.com","messagingSenderId":"1069097652276"}),
-    provideFirebaseApp(() => initializeApp({"projectId":"dabub-3dde6","appId":"1:1069097652276:web:078a0f97d1be6bdf697a61","storageBucket":"dabub-3dde6.appspot.com","apiKey":"AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0","authDomain":"dabub-3dde6.firebaseapp.com","messagingSenderId":"1069097652276"})),
+    AngularFireModule.initializeApp({ "projectId": "dabub-3dde6", "appId": "1:1069097652276:web:078a0f97d1be6bdf697a61", "storageBucket": "dabub-3dde6.appspot.com", "apiKey": "AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0", "authDomain": "dabub-3dde6.firebaseapp.com", "messagingSenderId": "1069097652276" }),
+    provideFirebaseApp(() => initializeApp({ "projectId": "dabub-3dde6", "appId": "1:1069097652276:web:078a0f97d1be6bdf697a61", "storageBucket": "dabub-3dde6.appspot.com", "apiKey": "AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0", "authDomain": "dabub-3dde6.firebaseapp.com", "messagingSenderId": "1069097652276" })),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
@@ -64,6 +65,7 @@ import { provideStorage, getStorage } from "@angular/fire/storage";
   ],
 
   providers: [LoginComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
+
 export class AppModule { }

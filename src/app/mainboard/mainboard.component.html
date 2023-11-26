@@ -22,8 +22,9 @@
     <div class="content-container">
 
         <app-menu *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
-
+      
         <div class="chat">
+         
             <div class="chat-headline-container">
                 <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
                     <app-edit-channel *ngIf="toggleEditChannel"></app-edit-channel>
@@ -84,8 +85,7 @@
                                         <img src="/assets/img/mainboard/checkEmoji.png" alt="">
                                         <p> 1 </p>
                                     </span>
-                                    <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png"
-                                            alt=""></span>
+                                    <span><app-emoji-picker></app-emoji-picker></span>
                                 </div>
                                 <div class="answers-message-history">
                                     <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
