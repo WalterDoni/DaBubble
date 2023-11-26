@@ -28,7 +28,8 @@
                 <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
                     <app-edit-channel *ngIf="toggleEditChannel"></app-edit-channel>
                     <p>#</p>
-                    <p>{{selectedChannelTitle}}</p><img src="/assets/img/mainboard/keyboard_arrow_down.png" alt="arrow-down">
+                    <p>{{selectedChannelTitle}}</p><img src="/assets/img/mainboard/keyboard_arrow_down.png"
+                        alt="arrow-down">
                 </span>
                 <span class="headline-right-span">
                     <div class="headline-right-span-contacts" (click)="openAddMembersPopUp(); overlayBackroundColor()">
@@ -57,44 +58,50 @@
                     <span class="seperator-chat"></span>
                 </div>
 
-                <div class="chat-history" (mouseenter)="showPopupForThread($event)" (mouseleave)="hidePopupForThread()">
+                <div *ngIf="selectedChannelContent.length > 0" (mouseenter)="showPopupForThread($event)"
+                    (mouseleave)="hidePopupForThread()">
 
                     <app-popup-for-thread #popup *ngIf="isPopupForThreadVisible"></app-popup-for-thread>
+                    <div *ngFor="let channel of selectedChannelContent">
+                        <div style="display: flex;">
+                            <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
+                            <div class="message-chat-history">
+                                <div class="headline-message-history">
+                                    <h3>{{channel.data.from}}</h3>
+                                    <p> {{channel.data.timestamp}} Uhr</p>
+                                </div>
+                                <div class="message-history">{{channel.data.message}}</div>
+                                <div class="reactions-container">
 
-                    <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
-                    <div class="message-chat-history">
-                        <div class="headline-message-history">
-                            <h3>Noah Braun</h3>
-                            <p> 16:30 Uhr</p>
+                                    <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                        (mouseleave)="hidePopupForReactions()">
+                                        <app-popup-reactions #popup
+                                            *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
+                                        <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
+                                        <p> 1 </p>
+                                    </span>
+                                    <span class="reactions">
+                                        <img src="/assets/img/mainboard/checkEmoji.png" alt="">
+                                        <p> 1 </p>
+                                    </span>
+                                    <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png"
+                                            alt=""></span>
+                                </div>
+                                <div class="answers-message-history">
+                                    <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
+                                        Antwort 17:00</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="message-history">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad,
-                            corporis sit nobis dolorum odit dolores corrupti ex, quaerat illum cupiditate repellat quas
-                            temporibus voluptatibus minima deleniti reprehenderit architecto rem vitae.</div>
-                        <div class="reactions-container">
-
-                            <span class="reactions" (mouseenter)="showPopupForReactions($event)"
-                                (mouseleave)="hidePopupForReactions()">
-                                <app-popup-reactions #popup *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
-                                <p> 1 </p>
-                            </span>
-                            <span class="reactions">
-                                <img src="/assets/img/mainboard/checkEmoji.png" alt="">
-                                <p> 1 </p>
-                            </span>
-                            <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
-                        </div>
-                        <div class="answers-message-history">
-                            <span (click)="showThread()">2 Antworten</span><span>Letzte Antwort 17:00</span>
+                        <div class="chat-seperator-with-date">
+                            <span class="seperator-chat"></span>
+                            <span class="date-chat"> Mittwoch, 08 November</span>
+                            <span class="seperator-chat"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="chat-seperator-with-date">
-                    <span class="seperator-chat"></span>
-                    <span class="date-chat"> Mittwoch, 08 November</span>
-                    <span class="seperator-chat"></span>
-                </div>
+
 
                 <div class="my-message-chat">
                     <div class="my-message-chat-history">

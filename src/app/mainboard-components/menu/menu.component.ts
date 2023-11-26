@@ -24,6 +24,7 @@ export class MenuComponent {
   firestore: Firestore = inject(Firestore)
   channelName: string = '';
   channelDescription: string = '';
+  channelID: string = '';
   channelsArray: Array<any> = [];
   
   username: string = '';
@@ -51,10 +52,10 @@ export class MenuComponent {
   }
 
   selectChannel(id: number){
-    let selectedChannelTitle = this.channelsArray[id].channelName;
-    let selectedChannelDescription = this.channelsArray[id].channelDescription;
-    this.mainboard.selectedChannelTitle = selectedChannelTitle;
-    this.mainboard.selectedChannelDescription = selectedChannelDescription;
+    this.mainboard.selectedChannelTitle = this.channelsArray[id].channelName;
+    this.mainboard.selectedChannelDescription = this.channelsArray[id].channelDescription;
+    this.mainboard.channelID = this.channelsArray[id].channelID;
+    this.mainboard.channelContent(); 
   }
 
   //----Subscribe-Functions----//
@@ -87,8 +88,7 @@ export class MenuComponent {
     return onSnapshot(this.channelsRef(), (list) => {
       this.channelsArray = [];
       list.forEach(element => {
-        let array = element.data();
-        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'] });
+        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'], channelID: element.id });
       });
     });
   }

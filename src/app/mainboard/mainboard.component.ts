@@ -1,7 +1,6 @@
-import { Component, ElementRef, HostListener, Injectable, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Injectable, ViewChild, inject } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
-import { doc } from "firebase/firestore";
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -38,24 +37,22 @@ export class MainboardComponent {
   selectedChannelTitle: string = 'Entwicklerteam';
   selectedChannelDescription: string = 'Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und Unterhaltungen';
 
-  firestore: Firestore = inject(Firestore);
+  channelID: string = 'nq56l3iiTG4g3e1iNHHm';
+  channelsArray: any[] = [];
 
-  channelName: string = '';
-  channelDescription: string = '';
-  channelsArray: Array<any> = [];
+  selectedChannelContent: any[] = [];
 
-  username: string = '';
-  id: string = '';
   img: string = '';
-  userArray: Array<any> = [];
+  userArray: any[] = [];
 
+  firestore: Firestore = inject(Firestore);
   unsubUsers;
   unsubChannels;
 
   constructor(private route: ActivatedRoute) {
+    this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
-    this.test();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -121,29 +118,31 @@ export class MainboardComponent {
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       list.forEach(element => {
-        let defaultImg = element.data()['defaultImg'];
-        let personalImg = element.data()['personalImg'];
-        if (defaultImg && defaultImg.length >= 1) {
-          this.img = defaultImg;
+        if (element.data()['defaultImg'] && element.data()['defaultImg'].length >= 1) {
+          this.img = element.data()['defaultImg'];
         } else {
-          this.img = personalImg;
+          this.img = element.data()['personalImg'];
         }
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
           this.loggedInUserImg = this.img;
         } else {
-          this.userArray.push({ username: element.data()['username'], id: element.id, img: this.img });
+          this.userArray.push({
+            username: element.data()['username'],
+            id: element.id, img: this.img
+          });
         }
       })
     })
   }
 
   subChannels() {
-
     return onSnapshot(this.channelsRef(), (list) => {
       list.forEach(element => {
-        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'] });
-        console.log(this.channelsArray);
+        this.channelsArray.push({
+          channelName: element.data()['name'],
+          channelDescription: element.data()['description']
+        });
       });
     });
   }
@@ -156,12 +155,15 @@ export class MainboardComponent {
     return collection(this.firestore, 'channels');
   }
 
-  async test() {
-    let test = await getDocs(collection(this.firestore, 'channels', 'nq56l3iiTG4g3e1iNHHm', 'channelContent'));
-    test.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+  async channelContent() {
+    let channel = await getDocs(collection(this.firestore, 'channels', this.channelID, 'channelContent'));
+    this.selectedChannelContent = [];
+    channel.forEach((doc) => {
+      this.selectedChannelContent.push({
+        id: doc.id,
+        data: doc.data(),
+      });
     });
-
   }
 
   testref() {
