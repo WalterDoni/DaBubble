@@ -166,10 +166,6 @@ export class MainboardComponent {
     });
   }
 
-  testref() {
-    return collection(this.firestore, 'channelContent')
-  }
-
   ngonDestroy() {
     this.unsubUsers();
     this.unsubChannels();
