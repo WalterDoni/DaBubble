@@ -60,7 +60,7 @@
                 </div>
 
                 <div *ngIf="selectedChannelContent.length > 0">
-                    <div class="test" *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopupForThread($event, i)"
+                    <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopupForThread($event, i)"
                     (mouseleave)="hidePopupForThread()">
                     <app-popup-for-thread #popup *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         <div style="display: flex;">
@@ -71,19 +71,17 @@
                                     <p> {{channel.data.timestamp}} Uhr</p>
                                 </div>
                                 <div class="message-history">{{channel.data.message}}</div>
+
                                 <div class="reactions-container">
 
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                         (mouseleave)="hidePopupForReactions()">
                                         <app-popup-reactions #popup
                                             *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
-                                        <p>{{reactionEmoji}}</p>
-                                        <p> 1 </p>
+                                        <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
+                                        <p style="position: absolute; right: 17px">1</p>
                                     </span>
-                                    <span class="reactions">
-                                        <img src="/assets/img/mainboard/checkEmoji.png" alt="">
-                                        <p> 1 </p>
-                                    </span>
+                                  
                                     <span><app-emoji-picker></app-emoji-picker></span>
                                 </div>
                                 <div class="answers-message-history">

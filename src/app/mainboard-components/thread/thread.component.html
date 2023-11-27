@@ -13,12 +13,10 @@
             <div class="padding-thread-avatar"><img src="/assets/img/signup/avatar2.png" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
-                    <h3>Noah Braun</h3>
+                    <h3>{{selectedChannel[selectedThreadID]['data']['from']}}</h3>
                     <p> 16:30 Uhr</p>
                 </div>
-                <div class="message-history">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad,
-                    corporis sit nobis dolorum odit dolores corrupti ex, quaerat illum cupiditate repellat quas
-                    temporibus voluptatibus minima deleniti reprehenderit architecto rem vitae.</div>
+                <div class="message-history">{{selectedChannel[selectedThreadID]['data']['message']}}</div>
             </div>
         </div>
 
@@ -26,14 +24,14 @@
             <p>2 Antworten</p> <span class="seperator-thread"></span>
         </div>
 
-        <div class="chat-history">
+        <div class="chat-history" *ngFor="let answerTextMessage of selectedChannel[selectedThreadID]['data']['answerText']; let i = index ">
             <div class="padding-thread-avatar"><img src="/assets/img/signup/avatar2.png" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
                     <h3>Noah Braun</h3>
                     <p> 16:30 Uhr</p>
                 </div>
-                <div class="message-history">Coole Sache.</div>
+                <div class="message-history">{{answerTextMessage}}</div>
                 <div class="reactions-container">
                     <span class="reactions"><img src="/assets/img/mainboard/rocketEmoji.png" alt="">
                         <p> 1 </p>

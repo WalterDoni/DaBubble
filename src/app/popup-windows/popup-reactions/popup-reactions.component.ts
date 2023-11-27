@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 @Component({
   selector: 'app-popup-reactions',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class PopupReactionsComponent {
 
+  constructor(public mainboard: MainboardComponent){}
 }

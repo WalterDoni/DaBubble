@@ -646,15 +646,12 @@
         background-color: #535AF1;
         color: white;
     }
-
-  
 }
 
 .add-reaction {
     height: 100%;
     display: flex;
     transition: filter 200ms ease-out;
-
 
     &:hover {
         filter: invert(30%) sepia(68%) saturate(4080%) hue-rotate(232deg) brightness(100%) contrast(89%);
