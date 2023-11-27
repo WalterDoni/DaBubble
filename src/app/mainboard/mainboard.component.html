@@ -59,11 +59,10 @@
                     <span class="seperator-chat"></span>
                 </div>
 
-                <div *ngIf="selectedChannelContent.length > 0" (mouseenter)="showPopupForThread($event)"
+                <div *ngIf="selectedChannelContent.length > 0">
+                    <div class="test" *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopupForThread($event, i)"
                     (mouseleave)="hidePopupForThread()">
-
-                    <app-popup-for-thread #popup *ngIf="isPopupForThreadVisible"></app-popup-for-thread>
-                    <div *ngFor="let channel of selectedChannelContent">
+                    <app-popup-for-thread #popup *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         <div style="display: flex;">
                             <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
                             <div class="message-chat-history">
@@ -77,8 +76,8 @@
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                         (mouseleave)="hidePopupForReactions()">
                                         <app-popup-reactions #popup
-                                            *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                        <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
+                                            *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
+                                        <p>{{reactionEmoji}}</p>
                                         <p> 1 </p>
                                     </span>
                                     <span class="reactions">

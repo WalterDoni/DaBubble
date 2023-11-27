@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {  Subject } from 'rxjs';
+import { MainboardComponent } from '../mainboard/mainboard.component';
 
 @Component({
   selector: 'app-emoji-picker',
@@ -12,16 +13,17 @@ export class EmojiPickerComponent {
   @Input() emojiInput$: Subject<string> | undefined;
   @ViewChild("container") container: ElementRef<HTMLElement> | undefined;
 
-  constructor() {
+  constructor(private mainboard: MainboardComponent) {
   }
 
   emojiSelected(event: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    this.emojiInput$?.next(event.emoji.native);
+    const selectedEmoji = event.emoji.native;
+    this.emojiInput$?.next(selectedEmoji);
+    this.mainboard.reactionEmoji = selectedEmoji;
+    
   }
 
   eventHandler = (event: Event) => {
-    // Watching for outside clicks
     if (!this.container?.nativeElement.contains(event.target as Node)) {
       this.isOpened = false;
       window.removeEventListener("click", this.eventHandler);

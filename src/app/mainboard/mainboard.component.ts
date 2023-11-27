@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class MainboardComponent {
 
   @ViewChild('thread') thread!: ElementRef;
-
+  reactionEmoji: any;
   userId: string = '';
 
   toggleMenu: boolean = true;
@@ -29,6 +29,7 @@ export class MainboardComponent {
   toggleProfile: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
+  hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
 
   loggedInUserName: string = '';
@@ -61,7 +62,8 @@ export class MainboardComponent {
   }
 
   //--Thread-Popup--//
-  showPopupForThread(event: MouseEvent) {
+  showPopupForThread(event: MouseEvent, index: number) {
+    this.hoveredChannelIndex = index;
     this.isPopupForThreadVisible = true;
   }
 

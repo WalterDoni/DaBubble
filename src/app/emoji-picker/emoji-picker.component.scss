@@ -2,6 +2,7 @@
     position: relative;
     width: 24px;
     height: 24px;
+   
   
     button {
       background-color: transparent;
@@ -9,21 +10,12 @@
       cursor: pointer;
       padding: 0;
       margin: 0;
-  
-      svg {
-        width: 24px;
-        height: 24px;
-  
-        path {
-          fill: var(--str-chat__message-input-tools-color);
-        }
-      }
     }
   
     .picker {
-      z-index: 3;
+      z-index: 999;
       position: absolute;
-      bottom: 100%;
+      
       transform: scale(0.8);
       right: 0;
       transform-origin: bottom right;
