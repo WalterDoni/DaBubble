@@ -18,7 +18,6 @@ import { DatePipe } from '@angular/common';
 export class MainboardComponent {
 
   date: Date = new Date(Date.now());
-  germanDate!: Date;
 
   @ViewChild('thread') thread!: ElementRef;
   reactionEmoji: any;

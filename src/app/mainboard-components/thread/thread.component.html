@@ -2,7 +2,7 @@
     <div class="thread-headline-container">
         <div>
             <h3>Thread</h3>
-            <p># Entwicklerteam</p>
+            <p># {{selectedChannelTitle}}</p>
         </div>
         <img (click)="closeThread()" src="/assets/img/create-channel/close.png" alt="">
     </div>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="thread-seperator-container">
-            <p>2 Antworten</p> <span class="seperator-thread"></span>
+            <p>{{selectedChannel[selectedThreadID]['data']['answers']}} Antworten</p> <span class="seperator-thread"></span>
         </div>
 
         <div class="chat-history" *ngFor="let answerTextMessage of selectedChannel[selectedThreadID]['data']['answerText']; let i = index ">

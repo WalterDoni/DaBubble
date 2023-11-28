@@ -10,15 +10,14 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 export class ThreadComponent {
 
   selectedThreadID!: number;
+  selectedChannelTitle!: string;
   selectedChannel: any [] = [];
 
   constructor( private mainboard: MainboardComponent){
+    
     this.selectedChannel = this.mainboard.selectedChannelContent;
     this.selectedThreadID = this.mainboard.hoveredChannelIndex;
-    console.log(this.selectedChannel);
-    
-    
-    
+    this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
   }
 
   closeThread(){
