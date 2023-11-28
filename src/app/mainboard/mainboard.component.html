@@ -12,7 +12,7 @@
 
         <span class="headline-span-input"><input type="text" placeholder="Code learning durchsuchen"></span>
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
-            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px;" src="{{loggedInUserImg}}"
+            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px; border-radius: 100px; object-fit: cover;" src="{{loggedInUserImg}}"
                 alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
         </span>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="content-container">
-
+    
         <app-menu *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
       
         <div class="chat">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="chat-seperator-with-date">
                     <span class="seperator-chat"></span>
-                    <span class="date-chat"> Mittwoch, 08 November</span>
+                    <span class="date-chat">{{ getFormattedDate()}}</span>
                     <span class="seperator-chat"></span>
                 </div>
 

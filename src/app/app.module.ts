@@ -27,6 +27,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { provideStorage, getStorage } from "@angular/fire/storage";
 import { EmojiPickerComponent } from './emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
+import { LOCALE_ID } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { PickerModule } from "@ctrl/ngx-emoji-mart";
     provideStorage(() => getStorage()),
   ],
 
-  providers: [LoginComponent],
+  providers: [LoginComponent, {provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
 })
 

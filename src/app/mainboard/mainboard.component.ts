@@ -1,13 +1,14 @@
-import { Component, ElementRef, HostListener, Injectable, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject,  LOCALE_ID } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mainboard',
   templateUrl: './mainboard.component.html',
-  styleUrls: ['./mainboard.component.scss']
+  styleUrls: ['./mainboard.component.scss'],
+  providers: [DatePipe]
 })
 
 @Injectable({
@@ -15,6 +16,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class MainboardComponent {
+
+  date: Date = new Date(Date.now());
+  germanDate!: Date;
 
   @ViewChild('thread') thread!: ElementRef;
   reactionEmoji: any;
@@ -50,12 +54,16 @@ export class MainboardComponent {
   unsubUsers;
   unsubChannels;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
-    this.unsubChannels = this.subChannels();
+    this.unsubChannels = this.subChannels(); 
   }
 
+  getFormattedDate(): string {
+    return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale)  as string;
+  }
+  
   @HostListener('window:resize', ['$event'])
   onResize(): void {
     this.checkWindowWidth1400();
