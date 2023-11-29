@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject,  LOCALE_ID } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
 import { Firestore, collection, getDocs } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -18,8 +18,8 @@ import { DatePipe } from '@angular/common';
 export class MainboardComponent {
 
   date: Date = new Date(Date.now());
-
   @ViewChild('thread') thread!: ElementRef;
+
   reactionEmoji: any;
   userId: string = '';
 
@@ -43,11 +43,15 @@ export class MainboardComponent {
 
   channelID: string = 'nq56l3iiTG4g3e1iNHHm';
   channelsArray: any[] = [];
+  filteredChannelsArray: any [] = [];
 
   selectedChannelContent: any[] = [];
 
   img: string = '';
   userArray: any[] = [];
+
+  searchTerm!: string;
+  filteredUserArray: any[] = [];
 
   firestore: Firestore = inject(Firestore);
   unsubUsers;
@@ -56,13 +60,14 @@ export class MainboardComponent {
   constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
-    this.unsubChannels = this.subChannels(); 
+    this.unsubChannels = this.subChannels();
+   
   }
 
   getFormattedDate(): string {
-    return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale)  as string;
+    return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale) as string;
   }
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(): void {
     this.checkWindowWidth1400();
@@ -115,7 +120,33 @@ export class MainboardComponent {
     this.toggleProfile = true;
   }
 
+  //----Search-Function----//
+  search(): void {
+    if (this.searchTerm && this.searchTerm.length >= 1) {
+      this.filteredUserArray = this.userArray.filter(user =>
+        user.username.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+      this.filteredChannelsArray = this.channelsArray.filter(user =>
+        user.channelName.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredUserArray = [];
+      this.filteredChannelsArray = [];
+    }
+  }
 
+  async searchBarSelectChannel(channelName: string) {
+    for (let i = 0; i < this.channelsArray.length; i++) {
+      let channel = this.channelsArray[i];
+      if (channel.channelName === channelName) {
+        this.selectedChannelTitle = channel.channelName;
+        this.selectedChannelDescription = channel.channelDescription;
+        this.channelID = channel.channelId;
+        this.channelContent();
+      }
+    }
+  }
+  
   //----Subscribee-Functions----//
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -150,7 +181,8 @@ export class MainboardComponent {
       list.forEach(element => {
         this.channelsArray.push({
           channelName: element.data()['name'],
-          channelDescription: element.data()['description']
+          channelDescription: element.data()['description'],
+          channelId: element.id,
         });
       });
     });

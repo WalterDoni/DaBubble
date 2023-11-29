@@ -28,6 +28,7 @@ import { provideStorage, getStorage } from "@angular/fire/storage";
 import { EmojiPickerComponent } from './emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { LOCALE_ID } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { LOCALE_ID } from '@angular/core';
   ],
 
   imports: [
+    FormsModule,
     PickerModule,
     BrowserModule,
     AppRoutingModule,

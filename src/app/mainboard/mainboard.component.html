@@ -10,21 +10,47 @@
                     <p>Code learning</p>
         </span>
 
-        <span class="headline-span-input"><input type="text" placeholder="Code learning durchsuchen"></span>
+        <span class="headline-span-input">
+            <input type="text" placeholder="Code learning durchsuchen" (keyup)="search()" [(ngModel)]="searchTerm">
+          
+            <div class="searchResults" *ngIf="searchTerm">
+                <h2>Mitglieder</h2>
+                <ul>
+                    <li *ngFor="let user of filteredUserArray">
+                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image"><p>{{ user.username }}</p>
+                    </li>
+                    <li
+                        *ngIf="searchTerm && filteredUserArray && filteredUserArray.length === 0 && searchTerm.length >= 1">
+                        Kein Mitglied gefunden
+                    </li>
+                </ul>
+                <h2>Channels</h2>
+                <ul>
+                    <li *ngFor="let channel of filteredChannelsArray"
+                        (click)="searchBarSelectChannel(channel.channelName)">
+                        <p style="padding-bottom: 8px;">#{{ channel.channelName }}</p>
+                    </li>
+                    <li
+                        *ngIf="searchTerm && filteredChannelsArray && filteredChannelsArray.length === 0 && searchTerm.length >= 1">
+                        Kein Kanal gefunden
+                    </li>
+                </ul>
+            </div>
+        </span>
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
-            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px; border-radius: 100px; object-fit: cover;" src="{{loggedInUserImg}}"
-                alt="profile-image">
+            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px; border-radius: 100px; object-fit: cover;"
+                src="{{loggedInUserImg}}" alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
         </span>
 
     </div>
 
     <div class="content-container">
-    
+
         <app-menu *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
-      
+
         <div class="chat">
-         
+
             <div class="chat-headline-container">
                 <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
                     <app-edit-channel *ngIf="toggleEditChannel"></app-edit-channel>
@@ -60,9 +86,10 @@
                 </div>
 
                 <div *ngIf="selectedChannelContent.length > 0">
-                    <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopupForThread($event, i)"
-                    (mouseleave)="hidePopupForThread()">
-                    <app-popup-for-thread #popup *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
+                    <div *ngFor="let channel of selectedChannelContent; let i = index"
+                        (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
+                        <app-popup-for-thread #popup
+                            *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         <div style="display: flex;">
                             <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
                             <div class="message-chat-history">
@@ -81,7 +108,7 @@
                                         <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
                                         <p style="position: absolute; right: 17px">1</p>
                                     </span>
-                                  
+
                                     <span><app-emoji-picker></app-emoji-picker></span>
                                 </div>
                                 <div class="answers-message-history">
