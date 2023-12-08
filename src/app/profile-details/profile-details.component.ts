@@ -9,15 +9,19 @@ import { Router } from '@angular/router';
 })
 export class ProfileDetailsComponent {
 
-  constructor(private mainboard: MainboardComponent, private router: Router){}
+  constructor(private mainboard: MainboardComponent, private router: Router) { }
 
-  hideProfile(event: Event){
-  event.stopPropagation();
-  this.mainboard.toggleProfile = false;
-  this.mainboard.toggleBackground = false;
+  hideProfile(event: Event) {
+    event.stopPropagation();
+    this.mainboard.toggleProfile = false;
+    this.mainboard.toggleBackground = false;
   }
 
-  goToLoginPage(){
+  showProfileViewPopUp() {
+    this.mainboard.toggleProfileView = true;
+  }
+
+  goToLoginPage() {
     this.router.navigateByUrl('');
   }
 

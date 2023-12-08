@@ -30,6 +30,9 @@ export class MainboardComponent {
   toggleAddNewMembers: boolean = false;
   toggleBackground: boolean = false;
   toggleProfile: boolean = false;
+  toggleProfileView: boolean = false;
+
+
 
   isPopupForThreadVisible: boolean = false;
   hoveredChannelIndex!: number;
@@ -37,6 +40,7 @@ export class MainboardComponent {
 
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
+  loggedInUserEmail: string = '';
 
   selectedChannelTitle: string = 'Entwicklerteam';
   selectedChannelDescription: string = 'Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und Unterhaltungen';
@@ -95,6 +99,7 @@ export class MainboardComponent {
   showPopupForReactions(event: MouseEvent) {
     this.isPopupForReactionsVisible = true;
   }
+
 
   hidePopupForReactions() {
     this.isPopupForReactionsVisible = false;
@@ -165,15 +170,18 @@ export class MainboardComponent {
         }
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
+          this.loggedInUserEmail = element.data()['email'];
           this.loggedInUserImg = this.img;
         } else {
           this.userArray.push({
             username: element.data()['username'],
             id: element.id, img: this.img
           });
+          console.log(this.userArray);
         }
       })
     })
+
   }
 
   subChannels() {
@@ -226,12 +234,13 @@ export class MainboardComponent {
   }
 
   closeWindow() {
-    if (this.toggleEditChannel || this.toggleEditMembers || this.toggleAddNewMembers || this.toggleProfile) { }
+    if (this.toggleEditChannel || this.toggleEditMembers || this.toggleAddNewMembers || this.toggleProfile || this.toggleProfileView) { }
     this.toggleProfile = false;
     this.toggleEditChannel = false;
     this.toggleEditMembers = false;
     this.toggleAddNewMembers = false;
     this.toggleBackground = false;
+    this.toggleProfileView = false;
   }
 
   checkWindowWidth1400(): void {

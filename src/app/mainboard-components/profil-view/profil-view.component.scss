@@ -5,14 +5,13 @@
     flex-direction: column;
     border-radius: 20px 0px 20px 20px;
     position: absolute;
-    width: 450px;
-    height: 520px;
+    width: 360px;
+    height: 500px;
     background-color: white !important;
     color: black;
     top: 90px;
     right: 80px;
     z-index: 10;
-    border: 1px solid black;
     padding: 16px;
     gap: 45px;
 
@@ -25,6 +24,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    img {
+        cursor: pointer;
+        transition: transform 200ms ease-in-out;
+
+
+        &:hover {
+            filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
+            transform: scale(1.1);
+        }
+    }
 }
 
 .img-cont {
@@ -70,7 +80,7 @@
     cursor: pointer;
     transition: background-color 200ms ease-in-out;
 
-    &:hover{
+    &:hover {
         background-color: #797EF3;
     }
 

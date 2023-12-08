@@ -29,6 +29,7 @@ import { EmojiPickerComponent } from './emoji-picker/emoji-picker.component';
 import { PickerModule } from "@ctrl/ngx-emoji-mart";
 import { LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FormsModule } from '@angular/forms';
     ImprintComponent,
     DataprotectionComponent,
     EmojiPickerComponent,
+    ProfilViewComponent,
 
   ],
 
