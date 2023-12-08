@@ -26,6 +26,10 @@
     }
 }
 
+.rotate-270 {
+    rotate: 270deg;
+}
+
 .channel-name-container {
     display: flex;
     gap: 10px;
@@ -81,7 +85,7 @@
                 font-size: 20px;
                 font-weight: 700;
             }
-            
+
         }
     }
 
@@ -128,7 +132,7 @@
 .list {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start!important;
+    justify-content: flex-start !important;
     align-items: center;
     gap: 8px;
     overflow-y: scroll;

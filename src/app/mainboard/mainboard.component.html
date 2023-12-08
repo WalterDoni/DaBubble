@@ -12,12 +12,13 @@
 
         <span class="headline-span-input">
             <input type="text" placeholder="Code learning durchsuchen" (keyup)="search()" [(ngModel)]="searchTerm">
-          
+
             <div class="searchResults" *ngIf="searchTerm">
                 <h2>Mitglieder</h2>
                 <ul>
                     <li *ngFor="let user of filteredUserArray">
-                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image"><p>{{ user.username }}</p>
+                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
+                        <p>{{ user.username }}</p>
                     </li>
                     <li
                         *ngIf="searchTerm && filteredUserArray && filteredUserArray.length === 0 && searchTerm.length >= 1">
@@ -49,7 +50,7 @@
 
         <app-menu *ngIf="toggleMenu" class="menu-container" #menu></app-menu>
 
-        <div class="chat">
+        <div class="chat" *ngIf="chatContent">
 
             <div class="chat-headline-container">
                 <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
@@ -156,7 +157,7 @@
             </div>
 
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #Entwicklerteam">
+                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}">
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
                         <img src="/assets/img/mainboard/add_plus.png" alt="">
@@ -173,6 +174,48 @@
             </div>
 
         </div>
+
+
+
+
+        <div class="chat" *ngIf="directMessageContent">
+
+            <div class="chat-headline-container">
+                <span class="headline-left-span">
+                    <img src="/assets/img/signup/avatar0.png" alt="">
+                    <p>Test User</p>
+                </span>
+            </div>
+            <div class="chat-content">
+            </div>
+
+            <div class="directMessageContent">
+                <div class="directMessageContact">
+                    <img src="/assets/img/signup/avatar0.png" alt="">
+                    <p>Test User</p>
+                </div>
+                <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @Test User und dir statt.</p>
+            </div>
+
+            <div class="chat-message-inputfield">
+                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}">
+                <div class="chat-message-options">
+                    <span class="imgHoverInput">
+                        <img src="/assets/img/mainboard/add_plus.png" alt="">
+                        <span class="seperator-send-message"></span>
+                        <img src="/assets/img/mainboard/smile_add_message.png" alt="">
+                        <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+                    </span>
+                    <span class="sendButtonImg">
+                        <img src="/assets/img/mainboard/send.png" alt="">
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
 
 
         <app-thread *ngIf="toggleThread" #thread class="thread-container"></app-thread>

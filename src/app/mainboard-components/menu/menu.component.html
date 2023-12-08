@@ -4,13 +4,13 @@
     </div>
     <div class="channels-container">
         <section class="channels-content">
-            <div><span class="hover-menu"><img src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
+            <div><span (click)="toggletableChannels()" class="hover-menu"><img #arrowChannels src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
                         class="gap10"><img src="/assets/img/mainboard/workspaces.png" alt="">
                         <p>Channels</p>
                     </span>
                 </span><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
             </div>
-            <div class="list">
+            <div class="list" #listChannels>
                 <li *ngFor="let channel of channelsArray; let i = index" (click)="selectChannel(i)"><p>#</p><p>{{channel.channelName}}</p></li>
             </div>
             <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png" alt="add">Channel hinzufügen
@@ -21,14 +21,14 @@
     <div class="directmessages-container"></div>
 
     <section class="contacts-content">
-        <div class="hover-menu"><span><img src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
+        <div class="hover-menu"><span (click)="toggletableDirectmessages()"><img #arrowDirectmessage src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
                     class="gap10"><img src="/assets/img/mainboard/account_circle.png" alt="">
                     <p>Direktnachrichten</p>
                 </span>
             </span></div>
-        <div class="contact-list">
+        <div class="contact-list" #listDirectmessage>
             <li><img src="{{loggedInUserImg}}" alt="add">{{loggedInUserName}} (Du)</li>
-            <li *ngFor = "let user of userArray"><img src="{{user.img}}" alt="add">{{user.username}}</li>
+            <li *ngFor = "let user of userArray" (click)="selectUserForDirectmessage()"><img src="{{user.img}}" alt="add">{{user.username}}</li>
           
         </div>
     </section>

@@ -32,7 +32,8 @@ export class MainboardComponent {
   toggleProfile: boolean = false;
   toggleProfileView: boolean = false;
 
-
+  chatContent: boolean = false;
+  directMessageContent: boolean = true;
 
   isPopupForThreadVisible: boolean = false;
   hoveredChannelIndex!: number;

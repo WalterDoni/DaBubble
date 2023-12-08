@@ -1,4 +1,4 @@
-import { Component, Injectable, inject } from '@angular/core';
+import { Component, ElementRef, Injectable, ViewChild, inject } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
@@ -20,13 +20,13 @@ export class MenuComponent {
   userId: string = '';
   loggedInUserName!: string;
   loggedInUserImg!: string;
- 
+
   firestore: Firestore = inject(Firestore)
   channelName: string = '';
   channelDescription: string = '';
   channelID: string = '';
   channelsArray: Array<any> = [];
-  
+
   username: string = '';
   id: string = '';
   img: string = '';
@@ -34,6 +34,13 @@ export class MenuComponent {
 
   unsubChannels;
   unsubUsers;
+
+  @ViewChild('arrowChannels') arrowChannels!: ElementRef;
+  @ViewChild('listChannels') listChannels!: ElementRef;
+  @ViewChild('arrowDirectmessage') arrowDirectmessage!: ElementRef;
+  @ViewChild('listDirectmessage') listDirectmessage!: ElementRef;
+  openTableChannels: boolean = true;
+  openTableDirectMessages: boolean = true;
 
   constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers();
@@ -51,12 +58,45 @@ export class MenuComponent {
     this.toggleCreateChannel = true;
   }
 
-  selectChannel(id: number){
+  selectChannel(id: number) {
+    this.mainboard.directMessageContent = false;
+    this.mainboard.chatContent = true;
     this.mainboard.selectedChannelTitle = this.channelsArray[id].channelName;
     this.mainboard.selectedChannelDescription = this.channelsArray[id].channelDescription;
     this.mainboard.channelID = this.channelsArray[id].channelID;
-    this.mainboard.channelContent(); 
+    this.mainboard.channelContent();
   }
+
+  selectUserForDirectmessage() {
+    this.mainboard.directMessageContent = true;
+    this.mainboard.chatContent = false;
+
+  }
+
+  //----Folding-Functions---//
+
+  toggletableChannels() {
+    this.openTableChannels = !this.openTableChannels
+    if (this.openTableChannels) {
+      this.arrowChannels.nativeElement.classList.remove('rotate-270');
+      this.listChannels.nativeElement.style.display = 'flex';
+    } else {
+      this.arrowChannels.nativeElement.classList.add('rotate-270');
+      this.listChannels.nativeElement.style.display = 'none';
+    }
+  }
+
+  toggletableDirectmessages() {
+    this.openTableDirectMessages = !this.openTableDirectMessages
+    if (this.openTableDirectMessages) {
+      this.arrowDirectmessage.nativeElement.classList.remove('rotate-270');
+      this.listDirectmessage.nativeElement.style.display = 'flex';
+    } else {
+      this.arrowDirectmessage.nativeElement.classList.add('rotate-270');
+      this.listDirectmessage.nativeElement.style.display = 'none';
+    }
+  }
+
 
   //----Subscribe-Functions----//
   subUsers() {
@@ -72,7 +112,7 @@ export class MenuComponent {
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
           this.loggedInUserImg = this.img;
-      
+
         } else {
           this.userArray.push({ username: element.data()['username'], id: element.id, img: this.img });
         }
