@@ -59,8 +59,9 @@ export class MenuComponent {
   }
 
   selectChannel(id: number) {
-    this.mainboard.directMessageContent = false;
     this.mainboard.chatContent = true;
+    this.mainboard.directMessageContent = false;
+    this.mainboard.menuSearchfieldChat = false;
     this.mainboard.selectedChannelTitle = this.channelsArray[id].channelName;
     this.mainboard.selectedChannelDescription = this.channelsArray[id].channelDescription;
     this.mainboard.channelID = this.channelsArray[id].channelID;
@@ -69,9 +70,17 @@ export class MenuComponent {
 
   selectUserForDirectmessage(id: number) {
     this.mainboard.directMessageContent = true;
+    this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
     this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
+  }
+
+  openMenuSearchFieldOnChat() {
+    this.mainboard.menuSearchfieldChat = true;
+    this.mainboard.directMessageContent = false;
+    this.mainboard.chatContent = false;
+
   }
 
   //----Folding-Functions---//

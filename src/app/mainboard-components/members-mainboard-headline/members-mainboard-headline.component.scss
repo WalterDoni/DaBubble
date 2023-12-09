@@ -1,5 +1,3 @@
-
-
 .content {
     position: absolute;
     top: 85px;
@@ -15,7 +13,7 @@
     font-size: 18px;
     z-index: 5;
 
-    h2{
+    h2 {
         font-size: 24px;
     }
 }
@@ -25,12 +23,12 @@
     justify-content: space-between;
     align-items: center;
 
-    img{
+    img {
         width: 16px;
         height: 16px;
         cursor: pointer;
-    
-        &:hover{
+
+        &:hover {
             filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
             transform: scale(1.1);
         }
@@ -43,9 +41,10 @@
     gap: 16px;
 
     img {
-        padding-right: 8px;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
+        border-radius: 100px;
+        object-fit: cover;
     }
 
     ul {
@@ -64,8 +63,9 @@
         border-radius: 30px;
         transition: background-color 200ms ease-out;
         padding: 8px;
+        gap: 8px;
 
-        &:hover{
+        &:hover {
             cursor: pointer;
             background: #ECEEFE;
         }
@@ -73,20 +73,20 @@
     }
 }
 
-.add-member{
+.add-member {
     display: flex;
     transition: background-color 200ms ease-out;
     padding: 8px;
     border-radius: 30px;
 
-    &:hover{
+    &:hover {
         cursor: pointer;
         background: #ECEEFE;
     }
 
-    img{
+    img {
         padding-right: 8px;
-       
+
     }
 
 

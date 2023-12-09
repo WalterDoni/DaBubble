@@ -7,8 +7,16 @@ import { MainboardComponent } from '../../mainboard/mainboard.component';
   styleUrls: ['./members-mainboard-headline.component.scss']
 })
 export class MembersMainboardHeadlineComponent {
+  loggedInUserName!: string
+  loggedInUserImg!: string 
+  userArray: any = []
 
   constructor(private mainboard: MainboardComponent){
+    
+    this.loggedInUserName = this.mainboard.loggedInUserName;
+    this.loggedInUserImg = this.mainboard.loggedInUserImg;
+    this.userArray = this.mainboard.userArray;
+
   }
 
   closeAddMembersPopUp(event: Event){
