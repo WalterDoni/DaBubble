@@ -67,10 +67,11 @@ export class MenuComponent {
     this.mainboard.channelContent();
   }
 
-  selectUserForDirectmessage() {
+  selectUserForDirectmessage(id: number) {
     this.mainboard.directMessageContent = true;
     this.mainboard.chatContent = false;
-
+    this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
+    this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
   }
 
   //----Folding-Functions---//
