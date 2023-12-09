@@ -182,8 +182,8 @@
 
             <div class="chat-headline-container">
                 <span class="headline-left-span">
-                    <img src="/assets/img/signup/avatar0.png" alt="">
-                    <p>Test User</p>
+                    <img class="directMessageImg" src="{{selectedUserDirectMessageImage}}" alt="">
+                    <p>{{selectedUserDirectMessageName}}</p>
                 </span>
             </div>
             <div class="chat-content">
@@ -191,14 +191,14 @@
 
             <div class="directMessageContent">
                 <div class="directMessageContact">
-                    <img src="/assets/img/signup/avatar0.png" alt="">
-                    <p>Test User</p>
+                    <img class="directMessageImg" src="{{selectedUserDirectMessageImage}}" alt="">
+                    <p>{{selectedUserDirectMessageName}}</p>
                 </div>
-                <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @Test User und dir statt.</p>
+                <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @{{selectedUserDirectMessageName}} und dir statt.</p>
             </div>
 
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}">
+                <input type="text" placeholder="Nachricht an #{{selectedUserDirectMessageName}}">
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
                         <img src="/assets/img/mainboard/add_plus.png" alt="">
@@ -215,6 +215,8 @@
             </div>
 
         </div>
+
+
 
 
 

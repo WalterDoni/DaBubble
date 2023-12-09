@@ -32,8 +32,8 @@ export class MainboardComponent {
   toggleProfile: boolean = false;
   toggleProfileView: boolean = false;
 
-  chatContent: boolean = false;
-  directMessageContent: boolean = true;
+  chatContent: boolean = true;
+  directMessageContent: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
   hoveredChannelIndex!: number;
@@ -45,10 +45,12 @@ export class MainboardComponent {
 
   selectedChannelTitle: string = 'Entwicklerteam';
   selectedChannelDescription: string = 'Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und Unterhaltungen';
+  selectedUserDirectMessageImage: string = '';
+  selectedUserDirectMessageName: string = '';
 
   channelID: string = 'nq56l3iiTG4g3e1iNHHm';
   channelsArray: any[] = [];
-  filteredChannelsArray: any [] = [];
+  filteredChannelsArray: any[] = [];
 
   selectedChannelContent: any[] = [];
 
@@ -66,7 +68,7 @@ export class MainboardComponent {
     this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
-   
+
   }
 
   getFormattedDate(): string {
@@ -152,7 +154,7 @@ export class MainboardComponent {
       }
     }
   }
-  
+
   //----Subscribee-Functions----//
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
