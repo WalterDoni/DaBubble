@@ -34,6 +34,7 @@ export class MainboardComponent {
 
   chatContent: boolean = true;
   directMessageContent: boolean = false;
+  menuSearchfieldChat: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
   hoveredChannelIndex!: number;
@@ -50,7 +51,6 @@ export class MainboardComponent {
 
   channelID: string = 'nq56l3iiTG4g3e1iNHHm';
   channelsArray: any[] = [];
-  filteredChannelsArray: any[] = [];
 
   selectedChannelContent: any[] = [];
 
@@ -59,6 +59,11 @@ export class MainboardComponent {
 
   searchTerm!: string;
   filteredUserArray: any[] = [];
+  filteredChannelsArray: any[] = [];
+
+  searchTermMenu!: string;
+  filteredUserArrayMenu: any[] = [];
+  filteredChannelsArrayMenu: any[] = [];
 
   firestore: Firestore = inject(Firestore);
   unsubUsers;
@@ -143,7 +148,22 @@ export class MainboardComponent {
     }
   }
 
-  async searchBarSelectChannel(channelName: string) {
+  searchfieldAtChat() {
+    if (this.searchTermMenu && this.searchTermMenu.length >= 1) {
+      this.filteredUserArrayMenu = this.userArray.filter(user =>
+        user.username.toLowerCase().includes(this.searchTermMenu.toLocaleLowerCase())
+      );
+      this.filteredChannelsArrayMenu = this.channelsArray.filter(user =>
+        user.channelName.toLowerCase().includes(this.searchTermMenu.toLowerCase())
+      );
+    } else {
+      this.filteredChannelsArrayMenu = [];
+      this.filteredUserArrayMenu = [];
+    }
+  }
+
+
+  /* async searchBarSelectChannel(channelName: string) {
     for (let i = 0; i < this.channelsArray.length; i++) {
       let channel = this.channelsArray[i];
       if (channel.channelName === channelName) {
@@ -153,9 +173,9 @@ export class MainboardComponent {
         this.channelContent();
       }
     }
-  }
+  } */
 
-  //----Subscribee-Functions----//
+  //----Subscribe-Functions----//
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let idParam = params.get('ref')

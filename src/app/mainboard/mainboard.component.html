@@ -27,8 +27,7 @@
                 </ul>
                 <h2>Channels</h2>
                 <ul>
-                    <li *ngFor="let channel of filteredChannelsArray"
-                        (click)="searchBarSelectChannel(channel.channelName)">
+                    <li *ngFor="let channel of filteredChannelsArray">
                         <p style="padding-bottom: 8px;">#{{ channel.channelName }}</p>
                     </li>
                     <li
@@ -182,7 +181,7 @@
 
             <div class="chat-headline-container">
                 <span class="headline-left-span">
-                    <img class="directMessageImg" src="{{selectedUserDirectMessageImage}}" alt="">
+                    <img class="imgHeadline" src="{{selectedUserDirectMessageImage}}" alt="">
                     <p>{{selectedUserDirectMessageName}}</p>
                 </span>
             </div>
@@ -194,7 +193,8 @@
                     <img class="directMessageImg" src="{{selectedUserDirectMessageImage}}" alt="">
                     <p>{{selectedUserDirectMessageName}}</p>
                 </div>
-                <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @{{selectedUserDirectMessageName}} und dir statt.</p>
+                <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @{{selectedUserDirectMessageName}}
+                    und dir statt.</p>
             </div>
 
             <div class="chat-message-inputfield">
@@ -217,6 +217,38 @@
         </div>
 
 
+
+        <div class="chat" *ngIf="menuSearchfieldChat">
+
+            <div class="searchfield-chat">
+                <h2>Neue Nachricht an:</h2>
+                <input type="text" placeholder="Channel,Person oder E-Mail Adresse" (keyup)="searchfieldAtChat()" [(ngModel)]="searchTermMenu">
+            </div>
+            <div class="chat-content p40" *ngIf="searchTermMenu">
+                <h2 style="padding-bottom: 16px;">Mitglieder</h2>
+                <ul class="ls-none">
+                    <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu">
+                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
+                        <p>{{ user.username }}</p>
+                    </li>
+                    <li
+                        *ngIf="searchTermMenu && filteredUserArrayMenu && filteredUserArrayMenu.length === 0 && searchTermMenu.length >= 1">
+                        Kein Mitglied gefunden
+                    </li>
+                </ul>
+                <h2 style="padding-bottom: 16px;">Channels</h2>
+                <ul class="ls-none">
+                    <li *ngFor="let channel of filteredChannelsArrayMenu">
+                        <p style="padding-bottom: 16px;">#{{ channel.channelName }}</p>
+                    </li>
+                    <li
+                        *ngIf="searchTermMenu && filteredChannelsArrayMenu && filteredChannelsArrayMenu.length === 0 && searchTermMenu.length >= 1">
+                        Kein Kanal gefunden
+                    </li>
+                </ul>
+            </div>
+
+        </div>
 
 
 
