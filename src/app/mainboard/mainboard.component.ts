@@ -162,6 +162,35 @@ export class MainboardComponent {
     }
   }
 
+  selectChannelSearchfield(channelName: string) {
+    this.chatContent = true;
+    this.directMessageContent = false;
+    this.menuSearchfieldChat = false;
+    for (let i = 0; i < this.channelsArray.length; i++) {
+      if (this.channelsArray[i]['channelName'] == channelName) {
+        this.selectedChannelTitle = this.channelsArray[i].channelName;
+        this.selectedChannelDescription = this.channelsArray[i].channelDescription;
+        this.channelID = this.channelsArray[i].channelId;
+        this.channelContent();
+      }
+    }
+  }
+
+
+  selectUserSearchfield(username: string) {
+    this.directMessageContent = true;
+    this.menuSearchfieldChat = false;
+    this.chatContent = false;
+    for (let i = 0; i < this.userArray.length; i++) {
+      if (this.userArray[i]['username'] == username) {
+        this.selectedUserDirectMessageImage = this.userArray[i].img;
+        this.selectedUserDirectMessageName = this.userArray[i].username;
+      }
+    }
+  }
+
+
+
 
   /* async searchBarSelectChannel(channelName: string) {
     for (let i = 0; i < this.channelsArray.length; i++) {
@@ -215,6 +244,7 @@ export class MainboardComponent {
           channelDescription: element.data()['description'],
           channelId: element.id,
         });
+        console.log(this.channelsArray);
       });
     });
   }

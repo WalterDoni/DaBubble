@@ -16,7 +16,7 @@
             <div class="searchResults" *ngIf="searchTerm">
                 <h2>Mitglieder</h2>
                 <ul>
-                    <li *ngFor="let user of filteredUserArray">
+                    <li *ngFor="let user of filteredUserArray" (click)="selectUserSearchfield(user.username)">
                         <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
@@ -27,8 +27,8 @@
                 </ul>
                 <h2>Channels</h2>
                 <ul>
-                    <li *ngFor="let channel of filteredChannelsArray">
-                        <p style="padding-bottom: 8px;">#{{ channel.channelName }}</p>
+                    <li *ngFor="let channel of filteredChannelsArray" (click)="selectChannelSearchfield(channel.channelName)">
+                        <p style="padding-bottom: 8px;" >#{{ channel.channelName }}</p>
                     </li>
                     <li
                         *ngIf="searchTerm && filteredChannelsArray && filteredChannelsArray.length === 0 && searchTerm.length >= 1">
@@ -227,7 +227,7 @@
             <div class="chat-content p40" *ngIf="searchTermMenu">
                 <h2 style="padding-bottom: 16px;">Mitglieder</h2>
                 <ul class="ls-none">
-                    <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu">
+                    <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu" (click)="selectUserSearchfield(user.username)">
                         <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
@@ -238,7 +238,7 @@
                 </ul>
                 <h2 style="padding-bottom: 16px;">Channels</h2>
                 <ul class="ls-none">
-                    <li *ngFor="let channel of filteredChannelsArrayMenu">
+                    <li *ngFor="let channel of filteredChannelsArrayMenu" (click)="selectChannelSearchfield(channel.channelName)">
                         <p style="padding-bottom: 16px;">#{{ channel.channelName }}</p>
                     </li>
                     <li
