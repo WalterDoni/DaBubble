@@ -242,7 +242,8 @@ export class MainboardComponent {
           channelDescription: element.data()['description'],
           channelId: element.id,
         });
-        console.log(this.channelsArray);
+        this.selectedChannelTitle = this.channelsArray[0]['channelName'];
+        this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
       });
     });
   }

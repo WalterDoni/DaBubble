@@ -14,7 +14,12 @@
     font-size: 18px;
     color: black;
 
+    @media(max-width: 1420px){
+        width: 70%;
+    }
+
     @media(max-width: 980px) {
+        width: unset;
         position: absolute;
         top: -100px;
         bottom: 0;

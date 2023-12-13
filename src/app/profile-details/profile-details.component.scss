@@ -4,7 +4,6 @@
     align-items: flex-start;
     flex-direction: column;
     border-radius: 20px 0px 20px 20px;
-
     position: absolute;
     width: 250px;
     height: 150px;
@@ -16,6 +15,10 @@
     font-size: 24px;
     font-weight: 700;
     transition: none;
+
+    @media(max-width: 350px){
+        right: 40px;
+    }
 
     div{
         display: flex;

@@ -18,6 +18,22 @@
     div {
         width: 100%;
     }
+
+    @media(max-width: 500px) {
+        right: 40px;
+    }
+
+    @media(max-width: 430px) {
+        right: 10px;
+    }
+
+    @media(max-width: 400px) {
+        width: 290px;
+    }
+
+    @media(max-width: 340px) {
+        width: 270px;
+    }
 }
 
 .headline {
@@ -102,11 +118,11 @@
         transition: background-color ease-in-out 200ms;
 
         &:hover {
-            background-color: #ECEEFE;    
+            background-color: #ECEEFE;
         }
     }
 
-    input{
+    input {
         padding: 8px;
         border-radius: 30px;
         border-style: none;
