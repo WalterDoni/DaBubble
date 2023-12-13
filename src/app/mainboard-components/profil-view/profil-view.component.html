@@ -5,11 +5,17 @@
             <img (click)="mainboard.closeWindow()" src="./assets/img/create-channel/close.png" alt="">
         </div>
         <div class="img-cont">
-           <div><img src="{{loggedInUserImg}}" alt="Profil-Image"></div>
+            <div><img src="{{loggedInUserImg}}" alt="Profil-Image"></div>
         </div>
         <div class="info">
-            <h2>{{loggedInUserName}}</h2>
-         
+            <div class="info-headline" *ngIf="!changeName">
+                <h2>{{loggedInUserName}}</h2>
+                <button (click)="toggleChangeName()">Namen bearbeiten</button>
+            </div>
+            <div class="info-headline" *ngIf="changeName">
+                <input type="text" placeholder="Namen ändern..." value="{{loggedInUserName}}">
+                <button (click)="toggleChangeName()">Speichern</button>
+            </div>
             <div class="email">
                 <span><img src="./assets/img/profile-view/mail.png" alt=""></span>
                 <span style="margin-top: -5px;">

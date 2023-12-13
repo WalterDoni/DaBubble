@@ -17,7 +17,7 @@
                 <h2>Mitglieder</h2>
                 <ul>
                     <li *ngFor="let user of filteredUserArray" (click)="selectUserSearchfield(user.username)">
-                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
+                        <img  class="imgHeadline" src="{{user.img}}" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
                     <li
@@ -228,7 +228,7 @@
                 <h2 style="padding-bottom: 16px;">Mitglieder</h2>
                 <ul class="ls-none">
                     <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu" (click)="selectUserSearchfield(user.username)">
-                        <img src="./assets/img/signup/avatar0.png" alt="Profile Image">
+                        <img class="imgHeadline" src="{{user.img}}" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
                     <li
@@ -238,7 +238,7 @@
                 </ul>
                 <h2 style="padding-bottom: 16px;">Channels</h2>
                 <ul class="ls-none">
-                    <li *ngFor="let channel of filteredChannelsArrayMenu" (click)="selectChannelSearchfield(channel.channelName)">
+                    <li  class="listSearchfieldMenuChat" *ngFor="let channel of filteredChannelsArrayMenu" (click)="selectChannelSearchfield(channel.channelName)">
                         <p style="padding-bottom: 16px;">#{{ channel.channelName }}</p>
                     </li>
                     <li

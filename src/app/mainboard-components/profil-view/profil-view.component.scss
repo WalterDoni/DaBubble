@@ -86,3 +86,31 @@
     }
 
 }
+
+.info-headline {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        background-color: white;
+        border: none;
+        color: #444DF2;
+        font-weight: 700;
+        cursor: pointer;
+        border-radius: 30px;
+        padding: 8px;
+        transition: background-color ease-in-out 200ms;
+
+        &:hover {
+            background-color: #ECEEFE;    
+        }
+    }
+
+    input{
+        padding: 8px;
+        border-radius: 30px;
+        border-style: none;
+        outline: none;
+        border: 1px solid #797EF3;
+    }
+}

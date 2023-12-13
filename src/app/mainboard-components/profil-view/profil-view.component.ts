@@ -10,11 +10,16 @@ export class ProfilViewComponent {
   loggedInUserName!: string;
   loggedInUserEmail!: string;
   loggedInUserImg!: string;
+  changeName: boolean = false;
 
   constructor(public mainboard: MainboardComponent) {
     this.loggedInUserName = this.mainboard.loggedInUserName;
     this.loggedInUserEmail = this.mainboard.loggedInUserEmail;
     this.loggedInUserImg = this.mainboard.loggedInUserImg;
-
    }
+
+toggleChangeName(){
+  this.changeName = !this.changeName;
+}
+
 }
