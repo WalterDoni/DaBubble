@@ -13,8 +13,8 @@
                 <button (click)="toggleChangeName()">Namen bearbeiten</button>
             </div>
             <div class="info-headline" *ngIf="changeName">
-                <input type="text" placeholder="Namen ändern..." value="{{loggedInUserName}}">
-                <button (click)="toggleChangeName()">Speichern</button>
+                <input #inputValue type="text" placeholder="Namen ändern..." value="{{loggedInUserName}}">
+                <button (click)="updateName()">Speichern</button>
             </div>
             <div class="email">
                 <span><img src="./assets/img/profile-view/mail.png" alt=""></span>

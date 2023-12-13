@@ -111,6 +111,7 @@ export class MenuComponent {
   //----Subscribe-Functions----//
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
+      this.userArray = [];
       list.forEach(element => {
         let defaultImg = element.data()['defaultImg'];
         let personalImg = element.data()['personalImg'];
