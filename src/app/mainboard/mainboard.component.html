@@ -52,7 +52,7 @@
         <div class="chat" *ngIf="chatContent">
 
             <div class="chat-headline-container">
-                <span class="headline-left-span" (click)="openCreateChannelPopUp();overlayBackroundColor()">
+                <span class="headline-left-span" (click)="openChangeChannelPopUp();overlayBackroundColor()">
                     <app-edit-channel *ngIf="toggleEditChannel"></app-edit-channel>
                     <p>#</p>
                     <p>{{selectedChannelTitle}}</p><img src="/assets/img/mainboard/keyboard_arrow_down.png"

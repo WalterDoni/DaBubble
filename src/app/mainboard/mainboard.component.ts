@@ -114,7 +114,7 @@ export class MainboardComponent {
   }
 
   //--Edit-Channel-Window--//
-  openCreateChannelPopUp() {
+  openChangeChannelPopUp() {
     this.toggleEditChannel = true;
   }
 
@@ -190,8 +190,6 @@ export class MainboardComponent {
   }
 
 
-
-
   /* async searchBarSelectChannel(channelName: string) {
     for (let i = 0; i < this.channelsArray.length; i++) {
       let channel = this.channelsArray[i];
@@ -214,6 +212,7 @@ export class MainboardComponent {
 
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
+      this.userArray = [];
       list.forEach(element => {
         if (element.data()['defaultImg'] && element.data()['defaultImg'].length >= 1) {
           this.img = element.data()['defaultImg'];
@@ -229,15 +228,14 @@ export class MainboardComponent {
             username: element.data()['username'],
             id: element.id, img: this.img
           });
-          console.log(this.userArray);
         }
       })
     })
-
   }
 
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {
+      this.channelsArray = [];
       list.forEach(element => {
         this.channelsArray.push({
           channelName: element.data()['name'],

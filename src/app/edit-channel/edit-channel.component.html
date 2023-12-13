@@ -1,14 +1,16 @@
 
     <div class="content">
         <button (click)="hideEditChannel($event)" class="cancel-btn"><img src="/assets/img/create-channel/close.png" alt=""></button>
-        <h2># Entwicklerteam</h2>
+        <h2># {{selectedChannelTitle}}</h2>
         <div class="content-div">
             <div class="upper-content">
                 <h3>Channel-Name</h3>
-                <button>Bearbeiten</button>
+                <button (click)="toggleChangeChannelName(); getCorrectChannelID()" *ngIf="!changeChannelName">Bearbeiten</button>
+                <button (click)="choosenNewChannelName(); toggleChangeChannelName()" *ngIf="changeChannelName">Speichern</button>
             </div>
             <div class="lower-content">
-                <p><b>#</b> Entwicklerteam</p>
+                <p *ngIf="!changeChannelName">#{{selectedChannelTitle}}</p>
+                <input #newChannelName *ngIf="changeChannelName" type="text" placeholder="Ändere den Namen des Channels..." value="{{selectedChannelTitle}}">
             </div>
 
         </div>
@@ -16,11 +18,11 @@
             <div>
                 <div class="upper-content">
                     <h3>Beschreibung</h3>
-                    <button>Bearbeiten</button>
+                    <button (click)="toggleChangeChannelDescription(); getCorrectChannelID()" *ngIf="!changeChannelDescription">Bearbeiten</button>
+                    <button (click)="choosenNewChannelDesription(); toggleChangeChannelDescription()" *ngIf="changeChannelDescription">Speichern</button>
                 </div>
-                <p>Dieser Channel ist für alles rund um #Entwicklerteam vorgesehen.Hier kannst du zusammen mit deinem
-                    Team
-                    Meeetings abhalten, Dokumente teilen und Entscheidungen treffen.</p>
+                <p *ngIf="!changeChannelDescription">{{selectedChannelDescription}}</p>
+                <textarea #newChannelDescription class="textarea" *ngIf="changeChannelDescription" rows="5">{{selectedChannelDescription}}</textarea>
             </div>
 
             <div class="seperator"></div>
