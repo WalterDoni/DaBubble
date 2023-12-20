@@ -17,7 +17,7 @@
                 <h2>Mitglieder</h2>
                 <ul>
                     <li *ngFor="let user of filteredUserArray" (click)="selectUserSearchfield(user.username)">
-                        <img  class="imgHeadline" src="{{user.img}}" alt="Profile Image">
+                        <img class="imgHeadline" src="{{user.img}}" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
                     <li
@@ -27,8 +27,9 @@
                 </ul>
                 <h2>Channels</h2>
                 <ul>
-                    <li *ngFor="let channel of filteredChannelsArray" (click)="selectChannelSearchfield(channel.channelName)">
-                        <p style="padding-bottom: 8px;" >#{{ channel.channelName }}</p>
+                    <li *ngFor="let channel of filteredChannelsArray"
+                        (click)="selectChannelSearchfield(channel.channelName)">
+                        <p style="padding-bottom: 8px;">#{{ channel.channelName }}</p>
                     </li>
                     <li
                         *ngIf="searchTerm && filteredChannelsArray && filteredChannelsArray.length === 0 && searchTerm.length >= 1">
@@ -88,8 +89,9 @@
                 <div *ngIf="selectedChannelContent.length > 0">
                     <div *ngFor="let channel of selectedChannelContent; let i = index"
                         (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
-                        <app-popup-for-thread #popup
-                            *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
+                        <div style="position: relative;"><app-popup-for-thread #popup
+                                *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
+                        </div>
                         <div style="display: flex;">
                             <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
                             <div class="message-chat-history">
@@ -127,29 +129,43 @@
 
 
 
-                <div class="my-message-chat">
+                <div class="my-message-chat" (mouseenter)="showPopUpForEditComment()"
+                    (mouseleave)="hidePopUpForEditComment()">
+                    <div style="position: relative;"><app-popup-edit-comment
+                            *ngIf="editCommentPopUp"></app-popup-edit-comment></div>
                     <div class="my-message-chat-history">
                         <div class="my-headline-message-history">
                             <p> 16:30 Uhr</p>
                             <h3>Frederik Beck</h3>
                         </div>
-                        <div class="my-message-history">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+                        <div *ngIf="!editComment" class="my-message-history">Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Minima
                             nemo blanditiis adipisci officiis veniam odit, nulla numquam, ipsa exercitationem eaque
                             facere, maxime laboriosam quia reprehenderit mollitia dicta iste. Aut, ea.</div>
-                        <div class="my-reactions-container">
+                        <div *ngIf="editComment" class="my-message-history">
+                            <div style="padding-bottom: 8px;"><input required class="editCommentInputfield" type="text" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+                                nemo blanditiis adipisci officiis veniam odit, nulla numquam, ipsa exercitationem eaque
+                                facere, maxime laboriosam quia reprehenderit mollitia dicta iste. Aut, ea."></div>
+                                <div class="btn-container"><button>Speichern</button><button (click)="closeEditComment()">Abbrechen</button></div>
 
+                        </div>
+
+                        <div class="my-reactions-container">
                             <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                 (mouseleave)="hidePopupForReactions()">
                                 <app-popup-reactions #popup *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                <img src="/assets/img/mainboard/rocketEmoji.png" alt="">
-                                <p> 1 </p>
+                                <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
+                                <p style="position: absolute; right: 17px">1</p>
                             </span>
-                            <span class="reactions">
-                                <img src="/assets/img/mainboard/checkEmoji.png" alt="">
-                                <p> 1 </p>
-                            </span>
-                            <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
+                            
+                            <span><app-emoji-picker></app-emoji-picker></span>
                         </div>
+
+                       
+
+
+
+
                     </div>
                     <div class="avatar-chat-history"><img src="/assets/img/signup/avatar2.png" alt=""></div>
                 </div>
@@ -222,12 +238,14 @@
 
             <div class="searchfield-chat">
                 <h2>Neue Nachricht an:</h2>
-                <input type="text" placeholder="Channel,Person oder E-Mail Adresse" (keyup)="searchfieldAtChat()" [(ngModel)]="searchTermMenu">
+                <input type="text" placeholder="Channel,Person oder E-Mail Adresse" (keyup)="searchfieldAtChat()"
+                    [(ngModel)]="searchTermMenu">
             </div>
             <div class="chat-content p40" *ngIf="searchTermMenu">
                 <h2 style="padding-bottom: 16px;">Mitglieder</h2>
                 <ul class="ls-none">
-                    <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu" (click)="selectUserSearchfield(user.username)">
+                    <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu"
+                        (click)="selectUserSearchfield(user.username)">
                         <img class="imgHeadline" src="{{user.img}}" alt="Profile Image">
                         <p>{{ user.username }}</p>
                     </li>
@@ -238,7 +256,8 @@
                 </ul>
                 <h2 style="padding-bottom: 16px;">Channels</h2>
                 <ul class="ls-none">
-                    <li  class="listSearchfieldMenuChat" *ngFor="let channel of filteredChannelsArrayMenu" (click)="selectChannelSearchfield(channel.channelName)">
+                    <li class="listSearchfieldMenuChat" *ngFor="let channel of filteredChannelsArrayMenu"
+                        (click)="selectChannelSearchfield(channel.channelName)">
                         <p style="padding-bottom: 16px;">#{{ channel.channelName }}</p>
                     </li>
                     <li

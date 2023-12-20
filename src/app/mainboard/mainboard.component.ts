@@ -37,8 +37,10 @@ export class MainboardComponent {
   menuSearchfieldChat: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
+  editCommentPopUp: boolean = false;
   hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
+  editComment: boolean = false;
 
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
@@ -101,6 +103,20 @@ export class MainboardComponent {
     if (this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
       this.toggleMenu = false;
     }
+  }
+
+  //--Edit-Comment-Pop-Up--//
+
+  showPopUpForEditComment(){
+    this.editCommentPopUp = true;
+  }
+
+  hidePopUpForEditComment(){
+    this.editCommentPopUp = false;
+  }
+
+  closeEditComment(){
+    this.editComment = false;
   }
 
   //--Reactions-Popup--//
