@@ -16,12 +16,9 @@
   }
 
   .picker {
-    z-index: 999;
     position: absolute;
-    transform: scale(0.8);
-    bottom: unset;
-    right: unset;
-    transform-origin: bottom right;
+    top: 10px;
+    left: 30px;
   }
 
   @media only screen and (min-device-width: 1024px) {

@@ -739,7 +739,19 @@
     border: 1px solid #ADB0D9;
     border-radius: 30px;
     padding: 8px;
-    width: 500px;
+    width: 900px;
+
+    @media(max-width: 1820px){
+        width: 700px;
+    }
+
+    @media(max-width: 1530px){
+        width: 500px;
+    }
+
+    @media(max-width: 1240px){
+        width: 300px;
+    }
 }
 
 .btn-container {
