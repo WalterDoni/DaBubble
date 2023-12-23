@@ -129,8 +129,6 @@
                     </div>
                 </div>
 
-
-
                 <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment()"
                     (mouseleave)="hidePopUpForEditComment()">
                     <div class="chat-seperator-with-date" *ngIf="channel.data.from == loggedInUserName">
@@ -168,7 +166,6 @@
                     <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
                 </div>
 
-           
                 </div>
             </div>
 

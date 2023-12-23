@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -70,12 +70,13 @@ export class MainboardComponent {
   firestore: Firestore = inject(Firestore);
   unsubUsers;
   unsubChannels;
+  unsubChannelContent;
 
   constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
-
+    this.unsubChannelContent = this.channelContent()
   }
 
   getFormattedDate(): string {
@@ -106,7 +107,6 @@ export class MainboardComponent {
   }
 
   //--Edit-Comment-Pop-Up--//
-
   showPopUpForEditComment(){
     this.editCommentPopUp = true;
   }
@@ -124,7 +124,6 @@ export class MainboardComponent {
     this.isPopupForReactionsVisible = true;
   }
 
-
   hidePopupForReactions() {
     this.isPopupForReactionsVisible = false;
   }
@@ -133,7 +132,6 @@ export class MainboardComponent {
   openChangeChannelPopUp() {
     this.toggleEditChannel = true;
   }
-
 
   //--Add-Members-Window--//
   openAddMembersPopUp() {
@@ -250,6 +248,10 @@ export class MainboardComponent {
     })
   }
 
+  usersRef() {
+    return collection(this.firestore, 'users');
+  }
+
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {
       this.channelsArray = [];
@@ -265,38 +267,40 @@ export class MainboardComponent {
     });
   }
 
-  usersRef() {
-    return collection(this.firestore, 'users');
-  }
-
   channelsRef() {
     return collection(this.firestore, 'channels');
   }
 
-  async channelContent() {
-    let channel = await getDocs(collection(this.firestore, 'channels', this.channelID, 'channelContent'));
-    this.selectedChannelContent = [];
-    channel.forEach((doc) => {
-      this.selectedChannelContent.push({
-        id: doc.id,
-        data: doc.data(),
+  channelContent(){
+    return onSnapshot(this.channelContentRef(), (list) => {
+      this.selectedChannelContent = [];
+      list.forEach(element => {
+        this.selectedChannelContent.push({
+          id: element.id,
+          data: element.data(),
+        });
+        console.log(this.selectedChannelContent); 
       });
     });
-    console.log(this.selectedChannelContent); 
   }
 
-  getImgFromAnswerUser(username: string) {
-    const user = this.userArray.find(user => user.username === username);
-    return user ? user.img : '/assets/img/signup/profile.png';
+  channelContentRef(){
+    return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
 
   ngonDestroy() {
     this.unsubUsers();
     this.unsubChannels();
+    this.unsubChannelContent();
   }
 
 
   //----Helpfunctions----//
+  getImgFromAnswerUser(username: string) {
+    const user = this.userArray.find(user => user.username === username);
+    return user ? user.img : '/assets/img/signup/profile.png';
+  }
+
   toggleMenuVisibility() {
     if (!this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
       this.toggleThread = false;
