@@ -3,6 +3,7 @@ import { Firestore, collection } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { NewComment } from '../models/newComment';
 
 @Component({
   selector: 'app-mainboard',
@@ -55,6 +56,7 @@ export class MainboardComponent {
   channelsArray: any[] = [];
 
   selectedChannelContent: any[] = [];
+  newComment = new NewComment();
 
   img: string = '';
   userArray: any[] = [];
@@ -215,6 +217,9 @@ export class MainboardComponent {
     }
   } */
 
+  //----New-Comment-Functions----//
+
+
   //----Subscribe-Functions----//
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -240,9 +245,7 @@ export class MainboardComponent {
           this.userArray.push({
             username: element.data()['username'],
             id: element.id, img: this.img
-          });
-          console.log(this.userArray);
-          
+          }); 
         }
       })
     })
@@ -327,6 +330,5 @@ export class MainboardComponent {
       this.toggleThread = false;
     }
   }
-
 
 }

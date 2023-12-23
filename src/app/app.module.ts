@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,6 @@ import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/po
     EmojiPickerComponent,
     ProfilViewComponent,
     PopupEditCommentComponent,
-
   ],
 
   imports: [
