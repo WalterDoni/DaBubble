@@ -192,7 +192,6 @@ export class MainboardComponent {
     }
   }
 
-
   selectUserSearchfield(username: string) {
     this.directMessageContent = true;
     this.menuSearchfieldChat = false;

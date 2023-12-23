@@ -42,7 +42,6 @@ export class SignupComponent {
   //----SignUp-Function----//
   async signUp() {
     let userData: any;
-    debugger
     if (this.selectedUrl && this.selectedUrl.length !== null) {
       userData = Object.assign(this.registerForm.value,
         {
@@ -69,12 +68,13 @@ export class SignupComponent {
     }).catch((error: any) => {
       console.log(error);
     })
+    this.goToLoginPage()
   }
 
-  //----Img Upload----//*css*/`
+  //----Img Upload----//
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
-    this.saveInStorage()
+    this.saveInStorage();
   }
 
   saveInStorage() {

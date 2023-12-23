@@ -74,21 +74,28 @@
                 </span>
             </div>
 
-
             <div class="chat-content">
                 <div class="start-chat">
                     <h2>Dies ist der Anfang vom Channel #{{selectedChannelTitle}}</h2>
                     <p>{{selectedChannelDescription}}</p>
                 </div>
-                <div class="chat-seperator-with-date">
+                
+               <!-- <div class="chat-seperator-with-date">
                     <span class="seperator-chat"></span>
                     <span class="date-chat">{{ getFormattedDate()}}</span>
                     <span class="seperator-chat"></span>
-                </div>
+                </div> -->
 
                 <div *ngIf="selectedChannelContent.length > 0">
                     <div *ngFor="let channel of selectedChannelContent; let i = index"
                         (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
+
+                        <div class="chat-seperator-with-date" *ngIf="channel.data.from != loggedInUserName">
+                            <span class="seperator-chat"></span>
+                            <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
+                            <span class="seperator-chat"></span>
+                        </div>
+
                         <div style="position: relative;"><app-popup-for-thread #popup
                                 *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         </div>
@@ -119,18 +126,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="chat-seperator-with-date">
-                            <span class="seperator-chat"></span>
-                            <span class="date-chat"> Mittwoch, 08 November</span>
-                            <span class="seperator-chat"></span>
-                        </div>
                     </div>
                 </div>
 
 
 
-                <div class="my-message-chat" *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment()"
+                <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment()"
                     (mouseleave)="hidePopUpForEditComment()">
+                    <div class="chat-seperator-with-date" *ngIf="channel.data.from == loggedInUserName">
+                        <span class="seperator-chat"></span>
+                        <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
+                        <span class="seperator-chat"></span>
+                    </div>
+
+                    <div class="my-message-chat" >
+
                     <div style="position: relative;"><app-popup-edit-comment
                             *ngIf="editCommentPopUp"></app-popup-edit-comment></div>
                     <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
@@ -156,6 +166,9 @@
                         </div>
                     </div>
                     <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
+                </div>
+
+           
                 </div>
             </div>
 

@@ -722,7 +722,7 @@
     flex-direction: column;
     gap: 8px;
     padding-top: 35px;
-    max-width: 70%;
+    width: 70%;
     padding-left: 10px;
 }
 
@@ -734,10 +734,6 @@
     justify-content: flex-end;
     gap: 16px;
 
-    :first-child {
-        font-size: 14px;
-        color: #686868;
-    }
 }
 
 .editCommentInputfield{
