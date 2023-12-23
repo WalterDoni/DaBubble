@@ -10,7 +10,7 @@
 
     <div class="thread-content">
         <div class="chat-history">
-            <div class="padding-thread-avatar"><img src="/assets/img/signup/avatar2.png" alt=""></div>
+            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[selectedThreadID]['data']['from'])" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
                     <h3>{{selectedChannel[selectedThreadID]['data']['from']}}</h3>
@@ -25,15 +25,15 @@
         </div>
 
         <div class="chat-history" *ngFor="let answerTextMessage of selectedChannel[selectedThreadID]['data']['answerText']; let i = index ">
-            <div class="padding-thread-avatar"><img src="/assets/img/signup/avatar2.png" alt=""></div>
+            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[0]['data']['answerFrom'][i])" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
-                    <h3>Noah Braun</h3>
-                    <p> 16:30 Uhr</p>
+                    <h3>{{selectedChannel[0]['data']['answerFrom'][i]}}</h3>
+                    <p>{{selectedChannel[0]['data']['answerTime'][i]}} Uhr</p>
                 </div>
                 <div class="message-history">{{answerTextMessage}}</div>
                 <div class="reactions-container">
-                    <span class="reactions"><img src="/assets/img/mainboard/rocketEmoji.png" alt="">
+                    <span class="reactions"><img  src="/assets/img/mainboard/rocketEmoji.png" alt="">
                         <p> 1 </p>
                     </span>
                     <span class="reactions"><img src="/assets/img/mainboard/checkEmoji.png" alt="">

@@ -92,8 +92,8 @@
                         <div style="position: relative;"><app-popup-for-thread #popup
                                 *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         </div>
-                        <div style="display: flex;">
-                            <div class="avatar-chat-history"><img src="/assets/img/signup/avatar5.png" alt=""></div>
+                        <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
+                            <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
                             <div class="message-chat-history">
                                 <div class="headline-message-history">
                                     <h3>{{channel.data.from}}</h3>
@@ -129,27 +129,21 @@
 
 
 
-                <div class="my-message-chat" (mouseenter)="showPopUpForEditComment()"
+                <div class="my-message-chat" *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment()"
                     (mouseleave)="hidePopUpForEditComment()">
                     <div style="position: relative;"><app-popup-edit-comment
                             *ngIf="editCommentPopUp"></app-popup-edit-comment></div>
-                    <div class="my-message-chat-history">
+                    <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
                         <div class="my-headline-message-history">
-                            <p> 16:30 Uhr</p>
-                            <h3>Frederik Beck</h3>
+                            <h3>{{channel.data.from}}</h3>
+                            <p> {{channel.data.timestamp}} Uhr</p>
                         </div>
-                        <div *ngIf="!editComment" class="my-message-history">Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Minima
-                            nemo blanditiis adipisci officiis veniam odit, nulla numquam, ipsa exercitationem eaque
-                            facere, maxime laboriosam quia reprehenderit mollitia dicta iste. Aut, ea.</div>
-                        <div *ngIf="editComment" class="my-message-history">
-                            <div style="padding-bottom: 8px;"><input required class="editCommentInputfield" type="text" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-                                nemo blanditiis adipisci officiis veniam odit, nulla numquam, ipsa exercitationem eaque
-                                facere, maxime laboriosam quia reprehenderit mollitia dicta iste. Aut, ea."></div>
+                        <div *ngIf="!editComment  && (channel.data.from == loggedInUserName)" class="my-message-history">
+                            {{channel.data.message}}</div>
+                        <div *ngIf="editComment && (channel.data.from == loggedInUserName)" class="my-message-history">
+                            <div style="padding-bottom: 8px;"><input required class="editCommentInputfield" type="text" value="{{channel.data.message}}"></div>
                                 <div class="btn-container"><button>Speichern</button><button (click)="closeEditComment()">Abbrechen</button></div>
-
                         </div>
-
                         <div class="my-reactions-container">
                             <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                 (mouseleave)="hidePopupForReactions()">
@@ -160,14 +154,8 @@
                             
                             <span><app-emoji-picker></app-emoji-picker></span>
                         </div>
-
-                       
-
-
-
-
                     </div>
-                    <div class="avatar-chat-history"><img src="/assets/img/signup/avatar2.png" alt=""></div>
+                    <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
                 </div>
             </div>
 

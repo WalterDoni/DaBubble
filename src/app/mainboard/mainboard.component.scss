@@ -646,6 +646,13 @@
     @media(max-width: 980px) {
         padding: 10px 10px 0px 10px;
     }
+
+    img {
+        object-fit: cover;
+        border-radius: 100%;
+        width: 80px;
+        height: 80px;
+    }
 }
 
 .message-chat-history {

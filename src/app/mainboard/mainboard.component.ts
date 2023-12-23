@@ -244,6 +244,8 @@ export class MainboardComponent {
             username: element.data()['username'],
             id: element.id, img: this.img
           });
+          console.log(this.userArray);
+          
         }
       })
     })
@@ -281,6 +283,12 @@ export class MainboardComponent {
         data: doc.data(),
       });
     });
+    console.log(this.selectedChannelContent); 
+  }
+
+  getImgFromAnswerUser(username: string) {
+    const user = this.userArray.find(user => user.username === username);
+    return user ? user.img : '/assets/img/signup/profile.png';
   }
 
   ngonDestroy() {
