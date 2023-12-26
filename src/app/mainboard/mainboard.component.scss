@@ -693,6 +693,32 @@
     align-items: center;
     font-size: 18px;
     color: #535AF1;
+  
+
+    :first-child:hover {
+        cursor: pointer;
+        font-weight: 600;
+        color: #535AF1;
+        transform: scale(1.1);
+    }
+
+    :last-child {
+        font-size: 14px;
+        color: #686868;
+    }
+
+    @media(max-width: 370px) {
+        flex-direction: column-reverse;
+    }
+}
+
+.my-answers-message-history {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #535AF1;
+    justify-content: flex-end;
+    gap: 16px;
 
     :first-child:hover {
         cursor: pointer;
@@ -713,6 +739,7 @@
 
 
 .my-message-chat {
+    position: relative;
     display: flex;
     justify-content: flex-end;
 }

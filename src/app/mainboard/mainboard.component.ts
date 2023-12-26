@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
-import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -21,6 +21,7 @@ export class MainboardComponent {
   date: Date = new Date(Date.now());
   @ViewChild('thread') thread!: ElementRef;
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
+  @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
 
   reactionEmoji: any;
   userId: string = '';
@@ -39,7 +40,7 @@ export class MainboardComponent {
   menuSearchfieldChat: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
-  editCommentPopUp: boolean = false;
+  editCommentPopUp: boolean = true;
   hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
   editComment: boolean = false;
@@ -111,15 +112,15 @@ export class MainboardComponent {
   }
 
   //--Edit-Comment-Pop-Up--//
-  showPopUpForEditComment(){
+  showPopUpForEditComment() {
     this.editCommentPopUp = true;
   }
 
-  hidePopUpForEditComment(){
+  hidePopUpForEditComment() {
     this.editCommentPopUp = false;
   }
 
-  closeEditComment(){
+  closeEditComment() {
     this.editComment = false;
   }
 
@@ -219,9 +220,9 @@ export class MainboardComponent {
     }
   } */
 
-  //----New-Comment-Functions----//
+  //----New-Comment-Functions----// 
 
-  async newCommentInSelectedChannel(){
+  async newCommentInSelectedChannel() {
     let input = this.newCommentValue.nativeElement.value;
     await addDoc(this.channelContentRef(), {
       answerFrom: [],
@@ -231,10 +232,29 @@ export class MainboardComponent {
       from: this.loggedInUserName,
       message: input,
       messageTime: new Date(),
-      timestamp: '14:00',
-    })
+      timestamp: this.getCurrentTimeInMEZ(),
+    });
   }
 
+  getCurrentTimeInMEZ() {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Europe/Berlin',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return now.toLocaleTimeString('de-DE', options);
+  }
+
+  //----Change-Comment-Functions----//
+  async saveCommentChange(id: string){
+    let newMessage = this.newChangedMessage.nativeElement.value;
+   await updateDoc(doc(this.channelContentRef(), id), {
+    message: newMessage, 
+   })
+   this.editComment = false;
+  }
 
   //----Subscribe-Functions----//
   ngOnInit() {
@@ -261,7 +281,7 @@ export class MainboardComponent {
           this.userArray.push({
             username: element.data()['username'],
             id: element.id, img: this.img
-          }); 
+          });
         }
       })
     })
@@ -283,7 +303,7 @@ export class MainboardComponent {
         this.selectedChannelTitle = this.channelsArray[0]['channelName'];
         this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
         this.channelID = this.channelsArray[0]['channelId'];
-        this.channelContent()  
+        this.channelContent();
       });
     });
   }
@@ -292,7 +312,7 @@ export class MainboardComponent {
     return collection(this.firestore, 'channels');
   }
 
-  channelContent(){
+  channelContent() {
     return onSnapshot(this.channelContentRef(), (list) => {
       this.selectedChannelContent = [];
       list.forEach(element => {
@@ -300,12 +320,11 @@ export class MainboardComponent {
           id: element.id,
           data: element.data(),
         });
-        console.log(this.selectedChannelContent); 
       });
     });
   }
 
-  channelContentRef(){
+  channelContentRef() {
     return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
 
@@ -314,7 +333,6 @@ export class MainboardComponent {
     this.unsubChannels();
     this.unsubChannelContent();
   }
-
 
   //----Helpfunctions----//
   getImgFromAnswerUser(username: string) {
