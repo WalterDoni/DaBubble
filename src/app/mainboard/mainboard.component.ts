@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
-import { Firestore, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -20,6 +20,7 @@ export class MainboardComponent {
 
   date: Date = new Date(Date.now());
   @ViewChild('thread') thread!: ElementRef;
+  @ViewChild('newCommentValue') newCommentValue!: ElementRef;
 
   reactionEmoji: any;
   userId: string = '';
@@ -47,8 +48,8 @@ export class MainboardComponent {
   loggedInUserImg: string = '';
   loggedInUserEmail: string = '';
 
-  selectedChannelTitle: string = 'Entwicklerteam';
-  selectedChannelDescription: string = 'Das ist der eine Channel, der immer alle einbezieht. Es ist ein toller Ort für Mitteilungen und Unterhaltungen';
+  selectedChannelTitle: string = '';
+  selectedChannelDescription: string = '';
   selectedUserDirectMessageImage: string = '';
   selectedUserDirectMessageName: string = '';
 
@@ -56,6 +57,7 @@ export class MainboardComponent {
   channelsArray: any[] = [];
 
   selectedChannelContent: any[] = [];
+
   newComment = new NewComment();
 
   img: string = '';
@@ -219,6 +221,20 @@ export class MainboardComponent {
 
   //----New-Comment-Functions----//
 
+  async newCommentInSelectedChannel(){
+    let input = this.newCommentValue.nativeElement.value;
+    await addDoc(this.channelContentRef(), {
+      answerFrom: [],
+      answerText: [],
+      answerTime: [],
+      answers: 0,
+      from: this.loggedInUserName,
+      message: input,
+      messageTime: new Date(),
+      timestamp: '14:00',
+    })
+  }
+
 
   //----Subscribe-Functions----//
   ngOnInit() {
@@ -266,6 +282,8 @@ export class MainboardComponent {
         });
         this.selectedChannelTitle = this.channelsArray[0]['channelName'];
         this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
+        this.channelID = this.channelsArray[0]['channelId'];
+        this.channelContent()  
       });
     });
   }

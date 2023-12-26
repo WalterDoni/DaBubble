@@ -86,7 +86,7 @@
                     <span class="seperator-chat"></span>
                 </div> -->
 
-                <div *ngIf="selectedChannelContent.length > 0">
+                <div>
                     <div *ngFor="let channel of selectedChannelContent; let i = index"
                         (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
 
@@ -170,7 +170,7 @@
             </div>
 
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}">
+                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
                         <img src="/assets/img/mainboard/add_plus.png" alt="">
@@ -179,7 +179,7 @@
                         <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
                     </span>
                     <span class="sendButtonImg">
-                        <img src="/assets/img/mainboard/send.png" alt="">
+                        <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
                     </span>
 
                 </div>
