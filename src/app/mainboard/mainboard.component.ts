@@ -40,10 +40,10 @@ export class MainboardComponent {
   menuSearchfieldChat: boolean = false;
 
   isPopupForThreadVisible: boolean = false;
-  editCommentPopUp: boolean = true;
+  editCommentPopUp: boolean = false;
   hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
-  editComment: boolean = false;
+ 
 
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
@@ -112,16 +112,17 @@ export class MainboardComponent {
   }
 
   //--Edit-Comment-Pop-Up--//
-  showPopUpForEditComment() {
+  showPopUpForEditComment(event: MouseEvent, index: number) {
+    this.hoveredChannelIndex = index;
     this.editCommentPopUp = true;
   }
 
   hidePopUpForEditComment() {
-    this.editCommentPopUp = false;
+    this.editCommentPopUp = true;
   }
 
-  closeEditComment() {
-    this.editComment = false;
+  closeEditComment(index: number) {
+    this.selectedChannelContent[index].editComment = false;
   }
 
   //--Reactions-Popup--//
@@ -248,12 +249,12 @@ export class MainboardComponent {
   }
 
   //----Change-Comment-Functions----//
-  async saveCommentChange(id: string){
+  async saveCommentChange(id: string, index: number){
     let newMessage = this.newChangedMessage.nativeElement.value;
    await updateDoc(doc(this.channelContentRef(), id), {
     message: newMessage, 
    })
-   this.editComment = false;
+   this.selectedChannelContent[index].editComment = false;
   }
 
   //----Subscribe-Functions----//
@@ -319,8 +320,10 @@ export class MainboardComponent {
         this.selectedChannelContent.push({
           id: element.id,
           data: element.data(),
+          editComment: false,
         });
       });
+      console.log(this.selectedChannelContent);
     });
   }
 

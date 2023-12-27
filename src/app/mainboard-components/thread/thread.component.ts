@@ -20,8 +20,6 @@ export class ThreadComponent {
     this.selectedThreadID = this.mainboard.hoveredChannelIndex;
     this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
     this.selectedChannelContent = this.mainboard.selectedChannelContent;
-    console.log(this.selectedChannel);
-
   }
 
   closeThread() {

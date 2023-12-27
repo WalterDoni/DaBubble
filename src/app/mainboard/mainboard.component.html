@@ -96,7 +96,7 @@
                             <span class="seperator-chat"></span>
                         </div>
 
-                        <div style="position: relative;"><app-popup-for-thread #popup
+                        <div style="position: relative;"><app-popup-for-thread 
                                 *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         </div>
                         <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
@@ -112,7 +112,7 @@
 
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                         (mouseleave)="hidePopupForReactions()">
-                                        <app-popup-reactions #popup
+                                        <app-popup-reactions
                                             *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
                                         <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
                                         <p style="position: absolute; right: 17px">1</p>
@@ -129,28 +129,29 @@
                     </div>
                 </div>
 
-                <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment()"
+                <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment($event, i)"
                     (mouseleave)="hidePopUpForEditComment()">
                     <div class="chat-seperator-with-date" *ngIf="channel.data.from == loggedInUserName">
                         <span class="seperator-chat"></span>
                         <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
                         <span class="seperator-chat"></span>
                     </div>
-
+                    <div class="popUp-div"><app-popup-edit-comment
+                        *ngIf="editCommentPopUp && hoveredChannelIndex == i"></app-popup-edit-comment></div>
                     <div class="my-message-chat" >
-                    <app-popup-edit-comment
-                            *ngIf="editCommentPopUp"></app-popup-edit-comment>
                     <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
                         <div class="my-headline-message-history">
                             <h3>{{channel.data.from}}</h3>
                             <p> {{channel.data.timestamp}} Uhr</p>
                         </div>
-                        <div *ngIf="!editComment  && (channel.data.from == loggedInUserName)" class="my-message-history">
+
+                        <div *ngIf="!channel.editComment && (channel.data.from == loggedInUserName)" class="my-message-history">
                             {{channel.data.message}}</div>
-                        <div *ngIf="editComment && (channel.data.from == loggedInUserName)" class="my-message-history">
+                        <div *ngIf="channel.editComment && hoveredChannelIndex === i && (channel.data.from == loggedInUserName)" class="my-message-history">
                             <div style="padding-bottom: 8px;"><input required class="editCommentInputfield" type="text" value="{{channel.data.message}}" #newChangedMessage></div>
-                                <div class="btn-container"><button (click)="saveCommentChange(channel.id)" >Speichern</button><button (click)="closeEditComment()">Abbrechen</button></div>
+                                <div class="btn-container"><button (click)="saveCommentChange(channel.id, i)" >Speichern</button><button (click)="closeEditComment(i)">Abbrechen</button></div>
                         </div>
+
                         <div class="my-reactions-container">
                             <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                 (mouseleave)="hidePopupForReactions()">

@@ -7,10 +7,14 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
   styleUrls: ['./popup-edit-comment.component.scss']
 })
 export class PopupEditCommentComponent {
+  index!: number;
+
   constructor(public mainboard: MainboardComponent){}
 
-  changeComment(){
-    this.mainboard.editComment = true;
+  changeComment(index: number){
+    this.mainboard.selectedChannelContent.forEach((channel, i) => {
+      channel.editComment = i === index;
+    });
   }
 
 }

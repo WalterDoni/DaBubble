@@ -59,9 +59,6 @@ export class MenuComponent {
   }
 
   selectChannel(id: number) {
-    if(this.mainboard.editComment = true){
-      this.mainboard.editComment = false;
-    }
     this.mainboard.chatContent = true;
     this.mainboard.directMessageContent = false;
     this.mainboard.menuSearchfieldChat = false;
@@ -72,9 +69,6 @@ export class MenuComponent {
   }
 
   selectUserForDirectmessage(id: number) {
-    if(this.mainboard.editComment = true){
-      this.mainboard.editComment = false;
-    }
     this.mainboard.directMessageContent = true;
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
@@ -129,7 +123,6 @@ export class MenuComponent {
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
           this.loggedInUserImg = this.img;
-
         } else {
           this.userArray.push({ username: element.data()['username'], id: element.id, img: this.img });
         }
