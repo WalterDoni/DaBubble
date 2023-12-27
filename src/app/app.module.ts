@@ -31,6 +31,7 @@ import { LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/po
     PickerModule,
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     AngularFireModule,
     AngularFireModule.initializeApp({ "projectId": "dabub-3dde6", "appId": "1:1069097652276:web:078a0f97d1be6bdf697a61", "storageBucket": "dabub-3dde6.appspot.com", "apiKey": "AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0", "authDomain": "dabub-3dde6.firebaseapp.com", "messagingSenderId": "1069097652276" }),
     provideFirebaseApp(() => initializeApp({ "projectId": "dabub-3dde6", "appId": "1:1069097652276:web:078a0f97d1be6bdf697a61", "storageBucket": "dabub-3dde6.appspot.com", "apiKey": "AIzaSyBKczVzCCDNMETdCGe5_SJYpcxot_BBvQ0", "authDomain": "dabub-3dde6.firebaseapp.com", "messagingSenderId": "1069097652276" })),

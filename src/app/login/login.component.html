@@ -1,4 +1,15 @@
 <div class="container">
+    <!-- Intro -->
+    <div [@backgroundAnimation]="backgroundState" [class.none]="setNone" class="start-animation">
+        <div class="content" [@moveAnimation]="moveState">
+            <img [@slideAnimation]="svgTransform" src="./assets/img/login/logo.svg" />
+            <div class="text">
+                <span [@textAnimation]="textState">DABubble</span>
+            </div>
+        </div>
+    </div>
+    <!-- Intro END -->
+
     <div class="headline">
         <span><img src="./assets/img/login/logo.png" alt="logo">
             <p>DABubble</p>
@@ -19,7 +30,8 @@
         <div class="seperator-container">
             <span class="sep-1"></span><span>ODER</span><span class="sep-2"></span>
         </div>
-        <button class="google-btn" (click)="loginWithGoogle()"><img src="./assets/img/login/google.png" alt="google">Anmelden mit Google</button>
+        <button class="google-btn" (click)="loginWithGoogle()"><img src="./assets/img/login/google.png"
+                alt="google">Anmelden mit Google</button>
         <div class="btn-container">
             <button (click)="loginWithEmailAndPassword()">Anmelden</button>
             <button (click)="guestLogin()">Gäste-Login</button>
