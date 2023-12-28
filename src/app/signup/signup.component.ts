@@ -97,7 +97,6 @@ export class SignupComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          debugger
           console.log('File available at', downloadURL);
           if (downloadURL) {
             this.customizedImg = true;

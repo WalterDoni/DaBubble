@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="answers-message-history">
                                     <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
-                                        Antwort 17:00</span>
+                                        Antwort {{channel.lastAnswer}}</span>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="answers-message-history">
                             <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
-                                Antwort 17:00</span>
+                                Antwort {{channel.lastAnswer}}</span>
                         </div>
                     </div>
                     <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>

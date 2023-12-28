@@ -51,6 +51,7 @@ export class MainboardComponent {
 
   selectedChannelTitle: string = '';
   selectedChannelDescription: string = '';
+  selectedChannelCreated: string = '';
   selectedUserDirectMessageImage: string = '';
   selectedUserDirectMessageName: string = '';
 
@@ -190,6 +191,7 @@ export class MainboardComponent {
       if (this.channelsArray[i]['channelName'] == channelName) {
         this.selectedChannelTitle = this.channelsArray[i].channelName;
         this.selectedChannelDescription = this.channelsArray[i].channelDescription;
+        this.selectedChannelCreated = this.channelsArray[i].channelCreated;
         this.channelID = this.channelsArray[i].channelId;
         this.channelContent();
       }
@@ -207,19 +209,6 @@ export class MainboardComponent {
       }
     }
   }
-
-
-  /* async searchBarSelectChannel(channelName: string) {
-    for (let i = 0; i < this.channelsArray.length; i++) {
-      let channel = this.channelsArray[i];
-      if (channel.channelName === channelName) {
-        this.selectedChannelTitle = channel.channelName;
-        this.selectedChannelDescription = channel.channelDescription;
-        this.channelID = channel.channelId;
-        this.channelContent();
-      }
-    }
-  } */
 
   //----New-Comment-Functions----// 
 
@@ -299,12 +288,16 @@ export class MainboardComponent {
         this.channelsArray.push({
           channelName: element.data()['name'],
           channelDescription: element.data()['description'],
+          channelCreated: element.data()['created'],
           channelId: element.id,
         });
         this.selectedChannelTitle = this.channelsArray[0]['channelName'];
         this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
+        this.selectedChannelCreated = this.channelsArray[0]['channelCreated'];
         this.channelID = this.channelsArray[0]['channelId'];
         this.channelContent();
+        console.log(this.channelsArray);
+        
       });
     });
   }
@@ -317,13 +310,14 @@ export class MainboardComponent {
     return onSnapshot(this.channelContentRef(), (list) => {
       this.selectedChannelContent = [];
       list.forEach(element => {
+        let answerTimeArray = element.data()['answerTime'];
         this.selectedChannelContent.push({
           id: element.id,
           data: element.data(),
           editComment: false,
+          lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
       });
-      console.log(this.selectedChannelContent);
     });
   }
 

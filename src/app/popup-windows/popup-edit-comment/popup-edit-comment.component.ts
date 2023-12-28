@@ -17,4 +17,12 @@ export class PopupEditCommentComponent {
     });
   }
 
+  openThread(index: number) {
+    this.mainboard.toggleThread = true;
+    if (this.mainboard.toggleMenu && this.mainboard.toggleThread && window.innerWidth < 1400) {
+      this.mainboard.toggleMenu = false;
+    }
+  }
+
+
 }

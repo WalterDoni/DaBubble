@@ -15,6 +15,7 @@ export class EditChannelComponent {
 
   selectedChannelTitle!: string;
   selectedChannelDescription!: string;
+  selectedChannelCreated!: string;
 
   changeChannelName: boolean = false;
   changeChannelDescription: boolean = false;
@@ -27,6 +28,7 @@ export class EditChannelComponent {
     this.unsubChannels = this.subChannels();
     this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
     this.selectedChannelDescription = this.mainboard.selectedChannelDescription;
+    this.selectedChannelCreated = this.mainboard.selectedChannelCreated;
   }
 
   hideEditChannel(event: Event) {
@@ -47,7 +49,6 @@ export class EditChannelComponent {
     this.channelsArray.forEach(channel => {
       if (channel.name == this.selectedChannelTitle) {
         this.channelID = channel.channelId;
-        console.log(this.channelID);
       }
     });
   }
@@ -78,8 +79,6 @@ export class EditChannelComponent {
           channelId: element.id,
         });
       });
-      console.log(this.channelsArray);
-
     });
   }
 

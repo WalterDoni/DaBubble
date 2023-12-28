@@ -64,6 +64,7 @@ export class MenuComponent {
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.selectedChannelTitle = this.channelsArray[id].channelName;
     this.mainboard.selectedChannelDescription = this.channelsArray[id].channelDescription;
+    this.mainboard.selectedChannelCreated = this.channelsArray[id].channelCreated;
     this.mainboard.channelID = this.channelsArray[id].channelID;
     this.mainboard.channelContent();
   }
@@ -138,7 +139,12 @@ export class MenuComponent {
     return onSnapshot(this.channelsRef(), (list) => {
       this.channelsArray = [];
       list.forEach(element => {
-        this.channelsArray.push({ channelName: element.data()['name'], channelDescription: element.data()['description'], channelID: element.id });
+        this.channelsArray.push({
+          channelName: element.data()['name'],
+          channelDescription: element.data()['description'],
+          channelCreated: element.data()['created'],
+          channelID: element.id
+        });
       });
     });
   }
