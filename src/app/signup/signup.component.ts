@@ -64,7 +64,7 @@ export class SignupComponent {
       this.newUser = user.toJSON();
       await addDoc(this.usersRef(), this.newUser).catch((error) => {
         console.log(error);
-      }).then(() => {})
+      }).then(() => { })
     }).catch((error: any) => {
       console.log(error);
     })
@@ -113,7 +113,7 @@ export class SignupComponent {
     this.customizedImg = false;
     this.selectedImg = 'avatar' + index + '.png'
   }
-  
+
   goToLoginPage() {
     this.router.navigateByUrl('');
   }

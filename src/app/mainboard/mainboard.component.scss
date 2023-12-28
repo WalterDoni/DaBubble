@@ -14,7 +14,6 @@
     }
 }
 
-
 .thread-container {
     transition: all ease-in-out 200ms;
 }
@@ -36,7 +35,6 @@
     transition: all ease-in-out 200ms;
 }
 
-
 .background-color {
     position: absolute;
     z-index: 3;
@@ -45,9 +43,13 @@
     right: 0;
     bottom: 0;
     background-color: rgb(0, 0, 0, 0.2);
-
-
 }
+
+
+.inputImgUpload {
+    display: none; 
+  }
+
 
 .headline-logo-till-w110px {
     @media(max-width: 1110px) {
@@ -278,7 +280,7 @@
 }
 
 .chat-content {
-    height: 75%;
+    height: 65%;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -675,7 +677,11 @@
     border-radius: 0px 30px 30px 30px;
     padding: 10px 30px;
     background-color: #ECEEFE;
+}
 
+.message-history-img{
+    max-width: 300px;
+    max-height: 200px;
 }
 
 .headline-message-history {
@@ -686,6 +692,7 @@
         font-size: 14px;
         color: #686868;
     }
+    
 }
 
 .answers-message-history {
@@ -881,7 +888,6 @@
     bottom: 8px;
     left: 16px;
     right: 16px;
-    height: 150px;
     background-color: white;
     border: 1px solid #ADB0D9;
     border-radius: 30px;
@@ -891,6 +897,7 @@
 
     input {
         width: 95%;
+        padding: 8px;
         margin-top: 30px;
         margin-left: 2%;
         height: 100%;
@@ -904,6 +911,14 @@
         }
     }
 }
+
+.comment-img{
+    padding: 16px;
+    max-width: 250px;
+    max-height: 135px;
+    object-fit: cover;
+  }
+  
 
 .sendButtonImg {
     transition: transform 200ms ease-out;

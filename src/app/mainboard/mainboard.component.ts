@@ -1,9 +1,10 @@
-import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
 import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
+import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-mainboard',
@@ -22,9 +23,15 @@ export class MainboardComponent {
   @ViewChild('thread') thread!: ElementRef;
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
   @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   reactionEmoji: any;
   userId: string = '';
+
+  uploadedImg: any = {};
+  selectedUrl: string = '';
+  customizedImg: boolean = false;
+  
 
   toggleMenu: boolean = true;
   toggleThread: boolean = false;
@@ -43,7 +50,6 @@ export class MainboardComponent {
   editCommentPopUp: boolean = false;
   hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
- 
 
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
@@ -78,7 +84,7 @@ export class MainboardComponent {
   unsubChannels;
   unsubChannelContent;
 
-  constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string) {
+  constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string,public storage: Storage, private cdr: ChangeDetectorRef) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
@@ -221,6 +227,7 @@ export class MainboardComponent {
       answers: 0,
       from: this.loggedInUserName,
       message: input,
+      messageImg: this.selectedUrl,
       messageTime: new Date(),
       timestamp: this.getCurrentTimeInMEZ(),
     });
@@ -237,13 +244,55 @@ export class MainboardComponent {
     return now.toLocaleTimeString('de-DE', options);
   }
 
+  //----Img Upload----//
+    uploadImg(event: any) {
+      this.uploadedImg = event.target.files[0];
+      this.saveInStorage();
+    }
+
+    triggerFileInput() {
+      this.fileInput.nativeElement.click();
+    }
+  
+    saveInStorage() {
+      let storageRef = ref(this.storage, this.uploadedImg.name);
+      let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        },
+        (error) => {
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log('File available at', downloadURL);
+            if (downloadURL) {
+              this.customizedImg = true;
+              this.selectedUrl = downloadURL;
+              this.cdr.detectChanges();
+            }
+          });
+        }
+      );
+    }
+  
+
   //----Change-Comment-Functions----//
-  async saveCommentChange(id: string, index: number){
+  async saveCommentChange(id: string, index: number) {
     let newMessage = this.newChangedMessage.nativeElement.value;
-   await updateDoc(doc(this.channelContentRef(), id), {
-    message: newMessage, 
-   })
-   this.selectedChannelContent[index].editComment = false;
+    await updateDoc(doc(this.channelContentRef(), id), {
+      message: newMessage,
+    })
+    this.selectedChannelContent[index].editComment = false;
   }
 
   //----Subscribe-Functions----//
@@ -296,8 +345,6 @@ export class MainboardComponent {
         this.selectedChannelCreated = this.channelsArray[0]['channelCreated'];
         this.channelID = this.channelsArray[0]['channelId'];
         this.channelContent();
-        console.log(this.channelsArray);
-        
       });
     });
   }

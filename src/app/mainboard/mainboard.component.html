@@ -79,8 +79,8 @@
                     <h2>Dies ist der Anfang vom Channel #{{selectedChannelTitle}}</h2>
                     <p>{{selectedChannelDescription}}</p>
                 </div>
-                
-               <!-- <div class="chat-seperator-with-date">
+
+                <!-- <div class="chat-seperator-with-date">
                     <span class="seperator-chat"></span>
                     <span class="date-chat">{{ getFormattedDate()}}</span>
                     <span class="seperator-chat"></span>
@@ -96,17 +96,22 @@
                             <span class="seperator-chat"></span>
                         </div>
 
-                        <div style="position: relative;"><app-popup-for-thread 
+                        <div style="position: relative;"><app-popup-for-thread
                                 *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         </div>
                         <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
-                            <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
+                            <div class="avatar-chat-history"><img
+                                    [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt="">
+                            </div>
                             <div class="message-chat-history">
                                 <div class="headline-message-history">
                                     <h3>{{channel.data.from}}</h3>
                                     <p> {{channel.data.timestamp}} Uhr</p>
                                 </div>
-                                <div class="message-history">{{channel.data.message}}</div>
+                                <div class="message-history">{{channel.data.message}}
+                                    <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
+                                            src="{{channel.data.messageImg}}" alt=""></div>
+                                </div>
 
                                 <div class="reactions-container">
 
@@ -129,55 +134,69 @@
                     </div>
                 </div>
 
-                <div *ngFor="let channel of selectedChannelContent; let i = index" (mouseenter)="showPopUpForEditComment($event, i)"
-                    (mouseleave)="hidePopUpForEditComment()">
+                <div *ngFor="let channel of selectedChannelContent; let i = index"
+                    (mouseenter)="showPopUpForEditComment($event, i)" (mouseleave)="hidePopUpForEditComment()">
                     <div class="chat-seperator-with-date" *ngIf="channel.data.from == loggedInUserName">
                         <span class="seperator-chat"></span>
                         <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
                         <span class="seperator-chat"></span>
                     </div>
                     <div class="popUp-div"><app-popup-edit-comment
-                        *ngIf="editCommentPopUp && hoveredChannelIndex == i"></app-popup-edit-comment></div>
-                    <div class="my-message-chat" >
-                    <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
-                        <div class="my-headline-message-history">
-                            <h3>{{channel.data.from}}</h3>
-                            <p> {{channel.data.timestamp}} Uhr</p>
-                        </div>
-
-                        <div *ngIf="!channel.editComment && (channel.data.from == loggedInUserName)" class="my-message-history">
-                            {{channel.data.message}}</div>
-                        <div *ngIf="channel.editComment && hoveredChannelIndex === i && (channel.data.from == loggedInUserName)" class="my-message-history">
-                            <div style="padding-bottom: 8px;"><input required class="editCommentInputfield" type="text" value="{{channel.data.message}}" #newChangedMessage></div>
-                                <div class="btn-container"><button (click)="saveCommentChange(channel.id, i)" >Speichern</button><button (click)="closeEditComment(i)">Abbrechen</button></div>
-                        </div>
-
-                        <div class="my-reactions-container">
-                            <span class="reactions" (mouseenter)="showPopupForReactions($event)"
-                                (mouseleave)="hidePopupForReactions()">
-                                <app-popup-reactions #popup *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
-                                <p style="position: absolute; right: 17px">1</p>
-                            </span>
-                            
-                            <span><app-emoji-picker></app-emoji-picker></span>
-                        </div>
-                        <div class="answers-message-history">
-                            <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
-                                Antwort {{channel.lastAnswer}}</span>
-                        </div>
+                            *ngIf="editCommentPopUp && hoveredChannelIndex == i && (channel.data.from == loggedInUserName)"></app-popup-edit-comment>
                     </div>
-                    <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
-                </div>
+                    <div class="my-message-chat">
+                        <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
+                            <div class="my-headline-message-history">
+                                <h3>{{channel.data.from}}</h3>
+                                <p> {{channel.data.timestamp}} Uhr</p>
+                            </div>
 
+                            <div *ngIf="!channel.editComment && (channel.data.from == loggedInUserName)"
+                                class="my-message-history">
+                                {{channel.data.message}}
+                                <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
+                                        src="{{channel.data.messageImg}}" alt=""></div>
+                            </div>
+                            <div *ngIf="channel.editComment && hoveredChannelIndex === i && (channel.data.from == loggedInUserName)"
+                                class="my-message-history">
+                                <div style="padding-bottom: 8px;"><input required class="editCommentInputfield"
+                                        type="text" value="{{channel.data.message}}" #newChangedMessage></div>
+                                <div class="btn-container"><button
+                                        (click)="saveCommentChange(channel.id, i)">Speichern</button><button
+                                        (click)="closeEditComment(i)">Abbrechen</button></div>
+                            </div>
+
+                            <div class="my-reactions-container">
+                                <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                    (mouseleave)="hidePopupForReactions()">
+                                    <app-popup-reactions #popup
+                                        *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
+                                    <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
+                                    <p style="position: absolute; right: 17px">1</p>
+                                </span>
+
+                                <span><app-emoji-picker></app-emoji-picker></span>
+                            </div>
+                            <div class="answers-message-history">
+                                <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
+                                    Antwort {{channel.lastAnswer}}</span>
+                            </div>
+                        </div>
+                        <div class="avatar-chat-history" *ngIf="channel.data.from == loggedInUserName"><img
+                                [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
+                    </div>
                 </div>
             </div>
 
             <div class="chat-message-inputfield">
                 <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
+                <img class="comment-img" src="{{selectedUrl}}" alt="">
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
-                        <img src="/assets/img/mainboard/add_plus.png" alt="">
+                        <div>
+                            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
+                            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
+                          </div>
                         <span class="seperator-send-message"></span>
                         <img src="/assets/img/mainboard/smile_add_message.png" alt="">
                         <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
