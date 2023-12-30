@@ -32,7 +32,6 @@ export class MainboardComponent {
   selectedUrl: string = '';
   customizedImg: boolean = false;
   
-
   toggleMenu: boolean = true;
   toggleThread: boolean = false;
   toggleEditChannel: boolean = false;
@@ -67,6 +66,7 @@ export class MainboardComponent {
   selectedChannelContent: any[] = [];
 
   newComment = new NewComment();
+  displayMembers: boolean = false;
 
   img: string = '';
   userArray: any[] = [];
@@ -215,7 +215,7 @@ export class MainboardComponent {
       }
     }
   }
-
+//------Every necessary function at the Inputfield-----//
   //----New-Comment-Functions----// 
 
   async newCommentInSelectedChannel() {
@@ -284,8 +284,18 @@ export class MainboardComponent {
         }
       );
     }
-  
 
+  toogleDisplayAllChannelMembers(){
+    this.displayMembers = !this.displayMembers 
+  }
+
+  selectedNameIntoInputfield(name: string){
+  this.displayMembers = false;
+  this.newCommentValue.nativeElement.value += name;
+  }
+  
+//------Every necessary function at the Inputfield-END-----//
+ 
   //----Change-Comment-Functions----//
   async saveCommentChange(id: string, index: number) {
     let newMessage = this.newChangedMessage.nativeElement.value;

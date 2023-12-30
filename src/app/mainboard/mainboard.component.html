@@ -79,13 +79,6 @@
                     <h2>Dies ist der Anfang vom Channel #{{selectedChannelTitle}}</h2>
                     <p>{{selectedChannelDescription}}</p>
                 </div>
-
-                <!-- <div class="chat-seperator-with-date">
-                    <span class="seperator-chat"></span>
-                    <span class="date-chat">{{ getFormattedDate()}}</span>
-                    <span class="seperator-chat"></span>
-                </div> -->
-
                 <div>
                     <div *ngFor="let channel of selectedChannelContent; let i = index"
                         (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
@@ -186,6 +179,9 @@
                                 [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
                     </div>
                 </div>
+                <div class="display-Members" *ngIf="displayMembers">
+                    <div *ngFor = "let user of userArray; let i = index" (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add"><p>{{user.username}}</p></div>
+                </div>
             </div>
 
             <div class="chat-message-inputfield">
@@ -199,7 +195,7 @@
                           </div>
                         <span class="seperator-send-message"></span>
                         <img src="/assets/img/mainboard/smile_add_message.png" alt="">
-                        <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+                        <img (click)="toogleDisplayAllChannelMembers()" src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
                     </span>
                     <span class="sendButtonImg">
                         <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
@@ -234,6 +230,7 @@
                     und dir statt.</p>
             </div>
 
+
             <div class="chat-message-inputfield">
                 <input type="text" placeholder="Nachricht an #{{selectedUserDirectMessageName}}">
                 <div class="chat-message-options">
@@ -246,13 +243,9 @@
                     <span class="sendButtonImg">
                         <img src="/assets/img/mainboard/send.png" alt="">
                     </span>
-
                 </div>
-
             </div>
-
         </div>
-
 
 
         <div class="chat" *ngIf="menuSearchfieldChat">

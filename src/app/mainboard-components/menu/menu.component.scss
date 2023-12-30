@@ -249,14 +249,16 @@
         font-size: 18px;
         font-weight: 400;
         border-radius: 30px;
-        transition: background-color 200ms ease-out;
         padding: 8px 16px;
+        transition: background-color 200ms ease-in, 200ms ease-out;
 
         &:hover {
             cursor: pointer;
-            background: #ECEEFE;
-
+            background-color: #ECEEFE;
+            color: #535AF1;
         }
+
+        
 
 
         img {
