@@ -61,9 +61,8 @@
                 </span>
                 <span class="headline-right-span">
                     <div class="headline-right-span-contacts" (click)="openAddMembersPopUp(); overlayBackroundColor()">
-                        <img src="/assets/img/signup/avatar1.png" alt="" class="headline-avatars ml0">
-                        <img src="/assets/img/signup/avatar1.png" alt="" class="headline-avatars">
-                        <img src="/assets/img/signup/avatar1.png" alt="" class="headline-avatars">
+                        <img *ngFor="let member of selectedChannelMembersArray" src="{{member.img}}" alt="" class="headline-avatars">
+                        
                         <app-members-mainboard-headline *ngIf="toggleEditMembers"></app-members-mainboard-headline>
                     </div>
                     <p>3</p>
@@ -180,7 +179,10 @@
                     </div>
                 </div>
                 <div class="display-Members" *ngIf="displayMembers">
-                    <div *ngFor = "let user of userArray; let i = index" (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add"><p>{{user.username}}</p></div>
+                    <div *ngFor="let user of userArray; let i = index"
+                        (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add">
+                        <p>{{user.username}}</p>
+                    </div>
                 </div>
             </div>
 
@@ -192,10 +194,11 @@
                         <div>
                             <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
                             <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
-                          </div>
+                        </div>
                         <span class="seperator-send-message"></span>
                         <img src="/assets/img/mainboard/smile_add_message.png" alt="">
-                        <img (click)="toogleDisplayAllChannelMembers()" src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+                        <img (click)="toogleDisplayAllChannelMembers()"
+                            src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
                     </span>
                     <span class="sendButtonImg">
                         <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
@@ -206,9 +209,6 @@
             </div>
 
         </div>
-
-
-
 
         <div class="chat" *ngIf="directMessageContent">
 
@@ -228,22 +228,35 @@
                 </div>
                 <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @{{selectedUserDirectMessageName}}
                     und dir statt.</p>
+                    
             </div>
 
-
+            <div class="display-Members" *ngIf="displayMembers">
+                <div *ngFor="let user of userArray; let i = index"
+                    (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add">
+                    <p>{{user.username}}</p>
+                </div>
+            </div>
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #{{selectedUserDirectMessageName}}">
+                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
+                <img class="comment-img" src="{{selectedUrl}}" alt="">
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
-                        <img src="/assets/img/mainboard/add_plus.png" alt="">
+                        <div>
+                            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
+                            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
+                        </div>
                         <span class="seperator-send-message"></span>
                         <img src="/assets/img/mainboard/smile_add_message.png" alt="">
-                        <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+                        <img (click)="toogleDisplayAllChannelMembers()"
+                            src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
                     </span>
                     <span class="sendButtonImg">
-                        <img src="/assets/img/mainboard/send.png" alt="">
+                        <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
                     </span>
+
                 </div>
+
             </div>
         </div>
 

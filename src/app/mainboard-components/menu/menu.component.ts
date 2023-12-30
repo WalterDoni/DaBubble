@@ -67,6 +67,7 @@ export class MenuComponent {
     this.mainboard.selectedChannelCreated = this.channelsArray[id].channelCreated;
     this.mainboard.channelID = this.channelsArray[id].channelID;
     this.mainboard.channelContent();
+    this.mainboard.getChannelMembersFromSelectedChannel()
   }
 
   selectUserForDirectmessage(id: number) {

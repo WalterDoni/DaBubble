@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { MenuComponent } from '../mainboard-components/menu/menu.component';
 
 @Component({
   selector: 'app-mainboard',
@@ -31,7 +32,7 @@ export class MainboardComponent {
   uploadedImg: any = {};
   selectedUrl: string = '';
   customizedImg: boolean = false;
-  
+
   toggleMenu: boolean = true;
   toggleThread: boolean = false;
   toggleEditChannel: boolean = false;
@@ -64,6 +65,7 @@ export class MainboardComponent {
   channelsArray: any[] = [];
 
   selectedChannelContent: any[] = [];
+  selectedChannelMembersArray: any[] = [];
 
   newComment = new NewComment();
   displayMembers: boolean = false;
@@ -84,7 +86,7 @@ export class MainboardComponent {
   unsubChannels;
   unsubChannelContent;
 
-  constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string,public storage: Storage, private cdr: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string, public storage: Storage, private cdr: ChangeDetectorRef) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
@@ -215,7 +217,12 @@ export class MainboardComponent {
       }
     }
   }
-//------Every necessary function at the Inputfield-----//
+
+
+  //----Search-Function-END---//
+
+
+  //------Every necessary function at the Inputfield-----//
   //----New-Comment-Functions----// 
 
   async newCommentInSelectedChannel() {
@@ -245,57 +252,57 @@ export class MainboardComponent {
   }
 
   //----Img Upload----//
-    uploadImg(event: any) {
-      this.uploadedImg = event.target.files[0];
-      this.saveInStorage();
-    }
+  uploadImg(event: any) {
+    this.uploadedImg = event.target.files[0];
+    this.saveInStorage();
+  }
 
-    triggerFileInput() {
-      this.fileInput.nativeElement.click();
-    }
-  
-    saveInStorage() {
-      let storageRef = ref(this.storage, this.uploadedImg.name);
-      let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-          }
-        },
-        (error) => {
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log('File available at', downloadURL);
-            if (downloadURL) {
-              this.customizedImg = true;
-              this.selectedUrl = downloadURL;
-              this.cdr.detectChanges();
-            }
-          });
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+
+  saveInStorage() {
+    let storageRef = ref(this.storage, this.uploadedImg.name);
+    let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
         }
-      );
-    }
-
-  toogleDisplayAllChannelMembers(){
-    this.displayMembers = !this.displayMembers 
+      },
+      (error) => {
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          if (downloadURL) {
+            this.customizedImg = true;
+            this.selectedUrl = downloadURL;
+            this.cdr.detectChanges();
+          }
+        });
+      }
+    );
   }
 
-  selectedNameIntoInputfield(name: string){
-  this.displayMembers = false;
-  this.newCommentValue.nativeElement.value += name;
+  toogleDisplayAllChannelMembers() {
+    this.displayMembers = !this.displayMembers
   }
-  
-//------Every necessary function at the Inputfield-END-----//
- 
+
+  selectedNameIntoInputfield(name: string) {
+    this.displayMembers = false;
+    this.newCommentValue.nativeElement.value += name;
+  }
+
+  //------Every necessary function at the Inputfield-END-----//
+
   //----Change-Comment-Functions----//
   async saveCommentChange(id: string, index: number) {
     let newMessage = this.newChangedMessage.nativeElement.value;
@@ -329,7 +336,8 @@ export class MainboardComponent {
         } else {
           this.userArray.push({
             username: element.data()['username'],
-            id: element.id, img: this.img
+            id: element.id,
+            img: this.img,
           });
         }
       })
@@ -348,12 +356,14 @@ export class MainboardComponent {
           channelName: element.data()['name'],
           channelDescription: element.data()['description'],
           channelCreated: element.data()['created'],
+          members: element.data()['members'],
           channelId: element.id,
         });
         this.selectedChannelTitle = this.channelsArray[0]['channelName'];
         this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
         this.selectedChannelCreated = this.channelsArray[0]['channelCreated'];
         this.channelID = this.channelsArray[0]['channelId'];
+        this.getChannelMembersFromSelectedChannel();
         this.channelContent();
       });
     });
@@ -386,6 +396,31 @@ export class MainboardComponent {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubChannelContent();
+  }
+
+  //--Other-functions--SORT AND DESCRIPE!!!!--//
+  getChannelMembersFromSelectedChannel() {
+    this.selectedChannelMembersArray = [];
+    this.channelsArray.forEach(channel => {
+      if (channel.channelId == this.channelID) {
+        channel.members.forEach((member: any) => {
+          if (member == this.loggedInUserName) {
+            this.selectedChannelMembersArray.push({
+              member: this.loggedInUserName,
+              img: this.loggedInUserImg,
+            })
+          }
+          this.userArray.forEach(user => {
+            if (user.username == member) {
+              this.selectedChannelMembersArray.push({
+                member: user.username,
+                img: user.img
+              })
+            }
+          });
+        });
+      }
+    });
   }
 
   //----Helpfunctions----//
