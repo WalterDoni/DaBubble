@@ -6,12 +6,12 @@
         </div>
         <div class="members">
             <ul>
-                <li><img src="{{loggedInUserImg}}" alt="add">{{loggedInUserName}}(Du)</li>
-                <li *ngFor="let user of userArray"><img class="img" src="{{user.img}}" alt="add">{{user.username}}</li>
+                <li><img src="{{mainboard.selectedChannelMembersArray[0].img}}" alt="add">{{mainboard.selectedChannelMembersArray[0].member}}(Du)</li>
+                <li *ngFor="let user of mainboard.selectedChannelMembersArray.slice(1) "><img class="img" src="{{user.img}}" alt="add">{{user.member}}</li>
                 
             </ul>
         </div>
-        <div class="add-member">
+        <div class="add-member" (click)="handleAddMembersClick($event)">
             <img src="/assets/img/mainboard/person_add.png" alt=""><p>Mitglieder hinzufügen</p>
         </div>
     </div>

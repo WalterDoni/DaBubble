@@ -39,7 +39,7 @@
             </div>
         </span>
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
-            <p>{{loggedInUserName}}</p><img style="width:80px; height:80px; border-radius: 100px; object-fit: cover;"
+            <p>{{loggedInUserName}}</p><img class="logged-in-user-img"
                 src="{{loggedInUserImg}}" alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
         </span>
@@ -188,7 +188,7 @@
 
             <div class="chat-message-inputfield">
                 <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
-                <img class="comment-img" src="{{selectedUrl}}" alt="">
+                <div *ngIf="showNewCommentImg"><img class="comment-img" src="{{selectedUrl}}" alt=""><button (click)="                                                    deleteNewImgInComment()">X</button></div>
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
                         <div>

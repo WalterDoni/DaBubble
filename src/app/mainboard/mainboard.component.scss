@@ -154,6 +154,13 @@
     }
 }
 
+.logged-in-user-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    object-fit: cover
+}
+
 .hide-under-980px {
     display: unset;
 

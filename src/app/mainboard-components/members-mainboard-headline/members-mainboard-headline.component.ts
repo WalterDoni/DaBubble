@@ -11,12 +11,18 @@ export class MembersMainboardHeadlineComponent {
   loggedInUserImg!: string 
   userArray: any = []
 
-  constructor(private mainboard: MainboardComponent){
+  constructor(public mainboard: MainboardComponent){
     
     this.loggedInUserName = this.mainboard.loggedInUserName;
     this.loggedInUserImg = this.mainboard.loggedInUserImg;
     this.userArray = this.mainboard.userArray;
 
+  }
+
+  handleAddMembersClick(event: Event) {
+    this.closeAddMembersPopUp(event);
+    this.mainboard.overlayBackroundColor();
+    this.mainboard.openAddNewMembersWindow();
   }
 
   closeAddMembersPopUp(event: Event){

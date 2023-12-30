@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { MenuComponent } from '../mainboard-components/menu/menu.component';
+
 
 @Component({
   selector: 'app-mainboard',
@@ -68,6 +68,7 @@ export class MainboardComponent {
   selectedChannelMembersArray: any[] = [];
 
   newComment = new NewComment();
+  showNewCommentImg: boolean = false;
   displayMembers: boolean = false;
 
   img: string = '';
@@ -238,6 +239,7 @@ export class MainboardComponent {
       messageTime: new Date(),
       timestamp: this.getCurrentTimeInMEZ(),
     });
+    this.newCommentValue.nativeElement.value = '';
   }
 
   getCurrentTimeInMEZ() {
@@ -255,6 +257,11 @@ export class MainboardComponent {
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
     this.saveInStorage();
+  }
+
+  deleteNewImgInComment() {
+    this.showNewCommentImg = false;
+    this.selectedUrl = "";
   }
 
   triggerFileInput() {
@@ -283,6 +290,7 @@ export class MainboardComponent {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
           if (downloadURL) {
+            this.showNewCommentImg = true;
             this.customizedImg = true;
             this.selectedUrl = downloadURL;
             this.cdr.detectChanges();
