@@ -8,12 +8,26 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 })
 export class AddMembersMainboardHeadlineComponent {
 
-  constructor(private mainboard: MainboardComponent){
+  constructor(public mainboard: MainboardComponent) {
   }
 
-  closeAddNewMembersWindow(event: Event){
+  closeAddNewMembersWindow(event: Event) {
     event.stopPropagation();
     this.mainboard.toggleAddNewMembers = false;
     this.mainboard.toggleBackground = false;
-    }
+  }
+
+  addMemberToChannel() {
+    let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
+    this.mainboard.channelsArray.forEach(channel => {
+      channel.members.forEach((member: any) => {
+        if (member == searchTermWithFirstLetterBig) {
+          alert("Dieser Nutzer befindet sich bereits im Channel!");
+          return;
+        } else {
+       //--TODO-- Member hinzufügen//
+        }
+      });
+    });
+  }
 }

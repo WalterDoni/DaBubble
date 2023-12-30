@@ -1,4 +1,3 @@
-
 .content {
     position: absolute;
     top: 75px;
@@ -14,11 +13,11 @@
     z-index: 5;
     font-size: 18px;
 
-    h2{
+    h2 {
         font-size: 24px;
     }
 
-    @media(max-width: 980px){
+    @media(max-width: 980px) {
         min-width: unset;
         max-height: unset;
         border-radius: 0;
@@ -30,29 +29,29 @@
     }
 }
 
-.headline{
+.headline {
     display: flex;
     justify-content: space-between;
-    
-    img{
+
+    img {
         width: 16px;
         height: 16px;
         cursor: pointer;
-    
-        &:hover{
+
+        &:hover {
             filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
             transform: scale(1.1);
         }
     }
 }
 
-.channel{
+.channel {
     display: flex;
-    gap:5px;
+    gap: 5px;
     color: #535AF1;
     font-size: 18px;
 
-    b{
+    b {
         padding-right: 4px;
     }
 }
@@ -62,7 +61,7 @@
     padding: 18px 20px;
     border-radius: 40px;
 
-    input{
+    input {
         width: 100%;
         height: 100%;
         border: none;
@@ -71,12 +70,12 @@
     }
 }
 
-.button-div{
+.button-div {
     padding-top: 20px;
     display: flex;
     justify-content: flex-end;
 
-    button{
+    button {
         border: none;
         background-color: #444DF2;
         color: white;
@@ -88,9 +87,49 @@
         cursor: pointer;
         transition: background-color ease-in-out 200ms;
 
-        &:hover{
+        &:hover {
             background-color: #797EF3;
-            
+
         }
+    }
+}
+
+.searchfield {
+    position: absolute;
+    bottom: -100px;
+    left: -175px;
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border: 1px solid #ADB0D9;
+    overflow: hidden;
+    padding: 8px;
+    border-radius: 30px 0px 30px 30px;
+
+    ul {
+        overflow-x: scroll; 
+        height: 100%;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-radius: 30px;
+        gap: 8px;
+        cursor: pointer;
+        transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+
+        &:hover {
+            background-color: #ECEEFE;
+            color: #535AF1;
+        }
+    }
+
+    img {
+        border-radius: 30px;
+        object-fit: cover;
+        width: 40px;
+        height: 40px;
     }
 }

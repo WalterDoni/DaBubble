@@ -39,8 +39,7 @@
             </div>
         </span>
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
-            <p>{{loggedInUserName}}</p><img class="logged-in-user-img"
-                src="{{loggedInUserImg}}" alt="profile-image">
+            <p>{{loggedInUserName}}</p><img class="logged-in-user-img" src="{{loggedInUserImg}}" alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
         </span>
 
@@ -61,8 +60,8 @@
                 </span>
                 <span class="headline-right-span">
                     <div class="headline-right-span-contacts" (click)="openAddMembersPopUp(); overlayBackroundColor()">
-                        <img *ngFor="let member of selectedChannelMembersArray" src="{{member.img}}" alt="" class="headline-avatars">
-                        
+                        <img *ngFor="let member of selectedChannelMembersArray" src="{{member.img}}" alt=""
+                            class="headline-avatars">
                         <app-members-mainboard-headline *ngIf="toggleEditMembers"></app-members-mainboard-headline>
                     </div>
                     <p>3</p>
@@ -178,17 +177,25 @@
                                 [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt=""></div>
                     </div>
                 </div>
+
                 <div class="display-Members" *ngIf="displayMembers">
-                    <div *ngFor="let user of userArray; let i = index"
-                        (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add">
-                        <p>{{user.username}}</p>
-                    </div>
+                    <ul>
+                        <li *ngFor="let user of userArray; let i = index"
+                            (click)="selectedNameIntoInputfield(user.username)">
+                            <img src="{{user.img}}" alt="add">
+                            <p>{{user.username}}</p>
+                        </li>
+                    </ul>
+
                 </div>
+
             </div>
 
             <div class="chat-message-inputfield">
                 <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
-                <div *ngIf="showNewCommentImg"><img class="comment-img" src="{{selectedUrl}}" alt=""><button (click)="                                                    deleteNewImgInComment()">X</button></div>
+                <div *ngIf="showNewCommentImg"><img class="comment-img" src="{{selectedUrl}}" alt=""><button
+                        (click)="                                                    deleteNewImgInComment()">X</button>
+                </div>
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
                         <div>
@@ -228,12 +235,12 @@
                 </div>
                 <p class="directMessageInfo">Diese Unterhaltung findet nur zwischen @{{selectedUserDirectMessageName}}
                     und dir statt.</p>
-                    
+
             </div>
 
             <div class="display-Members" *ngIf="displayMembers">
-                <div *ngFor="let user of userArray; let i = index"
-                    (click)="selectedNameIntoInputfield(user.username)"><img src="{{user.img}}" alt="add">
+                <div *ngFor="let user of userArray; let i = index" (click)="selectedNameIntoInputfield(user.username)">
+                    <img src="{{user.img}}" alt="add">
                     <p>{{user.username}}</p>
                 </div>
             </div>
@@ -296,10 +303,7 @@
 
         </div>
 
-
-
         <app-thread *ngIf="toggleThread" #thread class="thread-container"></app-thread>
-
 
         <div class="workspace-menu" (click)="toggleMenuVisibility()" *ngIf="toggleMenu">
             <p>Workspace-Menü schließen</p><img src="/assets/img/mainboard/show_menu.png" alt="">

@@ -78,6 +78,9 @@ export class MainboardComponent {
   filteredUserArray: any[] = [];
   filteredChannelsArray: any[] = [];
 
+  searchTermChannelMember!: string;
+  filteredMemberArray: any[] = [];
+
   searchTermMenu!: string;
   filteredUserArrayMenu: any[] = [];
   filteredChannelsArrayMenu: any[] = [];
@@ -164,7 +167,7 @@ export class MainboardComponent {
   }
 
   //----Search-Function----//
-  search(): void {
+  search() {
     if (this.searchTerm && this.searchTerm.length >= 1) {
       this.filteredUserArray = this.userArray.filter(user =>
         user.username.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -176,6 +179,17 @@ export class MainboardComponent {
       this.filteredUserArray = [];
       this.filteredChannelsArray = [];
     }
+  }
+
+  addMemberToChannelSearch() {
+    if (this.searchTermChannelMember && this.searchTermChannelMember.length >= 1) {
+      this.filteredMemberArray = this.userArray.filter(user =>
+        user.username.toLowerCase().includes(this.searchTermChannelMember.toLowerCase())
+      )
+    } else {
+      this.filteredMemberArray = [];
+    }
+    console.log(this.filteredMemberArray)
   }
 
   searchfieldAtChat() {

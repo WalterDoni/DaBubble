@@ -3,11 +3,20 @@
         <div class="headline">
             <h2>Leute hinzufügen</h2>  <img src="/assets/img/create-channel/close.png" alt="" (click)="closeAddNewMembersWindow($event)">
         </div>
-        <div class="channel"><b>#</b> <p>Entwicklerteam</p></div>
+        <div class="channel"><b>#</b> <p>{{mainboard.selectedChannelTitle}}</p></div>
         <div class="input-div">
-            <input type="text" placeholder="Name eingeben">
+            <input type="text" placeholder="Name eingeben" (keyup)="mainboard.addMemberToChannelSearch()" [(ngModel)]="mainboard.searchTermChannelMember">
         </div>
         <div class="button-div">
-            <button>Hinzufügen</button>
+        
+            <button (click)="addMemberToChannel()">Hinzufügen</button>
+        </div>
+        <div class="searchfield" *ngIf="mainboard.searchTermChannelMember && mainboard.searchTermChannelMember.length >= 1">
+            <ul>
+                <li *ngFor="let member of mainboard.filteredMemberArray">
+                <img src="{{member.img}}" alt="">
+                <p>{{member.username}}</p>
+                </li>
+            </ul>
         </div>
     </div>
