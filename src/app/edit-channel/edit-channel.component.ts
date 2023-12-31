@@ -68,7 +68,6 @@ export class EditChannelComponent {
   }
 
   async leaveChannel() {
-
     this.channelsArray.forEach(channel => {
       if (channel.channelId == this.mainboard.channelID) {
         channel.members.forEach(async (member: any, index: number) => {
@@ -79,10 +78,8 @@ export class EditChannelComponent {
         });
       }
     });
-
   }
-
-
+  
   //----Subscribe-Functions----//
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {

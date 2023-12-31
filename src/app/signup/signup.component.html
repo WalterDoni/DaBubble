@@ -14,7 +14,7 @@
             <input  class="name-input"type="text" #usernameInput placeholder="Name und Nachname">
             <input  class="email-input" type="email" #emailInput placeholder="Beispielname@email.com">
             <input  class="password-input"type="password" #passwordInput placeholder="Passwort">
-            <div class="checkbox"><input type="checkbox"><p style="padding-left: 4px;">Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p></div>
+            <div class="checkbox"><input type="checkbox"><p style="padding-left: 4px;">Ich stimme der <a (click)="showDataProtection()">Datenschutzerklärung</a> zu.</p></div>
           
         </div>
         <div class="btn-container">

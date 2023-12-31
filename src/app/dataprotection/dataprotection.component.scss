@@ -2,18 +2,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     height: 100vh;
 }
 
 .headline {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100px;
+    height: 140px;
     display: flex;
     justify-content: space-between;
+    font-size: 24px;
+    font-weight: 800;
 
     span {
         padding: 75px;
@@ -22,25 +19,11 @@
         align-items: center;
         gap: 16px;
     }
-
-    :first-child {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-
-        :nth-child(2) {
-            font-size: 24px;
-            font-weight: 800;
-        }
-    }
 }
 
 .data-protection {
     background-color: #FFFFFF;
     padding: 32px;
-    max-width: 1000px;
-    max-height: 800px;
     overflow-y: auto;
     overflow-x: auto;
     border-radius: 8px;

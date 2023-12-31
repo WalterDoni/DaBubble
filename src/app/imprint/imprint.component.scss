@@ -62,6 +62,12 @@
     h3{
         padding-top: 8px;
     }
+
+    @media(max-width: 520px){
+        width: 245px;
+    }
+
+ 
 }
 
 .headline-content{

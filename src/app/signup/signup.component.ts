@@ -136,4 +136,8 @@ export class SignupComponent {
     return collection(this.firestore, 'users');
   }
 
+  showDataProtection() {
+    this.router.navigateByUrl('dataProtection');
+  }
+
 }
