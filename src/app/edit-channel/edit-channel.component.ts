@@ -57,14 +57,29 @@ export class EditChannelComponent {
     let newName = this.newChannelName.nativeElement.value;
     await updateDoc(doc(this.channelsRef(), this.channelID), { name: newName });
     this.selectedChannelTitle = newName;
-    this.mainboard.selectedChannelTitle = newName; 
+    this.mainboard.selectedChannelTitle = newName;
   }
 
   async choosenNewChannelDesription() {
     let newDescription = this.newChannelDescription.nativeElement.value;
     await updateDoc(doc(this.channelsRef(), this.channelID), { description: newDescription });
     this.selectedChannelDescription = newDescription;
-    this.mainboard.selectedChannelDescription = newDescription; 
+    this.mainboard.selectedChannelDescription = newDescription;
+  }
+
+  async leaveChannel() {
+
+    this.channelsArray.forEach(channel => {
+      if (channel.channelId == this.mainboard.channelID) {
+        channel.members.forEach(async (member: any, index: number) => {
+          if (member == this.mainboard.loggedInUserName) {
+            channel.members.splice(index, 1);
+            await updateDoc(doc(this.channelsRef(), this.mainboard.channelID), { members: channel.members })
+          }
+        });
+      }
+    });
+
   }
 
 
@@ -76,6 +91,7 @@ export class EditChannelComponent {
         this.channelsArray.push({
           name: element.data()['name'],
           description: element.data()['description'],
+          members: element.data()['members'],
           channelId: element.id,
         });
       });

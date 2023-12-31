@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Firestore, collection, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 @Component({
@@ -7,8 +8,13 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
   styleUrls: ['./add-members-mainboard-headline.component.scss']
 })
 export class AddMembersMainboardHeadlineComponent {
+  @ViewChild('input') input!: ElementRef;
+
+  unsubChannelContent;
+  firestore: Firestore = inject(Firestore);
 
   constructor(public mainboard: MainboardComponent) {
+    this.unsubChannelContent = this.mainboard.channelContent()
   }
 
   closeAddNewMembersWindow(event: Event) {
@@ -17,17 +23,33 @@ export class AddMembersMainboardHeadlineComponent {
     this.mainboard.toggleBackground = false;
   }
 
-  addMemberToChannel() {
+  selectMember(name: string) {
+    this.input.nativeElement.value = name;
+    this.mainboard.searchTermChannelMember = name;
+  }
+
+  async addMemberToChannel() {
     let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
     this.mainboard.channelsArray.forEach(channel => {
-      channel.members.forEach((member: any) => {
-        if (member == searchTermWithFirstLetterBig) {
-          alert("Dieser Nutzer befindet sich bereits im Channel!");
-          return;
-        } else {
-       //--TODO-- Member hinzufügen//
+      if (channel.channelId == this.mainboard.channelID) {
+        let memberAlreadyExists = false;
+        channel.members.forEach((member: any) => {
+          if (member == searchTermWithFirstLetterBig) {
+            alert("Dieser Nutzer befindet sich bereits im Channel!");
+            memberAlreadyExists = true;
+          }
+        });
+        if (!memberAlreadyExists) {
+          channel.members.push(searchTermWithFirstLetterBig);
+          updateDoc(doc(this.mainboard.channelsRef(), this.mainboard.channelID), {
+            members: channel.members
+          });
         }
-      });
+      }
     });
   }
+  ngonDestroy() {
+    this.unsubChannelContent();
+  }
+
 }

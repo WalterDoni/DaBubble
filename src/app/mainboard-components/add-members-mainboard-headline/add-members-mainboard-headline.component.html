@@ -5,7 +5,7 @@
         </div>
         <div class="channel"><b>#</b> <p>{{mainboard.selectedChannelTitle}}</p></div>
         <div class="input-div">
-            <input type="text" placeholder="Name eingeben" (keyup)="mainboard.addMemberToChannelSearch()" [(ngModel)]="mainboard.searchTermChannelMember">
+            <input type="text" placeholder="Name eingeben" (keyup)="mainboard.addMemberToChannelSearch()" [(ngModel)]="mainboard.searchTermChannelMember" #input>
         </div>
         <div class="button-div">
         
@@ -13,7 +13,7 @@
         </div>
         <div class="searchfield" *ngIf="mainboard.searchTermChannelMember && mainboard.searchTermChannelMember.length >= 1">
             <ul>
-                <li *ngFor="let member of mainboard.filteredMemberArray">
+                <li *ngFor="let member of mainboard.filteredMemberArray" (click)="selectMember(member.username)">
                 <img src="{{member.img}}" alt="">
                 <p>{{member.username}}</p>
                 </li>
