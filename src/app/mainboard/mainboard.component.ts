@@ -404,9 +404,7 @@ export class MainboardComponent {
           data: element.data(),
           editComment: false,
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
-        });
-       console.log(this.selectedChannelContent);
-        
+        }); 
       });
     });
   }

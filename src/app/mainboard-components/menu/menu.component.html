@@ -1,38 +1,49 @@
-<div class="menu" >
+<div class="menu">
     <div class="channel-name-container"><img src="./assets/img/mainboard/channelname.png" alt="ChannelNameIMG">
-        <p>Code learning</p><img (click)=" openMenuSearchFieldOnChat()" src="./assets/img/mainboard/edit.png" alt="edit">
+        <p>Code learning</p><img (click)=" openMenuSearchFieldOnChat()" src="./assets/img/mainboard/edit.png"
+            alt="edit">
     </div>
     <div class="channels-container">
         <section class="channels-content">
-            <div><span (click)="toggletableChannels()" class="hover-menu"><img #arrowChannels src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
-                        class="gap10"><img src="/assets/img/mainboard/workspaces.png" alt="">
+            <div><span (click)="toggletableChannels()" class="hover-menu"><img #arrowChannels
+                        src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span class="gap10"><img
+                            src="/assets/img/mainboard/workspaces.png" alt="">
                         <p>Channels</p>
                     </span>
-                </span><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png" alt="add">
+                </span><img (click)="openCreateChannelPopUp()" class="add-symbol" src="/assets/img/mainboard/add.png"
+                    alt="add">
             </div>
             <div class="list" #listChannels>
-                <li *ngFor="let channel of channelsArray; let i = index" (click)="selectChannel(i)"><p>#</p><p>{{channel.channelName}}</p></li>
+                <ng-container *ngFor="let channel of channelsArray; let i = index">
+                    <li (click)="selectChannel(i)" *ngIf="channel.displayChannel">
+                        <p>#</p>
+                        <p>{{channel.channelName}}</p>
+                    </li>
+                </ng-container>
+
             </div>
-            <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png" alt="add">Channel hinzufügen
+            <li class="add-channel" (click)="openCreateChannelPopUp()"><img src="/assets/img/mainboard/add_circle.png"
+                    alt="add">Channel hinzufügen
             </li>
         </section>
     </div>
-    
+
     <div class="directmessages-container"></div>
 
     <section class="contacts-content">
-        <div class="hover-menu"><span (click)="toggletableDirectmessages()"><img #arrowDirectmessage src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span
-                    class="gap10"><img src="/assets/img/mainboard/account_circle.png" alt="">
+        <div class="hover-menu"><span (click)="toggletableDirectmessages()"><img #arrowDirectmessage
+                    src="/assets/img/mainboard/arrow_drop_down.png" alt="arrow-down"><span class="gap10"><img
+                        src="/assets/img/mainboard/account_circle.png" alt="">
                     <p>Direktnachrichten</p>
                 </span>
             </span></div>
         <div class="contact-list" #listDirectmessage>
             <li><img src="{{loggedInUserImg}}" alt="add">{{loggedInUserName}} (Du)</li>
-            <li *ngFor = "let user of userArray; let i = index" (click)="selectUserForDirectmessage(i)"><img src="{{user.img}}" alt="add">{{user.username}}</li>
-          
+            <li *ngFor="let user of userArray; let i = index" (click)="selectUserForDirectmessage(i)"><img
+                    src="{{user.img}}" alt="add">{{user.username}}</li>
+
         </div>
     </section>
 </div>
 
 <div *ngIf="toggleCreateChannel"><app-create-channel></app-create-channel></div>
-

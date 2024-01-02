@@ -125,11 +125,34 @@ export class SignupComponent {
   }
 
   showSecondPart() {
+    let { inputName, emailInput, passwordInput } = this.checkValidity();
+    if (inputName && emailInput && passwordInput) {
+      this.firstPartNewAccount.nativeElement.classList.add('d-none');
+      this.secondPartNewAccount.nativeElement.classList.remove('d-none');
+    }
+  }
+
+  checkValidity() {
+    let inputName = false;
+    let emailInput = false;
+    let passwordInput = false;
     if (this.usernameInput.nativeElement.value.length >= 1) {
       this.selectedUsername = this.usernameInput.nativeElement.value;
+      inputName = true;
+    } else {
+      alert("Bitte einen Namen einfügen!");
     }
-    this.firstPartNewAccount.nativeElement.classList.add('d-none');
-    this.secondPartNewAccount.nativeElement.classList.remove('d-none');
+    if (this.emailInput.nativeElement.value.length >= 1) {
+      emailInput = true;
+    } else {
+      alert("Bitte eine Email-Adresse eingeben!");
+    }
+    if (this.passwordInput.nativeElement.value.length >= 4) {
+      passwordInput = true;
+    } else {
+      alert("Mindestens 4 Zeichen bei dem Passwort verwenden");
+    }
+    return { inputName, emailInput, passwordInput };
   }
 
   usersRef() {

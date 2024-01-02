@@ -42,6 +42,8 @@ export class MenuComponent {
   openTableChannels: boolean = true;
   openTableDirectMessages: boolean = true;
 
+  
+
   constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
@@ -82,7 +84,17 @@ export class MenuComponent {
     this.mainboard.menuSearchfieldChat = true;
     this.mainboard.directMessageContent = false;
     this.mainboard.chatContent = false;
+  }
 
+  displayChannelOnlyWhenUserIsMember(){
+    this.channelsArray.forEach(channel => {
+     channel.members.forEach((member: any) => {
+       if(member == this.mainboard.loggedInUserName){
+       channel.displayChannel = true;
+       }
+     });
+    });
+    console.log(this.channelsArray);
   }
 
   //----Folding-Functions---//
@@ -144,9 +156,12 @@ export class MenuComponent {
           channelName: element.data()['name'],
           channelDescription: element.data()['description'],
           channelCreated: element.data()['created'],
-          channelID: element.id
+          members: element.data()['members'],
+          channelID: element.id,
+          displayChannel: false,
         });
       });
+      this.displayChannelOnlyWhenUserIsMember()
     });
   }
 
