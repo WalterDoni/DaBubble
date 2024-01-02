@@ -78,6 +78,7 @@
                     <p>{{selectedChannelDescription}}</p>
                 </div>
                 <div>
+
                     <div *ngFor="let channel of selectedChannelContent; let i = index"
                         (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
 
@@ -92,7 +93,7 @@
                         </div>
                         <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
                             <div class="avatar-chat-history"><img
-                                    [src]="getImgFromAnswerUser(selectedChannelContent[0]['data']['from'])" alt="">
+                                    [src]="getImgFromAnswerUser(channel.data.from)" alt="">
                             </div>
                             <div class="message-chat-history">
                                 <div class="headline-message-history">
@@ -123,6 +124,8 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
                 <div *ngFor="let channel of selectedChannelContent; let i = index"

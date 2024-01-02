@@ -189,7 +189,6 @@ export class MainboardComponent {
     } else {
       this.filteredMemberArray = [];
     }
-    console.log(this.filteredMemberArray)
   }
 
   searchfieldAtChat() {
@@ -406,6 +405,8 @@ export class MainboardComponent {
           editComment: false,
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
+       console.log(this.selectedChannelContent);
+        
       });
     });
   }
@@ -447,8 +448,10 @@ export class MainboardComponent {
 
   //----Helpfunctions----//
   getImgFromAnswerUser(username: string) {
+    if(this.userArray.length >= 1){
     const user = this.userArray.find(user => user.username === username);
     return user ? user.img : '/assets/img/signup/profile.png';
+  }
   }
 
   toggleMenuVisibility() {
