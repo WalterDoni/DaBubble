@@ -1,11 +1,11 @@
 <div class="container" (click)="closeWindow()">
-
     <div class="content" (click)="stopClosing($event)">
         <button class="cancel-btn" (click)="closeWindow()"><img src="/assets/img/create-channel/close.png" alt=""></button>
         <h2>Channel erstellen</h2>
         <p>Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein #Marketing zum Beispiel.</p>
         <h3>Channel-Name</h3>
         <div class="input-div"><input type="text" placeholder="# z.B. Kooperationsprojekte" #newChannelName></div>
+        <p *ngIf="errormessage" class="error-message">Bitte geben Sie einen Namen für den Channel ein.</p>
         <h3>Beschreibung (optional)</h3>
         <div class="input-div"><input type="text" placeholder="Dein Text hier" #newChannelDescription></div>    
         <div class="button-div" (click)="createChannel()"><button>Erstellen</button></div>

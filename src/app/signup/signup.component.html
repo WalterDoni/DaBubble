@@ -12,13 +12,16 @@
         </div>
         <div class="inputfields-container">
             <input class="name-input" type="text" #usernameInput placeholder="Name und Nachname">
+            <p *ngIf="errorname" class="error-message">Bitte geben Sie einen Namen ein.</p>
             <input class="email-input" type="email" #emailInput placeholder="Beispielname@email.com">
+            <p *ngIf="erroremail" class="error-message">Bitte geben Sie eine gültige E-Mail-Adresse ein.</p>
             <input class="password-input" type="password" #passwordInput placeholder="Passwort">
-            <div class="checkbox"><input type="checkbox"><p style="padding-left: 4px;">Ich stimme der <a (click)="showDataProtection()">Datenschutzerklärung</a> zu.</p></div>
+            <p *ngIf="errorpassword" class="error-message">Das Passwort muss aus mindestens 4 Zeichen bestehen.</p>
+            <div class="checkbox"><input type="checkbox" (click)="checkboxDataprotection()"><p style="padding-left: 4px;">Ich stimme der <a (click)="showDataProtection()">Datenschutzerklärung</a> zu.</p></div>
           
         </div>
         <div class="btn-container">
-            <button (click)="showSecondPart()">Weiter</button>   
+            <button [disabled]="!acceptDataprotection" (click)="showSecondPart()">Weiter</button>   
         </div>
     </div>
 

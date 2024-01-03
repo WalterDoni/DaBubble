@@ -74,7 +74,7 @@
 .signup-container {
     position: relative;
     background-color: #FFFFFF;
-    max-height: 670px;
+    max-height: 750px;
     max-width: 610px;
     border-radius: 30px;
     display: flex;
@@ -253,6 +253,12 @@
         &:hover {
             background-color: #797EF3;
         }
+
+        &:disabled {
+            background-color: #ccc;
+            /* Farbe für deaktivierten Zustand */
+            cursor: not-allowed;
+        }
     }
 
     @media(max-width: 665px) {
@@ -283,10 +289,15 @@
             border-color: #797EF3;
         }
 
-
     }
 
+}
 
+.error-message {
+    color: red;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 

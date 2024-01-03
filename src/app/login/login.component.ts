@@ -49,6 +49,7 @@ export class LoginComponent {
   email: string = '';
   id: string = '';
   loginArray: Array<any> = [];
+  errormessage: boolean = false;
 
   
   //----Intro----//
@@ -109,11 +110,12 @@ export class LoginComponent {
       this.loginArray.forEach((user) => {
         if (user.email == this.emailInput.nativeElement.value) {
           this.loggedInUser = user.id;
+          this.errormessage = false;
           this.router.navigateByUrl('mainboard/' + user.id);
         }
       })
     }).catch((error: any) => {
-      alert('Fehler, kein Account gefunden.')
+      this.errormessage = true;
     })
   }
 

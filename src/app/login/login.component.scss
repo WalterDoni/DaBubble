@@ -123,6 +123,13 @@
     }
 }
 
+.error-message {
+    color: red;
+    width: 90%;
+    padding-top: 16px;
+
+}
+
 .inputfields-container {
 
     padding-top: 50px;
@@ -327,7 +334,7 @@
 
 }
 
-  //----Intro----//
+//----Intro----//
 
 .start-animation.none {
     display: none;
@@ -368,14 +375,15 @@
 
 @media(max-width: 650px) {
     .content {
-      img {
-        width: 75px;
-        height: 75px;
-      }
-      span {
-        font-size: 48px;
-      }
+        img {
+            width: 75px;
+            height: 75px;
+        }
+
+        span {
+            font-size: 48px;
+        }
     }
 }
 
-  //----Intro-End----//
+//----Intro-End----//

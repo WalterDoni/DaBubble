@@ -22,6 +22,7 @@
             <h1>Anmeldung</h1>
             <p>Ich empfehle dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
         </div>
+        <p  *ngIf="errormessage" class="error-message">E-Mail-Adresse und/oder Passwort sind falsch, oder es existiert kein Account mit dieser E-Mail-Adresse.</p>
         <div class="inputfields-container">
             <input type="email" #emailInput placeholder="Beispielname@email.com">
             <input type="password" #passwordInput placeholder="Passwort">

@@ -123,6 +123,7 @@ export class MenuComponent {
 
 
   //----Subscribe-Functions----//
+  
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       this.userArray = [];
@@ -174,4 +175,6 @@ export class MenuComponent {
     this.unsubChannels();
   }
 
+
+  
 }

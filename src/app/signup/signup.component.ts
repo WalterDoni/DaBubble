@@ -12,6 +12,8 @@ import { Storage, ref, getDownloadURL, uploadBytesResumable } from "@angular/fir
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+  acceptDataprotection: boolean = false;
+
   selectedUsername: string = 'Kein Benutzername angegeben.';
   selectedImg: string = 'profile.png';
   selectedUrl: string | null = null;
@@ -31,6 +33,10 @@ export class SignupComponent {
   @ViewChild('emailInput') emailInput!: ElementRef;
   @ViewChild('passwordInput') passwordInput!: ElementRef;
   @ViewChild('usernameInput') usernameInput!: ElementRef;
+
+  errorname: boolean = false;
+  erroremail: boolean = false;
+  errorpassword: boolean = false;
 
   firestore: Firestore = inject(Firestore);
   newUser = new User();
@@ -124,43 +130,43 @@ export class SignupComponent {
     this.firstPartNewAccount.nativeElement.classList.remove('d-none');
   }
 
-  showSecondPart() {
-    let { inputName, emailInput, passwordInput } = this.checkValidity();
-    if (inputName && emailInput && passwordInput) {
-      this.firstPartNewAccount.nativeElement.classList.add('d-none');
-      this.secondPartNewAccount.nativeElement.classList.remove('d-none');
-    }
-  }
-
-  checkValidity() {
-    let inputName = false;
-    let emailInput = false;
-    let passwordInput = false;
-    if (this.usernameInput.nativeElement.value.length >= 1) {
-      this.selectedUsername = this.usernameInput.nativeElement.value;
-      inputName = true;
-    } else {
-      alert("Bitte einen Namen einfügen!");
-    }
-    if (this.emailInput.nativeElement.value.length >= 1) {
-      emailInput = true;
-    } else {
-      alert("Bitte eine Email-Adresse eingeben!");
-    }
-    if (this.passwordInput.nativeElement.value.length >= 4) {
-      passwordInput = true;
-    } else {
-      alert("Mindestens 4 Zeichen bei dem Passwort verwenden");
-    }
-    return { inputName, emailInput, passwordInput };
-  }
-
   usersRef() {
     return collection(this.firestore, 'users');
   }
 
   showDataProtection() {
     this.router.navigateByUrl('dataProtection');
+  }
+
+  async showSecondPart() {
+    await this.checkValidity();
+    if (!this.errorname && !this.erroremail && !this.errorpassword) {
+      this.firstPartNewAccount.nativeElement.classList.add('d-none');
+      this.secondPartNewAccount.nativeElement.classList.remove('d-none');
+    }
+  }
+
+  checkValidity() {
+    if (this.usernameInput.nativeElement.value.length >= 1) {
+      this.selectedUsername = this.usernameInput.nativeElement.value;
+      this.errorname = false;
+    } else {
+      this.errorname = true;
+    }
+    if (this.emailInput.nativeElement.value.length >= 1 && this.emailInput.nativeElement.value.includes('@') && this.emailInput.nativeElement.value.includes('.')) {
+      this.erroremail = false;
+    } else {
+      this.erroremail = true
+    }
+    if (this.passwordInput.nativeElement.value.length >= 4) {
+      this.errorpassword = false;
+    } else {
+      this.errorpassword = true
+    }
+  }
+
+  checkboxDataprotection() {
+    this.acceptDataprotection = !this.acceptDataprotection
   }
 
 }
