@@ -154,7 +154,9 @@
                             <div *ngIf="channel.editComment && hoveredChannelIndex === i && (channel.data.from == loggedInUserName)"
                                 class="my-message-history">
                                 <div style="padding-bottom: 8px;"><input required class="editCommentInputfield"
-                                        type="text" value="{{channel.data.message}}" #newChangedMessage></div>
+                                        type="text" value="{{channel.data.message}}" #newChangedMessage><img class="message-history-img"
+                                        src="{{channel.data.messageImg}}" alt=""></div>
+                                        <p *ngIf="errorMessageCommentChange" class="error-message">Die Nachricht ist leer</p>
                                 <div class="btn-container"><button
                                         (click)="saveCommentChange(channel.id, i)">Speichern</button><button
                                         (click)="closeEditComment(i)">Abbrechen</button></div>

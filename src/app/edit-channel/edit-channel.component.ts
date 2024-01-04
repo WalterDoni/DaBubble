@@ -24,6 +24,8 @@ export class EditChannelComponent {
   @ViewChild('newChannelDescription') newChannelDescription!: ElementRef;
   channelID!: string;
 
+  errormessage: boolean = false;
+
   constructor(public mainboard: MainboardComponent) {
     this.unsubChannels = this.subChannels();
     this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
@@ -54,10 +56,16 @@ export class EditChannelComponent {
   }
 
   async choosenNewChannelName() {
-    let newName = this.newChannelName.nativeElement.value;
-    await updateDoc(doc(this.channelsRef(), this.channelID), { name: newName });
-    this.selectedChannelTitle = newName;
-    this.mainboard.selectedChannelTitle = newName;
+    if (this.newChannelName.nativeElement.value.length >= 1) {
+      let newName = this.newChannelName.nativeElement.value;
+      await updateDoc(doc(this.channelsRef(), this.channelID), { name: newName });
+      this.selectedChannelTitle = newName;
+      this.mainboard.selectedChannelTitle = newName;
+      this.errormessage = false;
+      this.toggleChangeChannelName()
+    } else {
+      this.errormessage = true;
+    }
   }
 
   async choosenNewChannelDesription() {
@@ -79,7 +87,7 @@ export class EditChannelComponent {
       }
     });
   }
-  
+
   //----Subscribe-Functions----//
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {

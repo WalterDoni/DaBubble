@@ -21,6 +21,7 @@ export class ProfilViewComponent {
   userId: string = '';
   @ViewChild('inputValue') inputValue!: ElementRef;
 
+  errormessage: boolean = false;
 
   constructor(public mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers()
@@ -35,10 +36,15 @@ export class ProfilViewComponent {
   }
 
   async updateName(){
+    if(this.inputValue.nativeElement.value.length >= 1){
     let newName = this.inputValue.nativeElement.value;
     await updateDoc(doc(this.usersRef(), this.userId), {username: newName });
     this.loggedInUserName = newName;
+    this.errormessage = false;
     this.toggleChangeName()
+    }else{
+      this.errormessage = true;
+    }
   }
 
   //---Subscribe-Functions---// 

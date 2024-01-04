@@ -16,6 +16,7 @@
                 <input #inputValue type="text" placeholder="Namen ändern..." value="{{loggedInUserName}}">
                 <button (click)="updateName()">Speichern</button>
             </div>
+            <p *ngIf="errormessage" class="error-message">Bitte geben Sie einen Namen ein.</p>
             <div class="email">
                 <span><img src="./assets/img/profile-view/mail.png" alt=""></span>
                 <span style="margin-top: -5px;">

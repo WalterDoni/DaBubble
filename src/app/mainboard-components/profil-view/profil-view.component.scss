@@ -6,7 +6,7 @@
     border-radius: 20px 0px 20px 20px;
     position: absolute;
     width: 350px;
-    height: 335px;
+    height: 370px;
     background-color: white !important;
     color: black;
     top: 90px;
@@ -129,4 +129,9 @@
         outline: none;
         border: 1px solid #797EF3;
     }
+}
+
+.error-message {
+    color: red;
+    width: 90%;
 }

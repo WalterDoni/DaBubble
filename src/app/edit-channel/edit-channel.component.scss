@@ -14,7 +14,7 @@
     font-size: 18px;
     color: black;
 
-    @media(max-width: 1420px){
+    @media(max-width: 1420px) {
         width: 70%;
     }
 
@@ -141,4 +141,9 @@
         transform: scale(1.2);
         filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
     }
+}
+
+.error-message {
+    color: red;
+    width: 90%;
 }

@@ -70,6 +70,7 @@ export class MainboardComponent {
   newComment = new NewComment();
   showNewCommentImg: boolean = false;
   displayMembers: boolean = false;
+  errorMessageCommentChange: boolean = false;
 
   img: string = '';
   userArray: any[] = [];
@@ -326,12 +327,17 @@ export class MainboardComponent {
 
   //----Change-Comment-Functions----//
   async saveCommentChange(id: string, index: number) {
+    if(this.newChangedMessage.nativeElement.value.length >= 1){
     let newMessage = this.newChangedMessage.nativeElement.value;
     await updateDoc(doc(this.channelContentRef(), id), {
       message: newMessage,
     })
     this.selectedChannelContent[index].editComment = false;
+    this.errorMessageCommentChange = false;
+  }else{
+    this.errorMessageCommentChange = true;
   }
+}
 
   //----Subscribe-Functions----//
   ngOnInit() {

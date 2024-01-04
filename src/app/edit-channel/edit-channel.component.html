@@ -6,11 +6,12 @@
             <div class="upper-content">
                 <h3>Channel-Name</h3>
                 <button (click)="toggleChangeChannelName(); getCorrectChannelID()" *ngIf="!changeChannelName">Bearbeiten</button>
-                <button (click)="choosenNewChannelName(); toggleChangeChannelName()" *ngIf="changeChannelName">Speichern</button>
+                <button (click)="choosenNewChannelName()" *ngIf="changeChannelName">Speichern</button>
             </div>
             <div class="lower-content">
                 <p *ngIf="!changeChannelName">#{{selectedChannelTitle}}</p>
                 <input #newChannelName *ngIf="changeChannelName" type="text" placeholder="Ändere den Namen des Channels..." value="{{selectedChannelTitle}}">
+                <p *ngIf="errormessage" class="error-message">Bitte geben Sie einen Namen für den Channel ein.</p>
             </div>
 
         </div>
