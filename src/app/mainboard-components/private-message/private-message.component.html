@@ -28,7 +28,7 @@
     <div class="chat-message-options">
         <span class="imgHoverInput">
             <div>
-                <input type="file" class="inputImgUpload" #fileInput (change)="mainboard.uploadImg($event)">
+                <input type="file" class="inputImgUpload" #mainboard.fileInput (change)="mainboard.uploadImg($event)">
                 <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="mainboard.triggerFileInput()">
             </div>
             <span class="seperator-send-message"></span>

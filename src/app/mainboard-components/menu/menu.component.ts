@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -56,6 +57,8 @@ export class MenuComponent {
     });
   }
 
+  
+  
   openCreateChannelPopUp() {
     this.toggleCreateChannel = true;
   }
