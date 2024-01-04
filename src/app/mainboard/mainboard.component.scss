@@ -305,35 +305,6 @@
     }
 }
 
-.directMessageContent {
-    position: absolute;
-    bottom: 200px;
-    left: 32px;
-}
-
-.directMessageInfo {
-    padding-top: 8px;
-    font-size: 20px;
-    color: #686868;
-}
-
-.directMessageContact {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-    padding-bottom: 16px;
-    font-size: 22px;
-    font-weight: 700;
-
-}
-
-.directMessageImg {
-    width: 85px !important;
-    height: 85px;
-    border-radius: 100px;
-    object-fit: cover;
-}
-
 .imgHeadline {
     width: 65px !important;
     height: 65px;
@@ -1018,9 +989,6 @@
         }
     }
 }
-
-
-
 
 .sendButtonImg {
     transition: transform 200ms ease-out;

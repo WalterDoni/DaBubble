@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrivateMessageComponent } from './mainboard-components/private-message/private-message.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EmojiPickerComponent,
     ProfilViewComponent,
     PopupEditCommentComponent,
+    PrivateMessageComponent,
   ],
 
   imports: [

@@ -1,0 +1,42 @@
+<div class="chat-headline-container">
+    <span class="headline-left-span">
+        <img class="imgHeadline" src="{{mainboard.selectedUserDirectMessageImage}}" alt="">
+        <p>{{mainboard.selectedUserDirectMessageName}}</p>
+    </span>
+</div>
+<div class="chat-content">
+</div>
+
+<div class="directMessageContent">
+    <div class="directMessageContact">
+        <img class="imgChat" src="{{mainboard.selectedUserDirectMessageImage}}" alt="">
+        <p>{{mainboard.selectedUserDirectMessageName}}</p>
+    </div>
+    <p class="description">Diese Unterhaltung findet nur zwischen <b class="colorblue">@{{mainboard.selectedUserDirectMessageName}}</b>
+        und dir statt.</p>
+</div>
+
+<div class="display-Members" *ngIf="mainboard.displayMembers">
+    <div *ngFor="let user of mainboard.userArray; let i = index" (click)="mainboard.selectedNameIntoInputfield(user.username)">
+        <img src="{{user.img}}" alt="add">
+        <p>{{user.username}}</p>
+    </div>
+</div>
+<div class="chat-message-inputfield">
+    <input type="text" placeholder="Nachricht an #{{mainboard.selectedUserDirectMessageName}}" #mainboard.newCommentValue>
+    <img src="{{mainboard.selectedUrl}}" alt="">
+    <div class="chat-message-options">
+        <span class="imgHoverInput">
+            <div>
+                <input type="file" class="inputImgUpload" #fileInput (change)="mainboard.uploadImg($event)">
+                <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="mainboard.triggerFileInput()">
+            </div>
+            <span class="seperator-send-message"></span>
+            <img src="/assets/img/mainboard/smile_add_message.png" alt="">
+            <img (click)="mainboard.toogleDisplayAllChannelMembers()" src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+        </span>
+        <span class="sendButtonImg">
+            <img (click)="mainboard.newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
+        </span>
+    </div>
+</div>
