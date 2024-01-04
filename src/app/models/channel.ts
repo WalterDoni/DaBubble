@@ -1,7 +1,7 @@
 export class Channel {
     created!: string;
     description!: string;
-    members!: [];
+    members!: any[];
     name!: string;
     
 
@@ -10,9 +10,8 @@ export class Channel {
         return {
            created: this.created,
            description: this.description,
-           members: [],
-           name: this.name,
-           
+           members: this.members,
+           name: this.name,   
         }
     }
 
@@ -20,8 +19,7 @@ export class Channel {
         this.created = object ? object.created: ''; 
         this.description = object ? object.description: '';
         this.members = object ? object.members: [];
-        this.name = object ? object.name: ''; 
-       
+        this.name = object ? object.name: '';  
     }
 
 }

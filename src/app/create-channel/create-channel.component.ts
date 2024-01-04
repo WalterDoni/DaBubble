@@ -20,11 +20,12 @@ export class CreateChannelComponent {
   }
 
   async createChannel() {
+    debugger
     if(this.newChannelName.nativeElement.value.length >= 1){
     let values = {
       name: this.newChannelName.nativeElement.value,
       description: this.newChannelDescription.nativeElement.value,
-      members: [],
+      members: [this.mainboard.loggedInUserName],
       created: this.mainboard.loggedInUserName,
     }
     let newChannel = new Channel(values)
