@@ -92,8 +92,8 @@
                                 *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
                         </div>
                         <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
-                            <div class="avatar-chat-history"><img
-                                    [src]="getImgFromAnswerUser(channel.data.from)" alt="">
+                            <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(channel.data.from)"
+                                    alt="">
                             </div>
                             <div class="message-chat-history">
                                 <div class="headline-message-history">
@@ -153,10 +153,15 @@
                             </div>
                             <div *ngIf="channel.editComment && hoveredChannelIndex === i && (channel.data.from == loggedInUserName)"
                                 class="my-message-history">
-                                <div style="padding-bottom: 8px;"><input required class="editCommentInputfield"
-                                        type="text" value="{{channel.data.message}}" #newChangedMessage><img class="message-history-img"
-                                        src="{{channel.data.messageImg}}" alt=""></div>
-                                        <p *ngIf="errorMessageCommentChange" class="error-message">Die Nachricht ist leer</p>
+                                <div class="editComment-div"><input required class="editCommentInputfield" type="text"
+                                        value="{{channel.data.message}}" #newChangedMessage>
+                                    <div *ngIf="channel.data.messageImg.length > 38">
+                                        <img class="message-history-img" src="{{channel.data.messageImg}}" alt=""
+                                            #delImgEditComment>
+                                        <button (click)="deleteImgEditComment()">X</button>
+                                    </div>
+                                </div>
+                                <p *ngIf="errorMessageCommentChange" class="error-message">Die Nachricht ist leer</p>
                                 <div class="btn-container"><button
                                         (click)="saveCommentChange(channel.id, i)">Speichern</button><button
                                         (click)="closeEditComment(i)">Abbrechen</button></div>
@@ -198,8 +203,9 @@
 
             <div class="chat-message-inputfield">
                 <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
-                <div *ngIf="showNewCommentImg"><img class="comment-img" src="{{selectedUrl}}" alt=""><button
-                        (click)="                                                    deleteNewImgInComment()">X</button>
+                <p *ngIf="displayUploadMessage" class="upload-message" #uploadmessage style="padding-left: 2%;"></p>
+                <div *ngIf="showNewCommentImg" class="newImg-div"><img src="{{selectedUrl}}" alt=""><button
+                        (click)="deleteNewImgInComment()">X</button>
                 </div>
                 <div class="chat-message-options">
                     <span class="imgHoverInput">
@@ -266,9 +272,7 @@
                     <span class="sendButtonImg">
                         <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
                     </span>
-
                 </div>
-
             </div>
         </div>
 

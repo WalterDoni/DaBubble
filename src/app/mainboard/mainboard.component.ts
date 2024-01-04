@@ -25,6 +25,11 @@ export class MainboardComponent {
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
   @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
+
+  @ViewChild('uploadmessage') uploadmessage!: ElementRef;
+  displayUploadMessage: boolean = false;
+  
 
   reactionEmoji: any;
   userId: string = '';
@@ -288,7 +293,10 @@ export class MainboardComponent {
     uploadTask.on('state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+        this.displayUploadMessage = true;
+        if (this.uploadmessage && this.uploadmessage.nativeElement) {
+          this.uploadmessage.nativeElement.textContent = 'Das Bild ist zu ' +  Math.round(progress) + '% hochgeladen';
+        }
         switch (snapshot.state) {
           case 'paused':
             console.log('Upload is paused');
@@ -302,6 +310,7 @@ export class MainboardComponent {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          this.displayUploadMessage = false;
           console.log('File available at', downloadURL);
           if (downloadURL) {
             this.showNewCommentImg = true;
@@ -327,17 +336,25 @@ export class MainboardComponent {
 
   //----Change-Comment-Functions----//
   async saveCommentChange(id: string, index: number) {
-    if(this.newChangedMessage.nativeElement.value.length >= 1){
-    let newMessage = this.newChangedMessage.nativeElement.value;
-    await updateDoc(doc(this.channelContentRef(), id), {
-      message: newMessage,
-    })
-    this.selectedChannelContent[index].editComment = false;
-    this.errorMessageCommentChange = false;
-  }else{
-    this.errorMessageCommentChange = true;
+    if (this.newChangedMessage.nativeElement.value.length >= 1) {
+      let newMessage = this.newChangedMessage.nativeElement.value;
+      let img = this.delImgEditComment.nativeElement.src
+      await updateDoc(doc(this.channelContentRef(), id), {
+        message: newMessage,
+        messageImg: img
+      })
+      this.selectedChannelContent[index].editComment = false;
+      this.errorMessageCommentChange = false;
+    } else {
+      this.errorMessageCommentChange = true;
+    }
   }
-}
+
+  deleteImgEditComment(){
+    console.log(this.delImgEditComment.nativeElement.src);
+    this.delImgEditComment.nativeElement.src = "";
+    console.log(this.delImgEditComment.nativeElement.src);
+  }
 
   //----Subscribe-Functions----//
   ngOnInit() {
@@ -410,7 +427,7 @@ export class MainboardComponent {
           data: element.data(),
           editComment: false,
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
-        }); 
+        });
       });
     });
   }
@@ -452,10 +469,10 @@ export class MainboardComponent {
 
   //----Helpfunctions----//
   getImgFromAnswerUser(username: string) {
-    if(this.userArray.length >= 1){
-    const user = this.userArray.find(user => user.username === username);
-    return user ? user.img : '/assets/img/signup/profile.png';
-  }
+    if (this.userArray.length >= 1) {
+      const user = this.userArray.find(user => user.username === username);
+      return user ? user.img : '/assets/img/signup/profile.png';
+    }
   }
 
   toggleMenuVisibility() {

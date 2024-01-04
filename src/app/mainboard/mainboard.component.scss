@@ -773,6 +773,39 @@
 
 }
 
+.editComment-div {
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+    }
+
+    img {
+        padding: 8px;
+        max-width: 300px;
+        max-height: 200px;
+    }
+
+    button {
+        border-style: none;
+        border-radius: 30px;
+        background-color: #ECEEFE;
+        width: 25px;
+        height: 25px;
+        margin-top: 8px;
+        cursor: pointer;
+        transition: background-color ease-in-out 200ms, color ease-in-out 200ms;
+
+        &:hover {
+            background-color: #ADB0D9;
+            color: white;
+        }
+
+    }
+}
+
 .editCommentInputfield {
     outline: none;
     background-color: #ECEEFE;
@@ -931,7 +964,7 @@
     overflow: hidden;
 
     ul {
-        overflow-x: scroll; 
+        overflow-x: scroll;
         height: 100%;
     }
 
@@ -959,12 +992,34 @@
     }
 }
 
-.comment-img {
-    padding: 16px;
-    max-width: 250px;
-    max-height: 135px;
-    object-fit: cover;
+.newImg-div {
+    display: flex;
+
+    img {
+        padding: 16px;
+        max-width: 250px;
+        max-height: 135px;
+        object-fit: cover;
+    }
+
+    button {
+        border-style: none;
+        border-radius: 30px;
+        background-color: #ECEEFE;
+        width: 25px;
+        height: 25px;
+        margin-top: 8px;
+        cursor: pointer;
+        transition: background-color ease-in-out 200ms, color ease-in-out 200ms;
+
+        &:hover {
+            background-color: #ADB0D9;
+            color: white;
+        }
+    }
 }
+
+
 
 
 .sendButtonImg {
