@@ -238,10 +238,6 @@ export class MainboardComponent {
     }
   }
 
-
-  //----Search-Function-END---//
-
-
   //------Every necessary function at the Inputfield-----//
   //----New-Comment-Functions----// 
 

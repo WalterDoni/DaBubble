@@ -56,29 +56,23 @@ export class PrivateMessageComponent implements OnChanges {
   //----Create-Arrays----//
   getMessageFromArray() {
     this.messageFromArray = [];
-    this.privateChannelArray.forEach(element => {
-      element.messageFrom.forEach((list: any) => {
-        this.messageFromArray.push(list)
-      });
-    });
+    this.privateChannelArray[0].messageFrom.forEach((list: any) => {
+      this.messageFromArray.push(list)
+      });;
   }
 
   getmessageTextArrayArray() {
     this.messageTextArray = [];
-    this.privateChannelArray.forEach(element => {
-      element.messageText.forEach((list: any) => {
-        this.messageTextArray.push(list)
-      });
-    });
+    this.privateChannelArray[0].messageText.forEach((list: any) => {
+      this.messageTextArray.push(list)
+    }); 
   }
 
   getmessageTimeArray() {
     this.messageTimeArray = [];
-    this.privateChannelArray.forEach(element => {
-      element.messageTime.forEach((list: any) => {
+    this.privateChannelArray[0].messageTime.forEach((list: any) => {
         this.messageTimeArray.push(list)
       });
-    });
   }
 
   //----Subscribe-Functions----//
