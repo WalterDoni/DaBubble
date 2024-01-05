@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { Firestore, collection, addDoc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, onSnapshot, updateDoc, doc } from '@angular/fire/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
@@ -40,46 +40,45 @@ export class PrivateMessageComponent implements OnChanges {
 
   async newCommentInSelectedPrivateChannel() {
     let input = this.newCommentValue.nativeElement.value;
-    let message = this.messageTextArray.push(input);
-    let from = this.messageFromArray.push(this.mainboard.loggedInUserName);
+    this.messageTextArray.push(input);
+    this.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();
-    let time = this.messageTimeArray.push(timestamp);
-    debugger
-    await addDoc(this.privateChannelContentRef(), {
-      messageFrom: from,
-      messageText: message,
-      messageTime: time,
+    this.messageTimeArray.push(timestamp);
+    await updateDoc(doc(this.privateChannelRef(), this.channelId), {
+      messageFrom: this.messageFromArray,
+      messageText: this.messageTextArray,
+      messageTime: this.messageTimeArray,
     });
     this.newCommentValue.nativeElement.value = '';
   }
-  
+
 
   //----Create-Arrays----//
   getMessageFromArray() {
+    this.messageFromArray = [];
     this.privateChannelArray.forEach(element => {
       element.messageFrom.forEach((list: any) => {
         this.messageFromArray.push(list)
       });
     });
-    console.log(this.messageFromArray);
   }
 
   getmessageTextArrayArray() {
+    this.messageTextArray = [];
     this.privateChannelArray.forEach(element => {
       element.messageText.forEach((list: any) => {
         this.messageTextArray.push(list)
       });
     });
-    console.log(this.messageTextArray);
   }
 
   getmessageTimeArray() {
+    this.messageTimeArray = [];
     this.privateChannelArray.forEach(element => {
       element.messageTime.forEach((list: any) => {
         this.messageTimeArray.push(list)
       });
     });
-    console.log(this.messageTimeArray);
   }
 
   //----Subscribe-Functions----//
@@ -96,7 +95,9 @@ export class PrivateMessageComponent implements OnChanges {
           messageTime: element.data()['messageTime'],
           privateChannelId: element.id,
         })
+        this.channelId = element.id;
       })
+
       console.log(this.privateChannelArray);
       this.getPrivateChannelId();
       this.getMessageFromArray();
@@ -107,9 +108,5 @@ export class PrivateMessageComponent implements OnChanges {
 
   privateChannelRef() {
     return collection(this.firestore, 'private-channels')
-  }
-
-  privateChannelContentRef() {
-    return collection(this.firestore, 'private-channels', this.channelId)
   }
 }
