@@ -97,7 +97,6 @@ export class MenuComponent {
        }
      });
     });
-    console.log(this.channelsArray);
   }
 
   //----Folding-Functions---//
