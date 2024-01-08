@@ -20,7 +20,6 @@ export class CreateChannelComponent {
   }
 
   async createChannel() {
-    debugger
     if(this.newChannelName.nativeElement.value.length >= 1){
     let values = {
       name: this.newChannelName.nativeElement.value,

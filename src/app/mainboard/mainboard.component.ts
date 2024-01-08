@@ -91,6 +91,10 @@ export class MainboardComponent {
   filteredUserArrayMenu: any[] = [];
   filteredChannelsArrayMenu: any[] = [];
 
+  messageFromArray: any[] = [];
+  messageTextArray: any[] = [];
+  messageTimeArray: any[] = [];
+
   firestore: Firestore = inject(Firestore);
   unsubUsers;
   unsubChannels;
