@@ -28,38 +28,72 @@ export class PrivateMessageComponent {
   //----Add-New-Message and new channel----//
   async newCommentInSelectedPrivateChannel() {
     let input = this.newCommentValue.nativeElement.value;
-    this.messageTextArray.push(input);
-    this.messageFromArray.push(this.mainboard.loggedInUserName);
+    this.mainboard.messageTextArray.push(input);
+    this.mainboard.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();
-    this.messageTimeArray.push(timestamp);
+    this.mainboard.messageTimeArray.push(timestamp);
     for (const channel of this.privateChannelArray) {
       if (channel.privateMessageFromUser == this.mainboard.loggedInUserName && channel.privateMessageToUser == this.mainboard.selectedUserDirectMessageName) {
         this.channelId = channel.privateChannelId;
         await updateDoc(doc(this.privateChannelRef(), this.channelId), {
-          messageFrom: this.messageFromArray,
-          messageText: this.messageTextArray,
-          messageTime: this.messageTimeArray,
+          messageFrom: this.mainboard.messageFromArray,
+          messageText: this.mainboard.messageTextArray,
+          messageTime: this.mainboard.messageTimeArray,
         });
-      } else {
-        await this.createNewPrivateChannel(input);
       }
+    }
+    if (this.checkIfChannelExist()) {
+      await this.createNewPrivateChannel(input);
     }
     this.newCommentValue.nativeElement.value = '';
   }
 
+  checkIfChannelExist() {
+    if (this.channelId) {
+      return false;
+    }
+    else {
+      this.channelId == undefined;
+      let counter = 0;
+      let nameArray: any[] = []
+      let userArray: any[] = []
+      this.privateChannelArray.forEach((member, i) => {
+        nameArray.push(member.privateMessageToUser)
+        if (member.privateMessageFromUser !== userArray[i - 1]) {
+          userArray.push(member.privateMessageFromUser)
+        }
+      });
+      nameArray.forEach(name => {
+        if (name == this.mainboard.selectedUserDirectMessageName) {
+          counter + 1
+        }
+      });
+      if (!userArray.includes(this.mainboard.loggedInUserName)) {
+        counter = 0;
+      }
+      if (counter === 0) {
+        return true
+      } else {
+        return false;
+      }
+    }
+  }
+
   async createNewPrivateChannel(input: string) {
     await this.clearArrays();
-    this.messageTextArray.push(input);
-    this.messageFromArray.push(this.mainboard.loggedInUserName);
+    this.mainboard.messageTextArray.push(input);
+    this.mainboard.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();
-    this.messageTimeArray.push(timestamp);
+    this.mainboard.messageTimeArray.push(timestamp);
+    debugger
     await addDoc(this.privateChannelRef(), {
       privateMessageFromUser: this.mainboard.loggedInUserName,
       privateMessageToUser: this.mainboard.selectedUserDirectMessageName,
-      messageFrom: this.messageFromArray,
-      messageText: this.messageTextArray,
-      messageTime: this.messageTimeArray,
+      messageFrom: this.mainboard.messageFromArray,
+      messageText: this.mainboard.messageTextArray,
+      messageTime: this.mainboard.messageTimeArray,
     })
+
   }
 
   //----Get the current ID----//
@@ -118,7 +152,6 @@ export class PrivateMessageComponent {
           privateChannelId: element.id,
         })
       })
-      this.getSelectedPrivateChannelId();
     })
   }
 
