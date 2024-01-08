@@ -75,7 +75,7 @@ import { PrivateMessageComponent } from './mainboard-components/private-message/
     provideStorage(() => getStorage()),
   ],
 
-  providers: [LoginComponent, {provide: LOCALE_ID, useValue: 'de' }],
+  providers: [PrivateMessageComponent,LoginComponent, {provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
 })
 

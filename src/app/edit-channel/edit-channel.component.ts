@@ -107,7 +107,7 @@ export class EditChannelComponent {
     return collection(this.firestore, 'channels');
   }
 
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubChannels();
   }
 

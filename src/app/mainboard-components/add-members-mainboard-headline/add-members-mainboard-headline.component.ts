@@ -48,7 +48,7 @@ export class AddMembersMainboardHeadlineComponent {
       }
     });
   }
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubChannelContent();
   }
 

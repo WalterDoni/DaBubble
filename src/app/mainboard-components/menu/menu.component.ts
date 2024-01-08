@@ -2,6 +2,8 @@ import { Component, ElementRef, Injectable, ViewChild, inject } from '@angular/c
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
+import { PrivateMessageComponent } from '../private-message/private-message.component';
+
 
 
 
@@ -45,7 +47,7 @@ export class MenuComponent {
 
   
 
-  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
+  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent,private privateMessage: PrivateMessageComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
@@ -80,7 +82,8 @@ export class MenuComponent {
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
-    this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
+    this.mainboard.selectedUserDirectMessageName = this.userArray[id].username; 
+    this.privateMessage.getSelectedPrivateChannelId(); 
   }
 
   openMenuSearchFieldOnChat() {
@@ -172,7 +175,7 @@ export class MenuComponent {
     return collection(this.firestore, 'channels');
   }
 
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubUsers();
     this.unsubChannels();
   }

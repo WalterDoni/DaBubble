@@ -432,7 +432,7 @@ export class MainboardComponent {
     return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
 
-  ngonDestroy() {
+  ngOnDestroy() {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubChannelContent();
