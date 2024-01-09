@@ -25,11 +25,11 @@
         </div>
 
         <div class="chat-history" *ngFor="let answerTextMessage of selectedChannel[selectedThreadID]['data']['answerText']; let i = index ">
-            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[0]['data']['answerFrom'][i])" alt=""></div>
+            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[selectedThreadID]['data']['answerFrom'][i])" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
-                    <h3>{{selectedChannel[0]['data']['answerFrom'][i]}}</h3>
-                    <p>{{selectedChannel[0]['data']['answerTime'][i]}} Uhr</p>
+                    <h3>{{selectedChannel[selectedThreadID]['data']['answerFrom'][i]}}</h3>
+                    <p>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
                 </div>
                 <div class="message-history">{{answerTextMessage}}</div>
                 <div class="reactions-container">
@@ -69,7 +69,7 @@
 
 
     <div class="chat-message-inputfield">
-        <input type="text" placeholder="Antworten...">
+        <input type="text" placeholder="Antworten..." #inputfieldValue>
         <div class="chat-message-options">
             <span>
                 <img src="/assets/img/mainboard/add_plus.png" alt="">
@@ -78,7 +78,7 @@
                 <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
             </span>
             <span>
-                <img src="/assets/img/mainboard/send.png" alt="">
+                <img src="/assets/img/mainboard/send.png" alt="" (click)="addCommentInThread()">
             </span>
 
         </div>
