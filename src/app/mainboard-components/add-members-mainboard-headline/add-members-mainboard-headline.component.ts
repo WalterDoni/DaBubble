@@ -10,6 +10,8 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 export class AddMembersMainboardHeadlineComponent {
   @ViewChild('input') input!: ElementRef;
 
+  sureContainer: boolean = false;
+
   unsubChannelContent;
   firestore: Firestore = inject(Firestore);
 
@@ -48,8 +50,13 @@ export class AddMembersMainboardHeadlineComponent {
       }
     });
   }
+
   ngOnDestroy() {
     this.unsubChannelContent();
+  }
+  
+  toogleSureContainer() {
+    this.sureContainer = !this.sureContainer;
   }
 
 }

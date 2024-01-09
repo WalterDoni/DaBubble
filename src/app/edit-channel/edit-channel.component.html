@@ -35,5 +35,11 @@
 
         </div>
 
-        <div class="button-div"><button (click)="leaveChannel()">Channel verlassen</button></div>
+        <div class="button-div"><button (click)="toogleSureContainer()">Channel verlassen</button></div>
+        <div class="sure-message-container" *ngIf="sureContainer">
+            <div class="sure-message-content">
+                <h1>Sicher?</h1>
+                <div class="btn-container"><button (click)="leaveChannel(); toogleSureContainer()">Ja</button><button (click)="toogleSureContainer()">Nein</button></div>
+            </div>
+        </div>
     </div>

@@ -9,7 +9,7 @@
         </div>
         <div class="button-div">
         
-            <button (click)="addMemberToChannel()">Hinzufügen</button>
+            <button (click)="toogleSureContainer()">Hinzufügen</button>
         </div>
         <div class="searchfield" *ngIf="mainboard.searchTermChannelMember && mainboard.searchTermChannelMember.length >= 1">
             <ul>
@@ -18,5 +18,11 @@
                 <p>{{member.username}}</p>
                 </li>
             </ul>
+        </div>
+        <div class="sure-message-container" *ngIf="sureContainer">
+            <div class="sure-message-content">
+                <h1>Sicher?</h1>
+                <div class="btn-container"><button (click)="addMemberToChannel(); toogleSureContainer()">Ja</button><button (click)="toogleSureContainer()">Nein</button></div>
+            </div>
         </div>
     </div>

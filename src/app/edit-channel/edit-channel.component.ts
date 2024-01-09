@@ -25,6 +25,7 @@ export class EditChannelComponent {
   channelID!: string;
 
   errormessage: boolean = false;
+  sureContainer: boolean = false;
 
   constructor(public mainboard: MainboardComponent) {
     this.unsubChannels = this.subChannels();
@@ -45,6 +46,10 @@ export class EditChannelComponent {
 
   toggleChangeChannelDescription() {
     this.changeChannelDescription = !this.changeChannelDescription;
+  }
+
+  toogleSureContainer(){
+    this.sureContainer = !this.sureContainer;
   }
 
   getCorrectChannelID() {
