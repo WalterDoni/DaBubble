@@ -21,7 +21,7 @@
                     
                 </div>
             </div>
-            <div class="my-avatar-chat-history"><img [src]="mainboard.getImgFromAnswerUser(content)" alt=""></div>
+            <div class="my-avatar-chat-history"><img [src]="mainboard.loggedInUserImg" alt=""></div>
         </div>
 
         <div style="display: flex;" *ngIf="content != mainboard.loggedInUserName && mainboard.messageFromArray.length >= 1">

@@ -18,9 +18,9 @@ export class EmojiPickerComponent {
 
   emojiSelected(event: any) {
     const selectedEmoji = event.emoji.native;
-    this.emojiInput$?.next(selectedEmoji);
+    const test = event.emoji.colons;
+    this.emojiInput$?.next(test);
     this.mainboard.reactionEmoji = selectedEmoji;
-    
   }
 
   eventHandler = (event: Event) => {

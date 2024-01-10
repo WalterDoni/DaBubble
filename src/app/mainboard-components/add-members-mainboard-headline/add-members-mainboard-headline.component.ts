@@ -31,6 +31,9 @@ export class AddMembersMainboardHeadlineComponent {
   }
 
   async addMemberToChannel() {
+    if (this.mainboard.searchTermChannelMember == undefined) {
+      alert("Bitte Nutzer auswählen!");
+    }
     let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
     this.mainboard.channelsArray.forEach(channel => {
       if (channel.channelId == this.mainboard.channelID) {
@@ -38,6 +41,10 @@ export class AddMembersMainboardHeadlineComponent {
         channel.members.forEach((member: any) => {
           if (member == searchTermWithFirstLetterBig) {
             alert("Dieser Nutzer befindet sich bereits im Channel!");
+            memberAlreadyExists = true;
+          }
+          if (!this.mainboard.userArray.includes(searchTermWithFirstLetterBig)) {
+            alert("Dieser Nutzer existiert nicht!");
             memberAlreadyExists = true;
           }
         });
@@ -54,7 +61,7 @@ export class AddMembersMainboardHeadlineComponent {
   ngOnDestroy() {
     this.unsubChannelContent();
   }
-  
+
   toogleSureContainer() {
     this.sureContainer = !this.sureContainer;
   }

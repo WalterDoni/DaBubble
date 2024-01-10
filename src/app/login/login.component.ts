@@ -161,8 +161,6 @@ export class LoginComponent {
     return onSnapshot(this.usersRef(), (list) => {
       list.forEach(element => {
         this.loginArray.push({ email: element.data()['email'], id: element.id });
-        console.log(this.loginArray);
-
       })
     })
   }

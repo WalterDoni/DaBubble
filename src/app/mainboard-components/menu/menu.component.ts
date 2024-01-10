@@ -45,9 +45,9 @@ export class MenuComponent {
   openTableChannels: boolean = true;
   openTableDirectMessages: boolean = true;
 
-  
 
-  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent,private privateMessage: PrivateMessageComponent) {
+
+  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent, private privateMessage: PrivateMessageComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
@@ -59,8 +59,6 @@ export class MenuComponent {
     });
   }
 
-  
-  
   openCreateChannelPopUp() {
     this.toggleCreateChannel = true;
   }
@@ -74,7 +72,7 @@ export class MenuComponent {
     this.mainboard.selectedChannelCreated = this.channelsArray[id].channelCreated;
     this.mainboard.channelID = this.channelsArray[id].channelID;
     this.mainboard.channelContent();
-    this.mainboard.getChannelMembersFromSelectedChannel()
+    this.mainboard.getChannelMembersFromSelectedChannel();
   }
 
   selectUserForDirectmessage(id: number) {
@@ -82,8 +80,8 @@ export class MenuComponent {
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
-    this.mainboard.selectedUserDirectMessageName = this.userArray[id].username; 
-    this.privateMessage.getSelectedPrivateChannelId(); 
+    this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
+    this.privateMessage.getSelectedPrivateChannelId();
   }
 
   openMenuSearchFieldOnChat() {
@@ -92,13 +90,13 @@ export class MenuComponent {
     this.mainboard.chatContent = false;
   }
 
-  displayChannelOnlyWhenUserIsMember(){
+  displayChannelOnlyWhenUserIsMember() {
     this.channelsArray.forEach(channel => {
-     channel.members.forEach((member: any) => {
-       if(member == this.mainboard.loggedInUserName){
-       channel.displayChannel = true;
-       }
-     });
+      channel.members.forEach((member: any) => {
+        if (member == this.mainboard.loggedInUserName) {
+          channel.displayChannel = true;
+        }
+      });
     });
   }
 
@@ -128,7 +126,7 @@ export class MenuComponent {
 
 
   //----Subscribe-Functions----//
-  
+
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       this.userArray = [];
@@ -181,5 +179,5 @@ export class MenuComponent {
   }
 
 
-  
+
 }

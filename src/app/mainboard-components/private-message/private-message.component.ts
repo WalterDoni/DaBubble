@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Firestore, collection, addDoc, onSnapshot, updateDoc, doc } from '@angular/fire/firestore';
 import { Timestamp } from 'firebase/firestore';
-import { timestamp } from 'rxjs';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 
@@ -21,7 +20,7 @@ export class PrivateMessageComponent {
   firestore: Firestore = inject(Firestore);
   unsubprivateChannel;
 
-  constructor(public mainboard: MainboardComponent, private cdr: ChangeDetectorRef) {
+  constructor(public mainboard: MainboardComponent,  private cdr: ChangeDetectorRef) {
     this.unsubprivateChannel = this.subprivateChannel();
   }
 
@@ -32,63 +31,37 @@ export class PrivateMessageComponent {
     this.mainboard.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();
     this.mainboard.messageTimeArray.push(timestamp);
+    let newChannel = true;
     for (const channel of this.privateChannelArray) {
-      if (channel.privateMessageFromUser == this.mainboard.loggedInUserName && channel.privateMessageToUser == this.mainboard.selectedUserDirectMessageName) {
+      if (channel.messageBetween.includes(this.mainboard.loggedInUserName) && channel.messageBetween.includes(this.mainboard.selectedUserDirectMessageName)) {
         this.channelId = channel.privateChannelId;
         await updateDoc(doc(this.privateChannelRef(), this.channelId), {
           messageFrom: this.mainboard.messageFromArray,
           messageText: this.mainboard.messageTextArray,
           messageTime: this.mainboard.messageTimeArray,
         });
+        newChannel = false;
       }
     }
-    if (this.checkIfChannelExist()) {
+    if (newChannel) {
       await this.createNewPrivateChannel(input);
     }
     this.newCommentValue.nativeElement.value = '';
   }
 
-  checkIfChannelExist() {
-    if (this.channelId) {
-      return false;
-    }
-    else {
-      this.channelId == undefined;
-      let counter = 0;
-      let nameArray: any[] = []
-      let userArray: any[] = []
-      this.privateChannelArray.forEach((member, i) => {
-        nameArray.push(member.privateMessageToUser)
-        if (member.privateMessageFromUser !== userArray[i - 1]) {
-          userArray.push(member.privateMessageFromUser)
-        }
-      });
-      nameArray.forEach(name => {
-        if (name == this.mainboard.selectedUserDirectMessageName) {
-          counter + 1
-        }
-      });
-      if (!userArray.includes(this.mainboard.loggedInUserName)) {
-        counter = 0;
-      }
-      if (counter === 0) {
-        return true
-      } else {
-        return false;
-      }
-    }
-  }
+
 
   async createNewPrivateChannel(input: string) {
     await this.clearArrays();
+    let memberArray: any[] = [];
+    memberArray.push(this.mainboard.loggedInUserName);
+    memberArray.push(this.mainboard.selectedUserDirectMessageName);
     this.mainboard.messageTextArray.push(input);
     this.mainboard.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();
     this.mainboard.messageTimeArray.push(timestamp);
-    debugger
     await addDoc(this.privateChannelRef(), {
-      privateMessageFromUser: this.mainboard.loggedInUserName,
-      privateMessageToUser: this.mainboard.selectedUserDirectMessageName,
+      messageBetween: memberArray,
       messageFrom: this.mainboard.messageFromArray,
       messageText: this.mainboard.messageTextArray,
       messageTime: this.mainboard.messageTimeArray,
@@ -100,7 +73,7 @@ export class PrivateMessageComponent {
   getSelectedPrivateChannelId() {
     for (let i = 0; i < this.privateChannelArray.length; i++) {
       const channel = this.privateChannelArray[i];
-      if (channel.privateMessageFromUser == this.mainboard.loggedInUserName && channel.privateMessageToUser == this.mainboard.selectedUserDirectMessageName) {
+      if (channel.messageBetween.includes(this.mainboard.loggedInUserName) && channel.messageBetween.includes(this.mainboard.selectedUserDirectMessageName)) {
         this.channelId = channel.id;
         this.getMessageFromArray(i);
         this.getmessageTextArrayArray(i);
@@ -113,28 +86,31 @@ export class PrivateMessageComponent {
   }
 
   //----Create-Arrays----//
-  getMessageFromArray(index: number) {
+  async getMessageFromArray(index: number) {
     this.messageFromArray = [];
-    this.privateChannelArray[index].messageFrom.forEach((list: any) => {
+    await this.privateChannelArray[index].messageFrom.forEach((list: any) => {
       this.messageFromArray.push(list)
     });
-    this.mainboard.messageFromArray = this.messageFromArray
+    this.mainboard.messageFromArray = this.messageFromArray;
+
   }
 
-  getmessageTextArrayArray(index: number) {
+  async getmessageTextArrayArray(index: number) {
     this.messageTextArray = [];
-    this.privateChannelArray[index].messageText.forEach((list: any) => {
+    await this.privateChannelArray[index].messageText.forEach((list: any) => {
       this.messageTextArray.push(list)
     });
-    this.mainboard.messageTextArray = this.messageTextArray
+    this.mainboard.messageTextArray = this.messageTextArray;
+   console.log('nach Abfrage' + this.mainboard.messageTextArray);
   }
 
-  getmessageTimeArray(index: number) {
+  async getmessageTimeArray(index: number) {
     this.messageTimeArray = [];
-    this.privateChannelArray[index].messageTime.forEach((list: any) => {
+    await this.privateChannelArray[index].messageTime.forEach((list: any) => {
       this.messageTimeArray.push(list)
     });
-    this.mainboard.messageTimeArray = this.messageTimeArray
+    this.mainboard.messageTimeArray = this.messageTimeArray;
+    this.cdr.detectChanges();
   }
 
   //----Subscribe-Functions----//
@@ -144,14 +120,14 @@ export class PrivateMessageComponent {
       this.privateChannelArray = [];
       list.forEach(element => {
         this.privateChannelArray.push({
-          privateMessageFromUser: element.data()['privateMessageFromUser'],
-          privateMessageToUser: element.data()['privateMessageToUser'],
+          messageBetween: element.data()['messageBetween'],
           messageFrom: element.data()['messageFrom'],
           messageText: element.data()['messageText'],
           messageTime: element.data()['messageTime'],
           privateChannelId: element.id,
         })
-      })
+      });
+      console.log('bevor Abfrage' + this.mainboard.messageTextArray);
     })
   }
 

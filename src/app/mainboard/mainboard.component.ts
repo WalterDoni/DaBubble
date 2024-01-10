@@ -351,9 +351,7 @@ export class MainboardComponent {
   }
 
   deleteImgEditComment(){
-    console.log(this.delImgEditComment.nativeElement.src);
     this.delImgEditComment.nativeElement.src = "";
-    console.log(this.delImgEditComment.nativeElement.src);
   }
 
   //----Subscribe-Functions----//
@@ -435,6 +433,7 @@ export class MainboardComponent {
   channelContentRef() {
     return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
+  
 
   ngOnDestroy() {
     this.unsubUsers();
