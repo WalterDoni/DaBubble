@@ -30,7 +30,7 @@ export class MainboardComponent {
 
   @ViewChild('uploadmessage') uploadmessage!: ElementRef;
   displayUploadMessage: boolean = false;
-  
+
   reactionEmoji: any;
   userId: string = '';
 
@@ -295,7 +295,7 @@ export class MainboardComponent {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         this.displayUploadMessage = true;
         if (this.uploadmessage && this.uploadmessage.nativeElement) {
-          this.uploadmessage.nativeElement.textContent = 'Das Bild ist zu ' +  Math.round(progress) + '% hochgeladen';
+          this.uploadmessage.nativeElement.textContent = 'Das Bild ist zu ' + Math.round(progress) + '% hochgeladen';
         }
         switch (snapshot.state) {
           case 'paused':
@@ -350,8 +350,16 @@ export class MainboardComponent {
     }
   }
 
-  deleteImgEditComment(){
+  deleteImgEditComment() {
     this.delImgEditComment.nativeElement.src = "";
+  }
+
+  //----Update-Emoji-Counter----//
+
+  updateEmojis() {
+    console.log(this. channelContentRef())
+    console.log(this.selectedChannelContent[0]['id']);
+    console.log(this.reactionEmoji);
   }
 
   //----Subscribe-Functions----//
@@ -423,18 +431,21 @@ export class MainboardComponent {
         this.selectedChannelContent.push({
           id: element.id,
           data: element.data(),
+          emoji: element.data()['emoji'],
+          emojiBy: element.data()['emojiBy'],
+          emojiCounter: element.data()['emojiCounter'],
           answers: element.data()['answerFrom'].length,
           editComment: false,
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
-      }); 
+      });
     });
   }
 
   channelContentRef() {
     return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
-  
+
 
   ngOnDestroy() {
     this.unsubUsers();

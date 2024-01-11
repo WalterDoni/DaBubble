@@ -101,7 +101,6 @@ export class PrivateMessageComponent {
       this.messageTextArray.push(list)
     });
     this.mainboard.messageTextArray = this.messageTextArray;
-   console.log('nach Abfrage' + this.mainboard.messageTextArray);
   }
 
   async getmessageTimeArray(index: number) {
@@ -127,7 +126,6 @@ export class PrivateMessageComponent {
           privateChannelId: element.id,
         })
       });
-      console.log('bevor Abfrage' + this.mainboard.messageTextArray);
     })
   }
 

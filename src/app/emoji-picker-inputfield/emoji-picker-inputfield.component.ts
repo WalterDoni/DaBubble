@@ -17,11 +17,8 @@ export class EmojiPickerInputfieldComponent {
 
   emojiSelected(event: any) {
     const selectedEmoji = event.emoji.native;
-    const test = event.emoji.colons;
-    this.emojiInput$?.next(test);
+    this.emojiInput$?.next(selectedEmoji);
     this.mainboard.newCommentValue.nativeElement.value = selectedEmoji;
-    console.log(selectedEmoji);
-    
   }
 
   eventHandler = (event: Event) => {
