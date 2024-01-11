@@ -95,8 +95,8 @@
                                     <h3>{{channel.data.from}}</h3>
                                     <p class="headline-message-time"> {{channel.data.timestamp}} Uhr</p>
                                     <div><app-popup-for-thread
-                                        *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
-                                </div>
+                                            *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
+                                    </div>
                                 </div>
                                 <div class="message-history">{{channel.data.message}}
                                     <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
@@ -106,22 +106,22 @@
                                 <div class="reactions-container">
 
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                        *ngFor="let emoji of channel.data.emoji; let i = index"
                                         (mouseleave)="hidePopupForReactions()">
                                         <app-popup-reactions
                                             *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
-                                        <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
-                                        <p style="position: absolute; right: 17px">1</p>
+                                        <p style="position: absolute; left: 10px">{{emoji}}</p>
+                                        <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[i]}}</p>
                                     </span>
                                 </div>
                                 <div class="answers-message-history">
-                                    <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
+                                    <div (click)="showThread()">{{channel.answers}} Antworten</div><span
+                                        *ngIf="channel.answers > 0">Letzte
                                         Antwort {{channel.lastAnswer}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <div *ngFor="let channel of selectedChannelContent; let i = index"
@@ -136,8 +136,8 @@
                         <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
                             <div class="my-headline-message-history">
                                 <div class="popUp-div"><app-popup-edit-comment
-                                    *ngIf="editCommentPopUp && hoveredChannelIndex == i && (channel.data.from == loggedInUserName)"></app-popup-edit-comment>
-                            </div>
+                                        *ngIf="editCommentPopUp && hoveredChannelIndex == i && (channel.data.from == loggedInUserName)"></app-popup-edit-comment>
+                                </div>
                                 <h3>{{channel.data.from}}</h3>
                                 <p> {{channel.data.timestamp}} Uhr</p>
                             </div>
@@ -165,16 +165,17 @@
                             </div>
 
                             <div class="my-reactions-container">
-                                <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                <span class="reactions" (mouseenter)="showPopupForReactions($event)" *ngFor="let emoji of channel.data.emoji; let i = index"
                                     (mouseleave)="hidePopupForReactions()">
                                     <app-popup-reactions #popup
                                         *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                    <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
-                                    <p style="position: absolute; right: 17px">1</p>
+                                    <p style="position: absolute; left: 10px">{{emoji}}</p>
+                                    <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[i]}}</p>
                                 </span>
                             </div>
                             <div class="answers-message-history">
-                                <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
+                                <div (click)="showThread()">{{channel.answers}} Antworten</div><span
+                                    *ngIf="channel.answers > 0">Letzte
                                     Antwort {{channel.lastAnswer}}</span>
                             </div>
                         </div>
@@ -209,7 +210,7 @@
                             <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
                         </div>
                         <span class="seperator-send-message"></span>
-                        <span><img src="/assets/img/mainboard/smile_add_message.png" alt="" style="position: absolute;"><app-emoji-picker-inputfield></app-emoji-picker-inputfield></span>
+                        <span><app-emoji-picker-inputfield></app-emoji-picker-inputfield></span>
                         <img (click)="toogleDisplayAllChannelMembers()"
                             src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
                     </span>

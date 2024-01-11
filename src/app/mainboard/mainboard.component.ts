@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 
 @Component({
@@ -422,10 +423,11 @@ export class MainboardComponent {
         this.selectedChannelContent.push({
           id: element.id,
           data: element.data(),
+          answers: element.data()['answerFrom'].length,
           editComment: false,
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
-      });
+      }); 
     });
   }
 

@@ -112,6 +112,7 @@
     height: 100%;
     width: 1px;
     background: #ADB0D9;
+    cursor: default;
 }
 
 .chat-history {
@@ -240,6 +241,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
+    cursor: pointer;
 
     span {
         display: flex;
@@ -254,5 +256,18 @@
 
     :last-child {
         margin-right: 8px;
+        transition: transform 200ms ease-in-out;
+      
+        :hover{
+
+            transform: scale(1.2);
+        }
+
     }
+}
+
+.hoverImg:hover {
+    transition: transform 200ms ease-in-out;
+    filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
+    transform: scale(1.2);
 }

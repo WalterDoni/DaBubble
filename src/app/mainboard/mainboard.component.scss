@@ -718,14 +718,14 @@
     gap: 16px;
 
 
-    :first-child:hover {
+    div:hover {
         cursor: pointer;
         font-weight: 600;
         color: #535AF1;
         transform: scale(1.1);
     }
 
-    :last-child {
+    span {
         font-size: 14px;
         color: #686868;
 
@@ -1086,7 +1086,6 @@
 }
 
 .imgHoverInput {
-
     img:hover {
         filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
         transform: scale(1.2);

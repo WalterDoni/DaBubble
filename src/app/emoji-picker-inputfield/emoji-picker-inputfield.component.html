@@ -1,12 +1,6 @@
-<div #container class="emoji-picker-container" (click)="toggled()">
+<div #container class="emoji-picker-container">
+    <button> <img (click)="toggled()" src="/assets/img/mainboard/smile_add_message.png" alt=""></button>
 
-    <emoji-mart
-      class="picker"
-      color="var(--str-chat__primary-color)"
-      *ngIf="isOpened"
-      title="Pick your emoji…"
-      emoji="point_up"
-      (emojiSelect)="emojiSelected($event)"
-    
-    ></emoji-mart>
-  </div>
+    <emoji-mart class="picker" color="var(--str-chat__primary-color)" *ngIf="isOpened" title="Pick your emoji…"
+        emoji="point_up" (emojiSelect)="emojiSelected($event)"></emoji-mart>
+</div>

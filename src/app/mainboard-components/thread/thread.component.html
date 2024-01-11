@@ -68,13 +68,12 @@
         <input type="text" placeholder="Antworten..." #inputfieldValue>
         <div class="chat-message-options">
             <span>
-                <img src="/assets/img/mainboard/add_plus.png" alt="">
+                <span><app-emoji-picker-inputfield></app-emoji-picker-inputfield></span>
                 <span class="seperator-send-message"></span>
-                <span><img src="/assets/img/mainboard/smile_add_message.png" alt="" style="position: absolute;"><app-emoji-picker-inputfield></app-emoji-picker-inputfield></span>
-                <img src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
+                <img class="hoverImg" src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
             </span>
-            <span>
-                <img src="/assets/img/mainboard/send.png" alt="" (click)="addCommentInThread()">
+            <span >
+                <img  src="/assets/img/mainboard/send.png" alt="" (click)="addCommentInThread()">
             </span>
 
         </div>
