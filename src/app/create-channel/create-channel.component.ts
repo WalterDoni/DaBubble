@@ -35,9 +35,7 @@ export class CreateChannelComponent {
         this.closeWindow();
         this.errormessage = false;
       })
-        .catch((error) => {
-          console.log(error)
-        })
+        .catch((error) => { console.log(error) })
     } else {
       this.errormessage = true;
     }
@@ -51,6 +49,7 @@ export class CreateChannelComponent {
       created: this.mainboard.loggedInUserName,
     };
   }
+
   closeWindow() {
     this.menu.toggleCreateChannel = false;
   }
@@ -58,4 +57,5 @@ export class CreateChannelComponent {
   stopClosing(event: Event) {
     event.stopPropagation();
   }
+  
 }

@@ -8,9 +8,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class EmailNewPasswordComponent {
 
-
   constructor(private authService: AuthService){}
-
-
 
 }

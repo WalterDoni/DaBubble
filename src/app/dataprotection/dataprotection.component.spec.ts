@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DataprotectionComponent } from './dataprotection.component';
 
 describe('DataprotectionComponent', () => {

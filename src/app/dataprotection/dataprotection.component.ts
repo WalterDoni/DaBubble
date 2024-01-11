@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
 })
 export class DataprotectionComponent {
 
-  
   constructor(private router: Router){}
-
 
   goToLoginPage() {
     this.router.navigateByUrl('');

@@ -16,6 +16,9 @@ export class EmojiPickerComponent {
   constructor(private mainboard: MainboardComponent) {
   }
 
+  /**
+ * Handles the selection of an emoji.
+ */
   emojiSelected(event: any) {
     const selectedEmoji = event.emoji.native;
     this.emojiInput$?.next(selectedEmoji);
@@ -23,6 +26,11 @@ export class EmojiPickerComponent {
     this.mainboard.updateEmojis();
   }
 
+/**
+ * Handles the click event to check if it occurs outside the container.
+ * Closes the container if the click is outside.
+ *
+ */
   eventHandler = (event: Event) => {
     if (!this.container?.nativeElement.contains(event.target as Node)) {
       this.isOpened = false;
@@ -30,6 +38,10 @@ export class EmojiPickerComponent {
     }
   };
 
+/**
+ * Toggles the opened/closed state of the container and adds or removes the event handler accordingly.
+ *
+ */
   toggled() {
     if (!this.container) {
       return;

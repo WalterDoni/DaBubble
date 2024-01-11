@@ -10,7 +10,6 @@ export class ImprintComponent {
 
 constructor(private router: Router){}
 
-
   goToLoginPage() {
     this.router.navigateByUrl('');
   }
