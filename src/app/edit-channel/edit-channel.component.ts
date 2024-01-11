@@ -94,6 +94,7 @@ export class EditChannelComponent {
   }
 
   //----Subscribe-Functions----//
+  
   subChannels() {
     return onSnapshot(this.channelsRef(), (list) => {
       this.channelsArray = [];

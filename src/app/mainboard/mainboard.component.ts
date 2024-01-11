@@ -107,6 +107,11 @@ export class MainboardComponent {
     this.unsubChannelContent = this.channelContent()
   }
 
+ /**
+ * Returns the formatted date in the specified format.
+ *
+ * @returns {string} The formatted date.
+ */
   getFormattedDate(): string {
     return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale) as string;
   }
