@@ -30,7 +30,6 @@ export class MainboardComponent {
   @ViewChild('uploadmessage') uploadmessage!: ElementRef;
   displayUploadMessage: boolean = false;
   
-
   reactionEmoji: any;
   userId: string = '';
 
