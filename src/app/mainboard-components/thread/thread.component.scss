@@ -102,6 +102,10 @@
         width: 65%;
         background: #ADB0D9;
 
+        @media(max-width: 350px){
+            width: 60%;
+        }
+
     }
 }
 
@@ -186,6 +190,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 16px;
+    color: black;
 
     :first-child {
         font-size: 14px;

@@ -5,7 +5,7 @@
             <p>DABubble</p>
         </span>
         <span class="headline-logo-under-w1110px" (click)="toggleMenuVisibility()">
-            <p style="width: 2px;">
+            <p style="width: 2px; cursor: pointer;">
                 < </p><img src="/assets/img/mainboard/channelname.png" alt="">
                     <p>Code learning</p>
         </span>
@@ -86,10 +86,6 @@
                             <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
                             <span class="seperator-chat"></span>
                         </div>
-
-                        <div style="position: relative;"><app-popup-for-thread
-                                *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
-                        </div>
                         <div style="display: flex;" *ngIf="channel.data.from != loggedInUserName">
                             <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(channel.data.from)"
                                     alt="">
@@ -97,7 +93,10 @@
                             <div class="message-chat-history">
                                 <div class="headline-message-history">
                                     <h3>{{channel.data.from}}</h3>
-                                    <p> {{channel.data.timestamp}} Uhr</p>
+                                    <p class="headline-message-time"> {{channel.data.timestamp}} Uhr</p>
+                                    <div><app-popup-for-thread
+                                        *ngIf="isPopupForThreadVisible && hoveredChannelIndex === i"></app-popup-for-thread>
+                                </div>
                                 </div>
                                 <div class="message-history">{{channel.data.message}}
                                     <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
@@ -113,8 +112,6 @@
                                         <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
                                         <p style="position: absolute; right: 17px">1</p>
                                     </span>
-
-                                    <span><app-emoji-picker></app-emoji-picker></span>
                                 </div>
                                 <div class="answers-message-history">
                                     <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
@@ -134,12 +131,13 @@
                         <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
                         <span class="seperator-chat"></span>
                     </div>
-                    <div class="popUp-div"><app-popup-edit-comment
-                            *ngIf="editCommentPopUp && hoveredChannelIndex == i && (channel.data.from == loggedInUserName)"></app-popup-edit-comment>
-                    </div>
+
                     <div class="my-message-chat">
                         <div class="my-message-chat-history" *ngIf="channel.data.from == loggedInUserName">
                             <div class="my-headline-message-history">
+                                <div class="popUp-div"><app-popup-edit-comment
+                                    *ngIf="editCommentPopUp && hoveredChannelIndex == i && (channel.data.from == loggedInUserName)"></app-popup-edit-comment>
+                            </div>
                                 <h3>{{channel.data.from}}</h3>
                                 <p> {{channel.data.timestamp}} Uhr</p>
                             </div>
@@ -174,8 +172,6 @@
                                     <p style="position: absolute; left: 10px">{{reactionEmoji}}</p>
                                     <p style="position: absolute; right: 17px">1</p>
                                 </span>
-
-                                <span><app-emoji-picker></app-emoji-picker></span>
                             </div>
                             <div class="answers-message-history">
                                 <span (click)="showThread()">{{channel.data.answers}} Antworten</span><span>Letzte
@@ -228,7 +224,7 @@
         </div>
 
         <div class="chat" *ngIf="directMessageContent">
-          <app-private-message></app-private-message>
+            <app-private-message></app-private-message>
         </div>
 
 

@@ -10,12 +10,19 @@ import { AuthService } from '../services/auth.service';
 export class PasswordResetComponent {
   @ViewChild('email') email!: ElementRef;
 
+  showEmailHasBeenSend: boolean = false;
+
   constructor(private router: Router, private authService: AuthService) {
   }
 
   sendResetMail(){
     let mail = this.email.nativeElement.value;
     this.authService.forgotPassword(mail);
+    this.showEmailHasBeenSend = true;
+    setTimeout(() => {
+      this.showEmailHasBeenSend = false;
+      this.router.navigateByUrl('');
+    }, 2000);
   }
 
   goToLoginPage() {

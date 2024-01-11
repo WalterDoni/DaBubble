@@ -1,7 +1,5 @@
-<div #container class="emoji-picker-container">
-    <button (click)="toggled()">
-      <img src="/assets/img/mainboard/add_reaction.png" alt="">
-    </button>
+<div #container class="emoji-picker-container" (click)="toggled()">
+
     <emoji-mart
       class="picker"
       color="var(--str-chat__primary-color)"

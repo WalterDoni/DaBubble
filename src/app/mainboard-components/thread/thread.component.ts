@@ -17,7 +17,7 @@ export class ThreadComponent {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(private mainboard: MainboardComponent) {
+  constructor(public mainboard: MainboardComponent) {
     this.selectedChannel = this.mainboard.selectedChannelContent;
     this.selectedThreadID = this.mainboard.hoveredChannelIndex;
     this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
