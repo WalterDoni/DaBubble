@@ -107,7 +107,7 @@
 
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
                                         *ngFor="let emoji of channel.data.emoji; let i = index"
-                                        (mouseleave)="hidePopupForReactions()">
+                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
                                         <app-popup-reactions
                                             *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
                                         <p style="position: absolute; left: 10px">{{emoji}}</p>
@@ -166,7 +166,7 @@
 
                             <div class="my-reactions-container">
                                 <span class="reactions" (mouseenter)="showPopupForReactions($event)" *ngFor="let emoji of channel.data.emoji; let i = index"
-                                    (mouseleave)="hidePopupForReactions()">
+                                    (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
                                     <app-popup-reactions #popup
                                         *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
                                     <p style="position: absolute; left: 10px">{{emoji}}</p>

@@ -33,12 +33,6 @@
                     <p>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
                 </div>
                 <div class="message-history">{{answerTextMessage}}</div>
-                <div class="reactions-container">
-                    <span class="reactions"><img  src="/assets/img/mainboard/rocketEmoji.png" alt="">
-                        <p> 1 </p>
-                    </span>
-                    <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
-                </div>
             </div>
         </div>
 
@@ -49,12 +43,6 @@
                     <h3>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}}</h3>
                 </div>
                 <div class="my-message-history">{{answerTextMessage}}</div>
-                <div class="reactions-container">
-                    <span class="reactions"><img src="/assets/img/mainboard/rocketEmoji.png" alt="">
-                        <p> 1 </p>
-                    </span>
-                    <span class="add-reaction"><img src="/assets/img/mainboard/add_reaction.png" alt=""></span>
-                </div>
             </div>
             <div *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName" class="padding-thread-avatar"><img src="/assets/img/signup/avatar2.png" alt=""></div>
         </div>

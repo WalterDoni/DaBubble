@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import {  Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { MainboardComponent } from '../mainboard/mainboard.component';
 
 @Component({
@@ -23,14 +23,15 @@ export class EmojiPickerComponent {
     const selectedEmoji = event.emoji.native;
     this.emojiInput$?.next(selectedEmoji);
     this.mainboard.reactionEmoji = selectedEmoji;
+    console.log(selectedEmoji);
     this.mainboard.updateEmojis();
   }
 
-/**
- * Handles the click event to check if it occurs outside the container.
- * Closes the container if the click is outside.
- *
- */
+  /**
+   * Handles the click event to check if it occurs outside the container.
+   * Closes the container if the click is outside.
+   *
+   */
   eventHandler = (event: Event) => {
     if (!this.container?.nativeElement.contains(event.target as Node)) {
       this.isOpened = false;
@@ -38,10 +39,10 @@ export class EmojiPickerComponent {
     }
   };
 
-/**
- * Toggles the opened/closed state of the container and adds or removes the event handler accordingly.
- *
- */
+  /**
+   * Toggles the opened/closed state of the container and adds or removes the event handler accordingly.
+   *
+   */
   toggled() {
     if (!this.container) {
       return;

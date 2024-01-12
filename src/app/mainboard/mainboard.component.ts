@@ -107,11 +107,11 @@ export class MainboardComponent {
     this.unsubChannelContent = this.channelContent()
   }
 
- /**
- * Returns the formatted date in the specified format.
- *
- * @returns {string} The formatted date.
- */
+  /**
+  * Returns the formatted date in the specified format.
+  *
+  * @returns {string} The formatted date.
+  */
   getFormattedDate(): string {
     return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale) as string;
   }
@@ -361,12 +361,61 @@ export class MainboardComponent {
 
   //----Update-Emoji-Counter----//
 
-  updateEmojis() {
-    console.log(this. channelContentRef())
-    console.log(this.selectedChannelContent[0]['id']);
-    console.log(this.reactionEmoji);
+  async updateEmojis() {
+    let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
+    let id = this.selectedChannelContent[0]['id'];
+    if (!emojiByContainer.includes(this.loggedInUserName)) {
+      if (emojiContainer.includes(this.reactionEmoji)) {
+        emojiContainer.forEach((element: string, id: number) => {
+          if (element == this.reactionEmoji) {
+            emojiCounterContainer[id] = emojiCounterContainer[id] + 1;
+          }
+        });
+      } else {
+        emojiCounterContainer.push(1);
+      }
+      emojiContainer.push(this.reactionEmoji);
+      emojiByContainer.push(this.loggedInUserName);
+      await updateDoc(doc(this.channelContentRef(), id), {
+        emoji: emojiContainer,
+        emojiBy: emojiByContainer,
+        emojiCounter: emojiCounterContainer,
+      })
+    } else {
+      alert('Bitte nur ein Emoji pro Kommentar auswählen')
+    }
   }
 
+  async removeEmoji(index: number) {
+    let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
+    let id = this.selectedChannelContent[0]['id'];
+    if (emojiByContainer.includes(this.loggedInUserName)) {
+      emojiByContainer.forEach((name: string, i: number) => {
+        if (name == this.loggedInUserName) {
+          emojiByContainer.splice(i, 1);
+          if (emojiCounterContainer[index] > 1) {
+            emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
+          } else {
+            emojiCounterContainer.splice(index, 1);
+            emojiContainer.splice(index, 1);
+          }
+        }
+      });
+    }
+    await updateDoc(doc(this.channelContentRef(), id), {
+      emoji: emojiContainer,
+      emojiBy: emojiByContainer,
+      emojiCounter: emojiCounterContainer,
+    })
+  }
+
+  referencesEmoji() {
+    return {
+      emojiContainer: this.selectedChannelContent[0]['emoji'],
+      emojiByContainer: this.selectedChannelContent[0]['emojiBy'],
+      emojiCounterContainer: this.selectedChannelContent[0]['emojiCounter']
+    };
+  }
   //----Subscribe-Functions----//
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -444,6 +493,8 @@ export class MainboardComponent {
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
       });
+      console.log(this.selectedChannelContent);
+
     });
   }
 

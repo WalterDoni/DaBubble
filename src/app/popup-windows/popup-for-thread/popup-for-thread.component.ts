@@ -19,4 +19,14 @@ export class PopupForThreadComponent {
     }
   }
 
+  raisedHandsEmoji() {
+    this.mainboard.reactionEmoji = '🙌';
+    this.mainboard.updateEmojis();
+  }
+
+  checkEmoji(){
+    this.mainboard.reactionEmoji = '✅';
+    this.mainboard.updateEmojis();
+  }
+  
 }

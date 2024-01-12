@@ -9,9 +9,9 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 export class PopupEditCommentComponent {
   index!: number;
 
-  constructor(public mainboard: MainboardComponent){}
+  constructor(public mainboard: MainboardComponent) { }
 
-  changeComment(index: number){
+  changeComment(index: number) {
     this.mainboard.selectedChannelContent.forEach((channel, i) => {
       channel.editComment = i === index;
     });
@@ -24,5 +24,14 @@ export class PopupEditCommentComponent {
     }
   }
 
+  raisedHandsEmoji() {
+    this.mainboard.reactionEmoji = '🙌';
+    this.mainboard.updateEmojis();
+  }
 
+  checkEmoji() {
+    this.mainboard.reactionEmoji = '✅';
+    this.mainboard.updateEmojis();
+  }
+  
 }
