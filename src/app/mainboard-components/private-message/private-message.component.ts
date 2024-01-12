@@ -109,7 +109,6 @@ export class PrivateMessageComponent {
       this.messageTimeArray.push(list)
     });
     this.mainboard.messageTimeArray = this.messageTimeArray;
-    this.cdr.detectChanges();
   }
 
   //----Subscribe-Functions----//
@@ -134,7 +133,7 @@ export class PrivateMessageComponent {
   }
 
   ngOnDestroy() {
-    this.unsubprivateChannel;
+    this.unsubprivateChannel();
   }
 
   //----Helpfunction----//

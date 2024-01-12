@@ -381,8 +381,8 @@ export class MainboardComponent {
         });
       } else {
         emojiCounterContainer.push(1);
-        emojiContainer.push(this.reactionEmoji);
       }
+      emojiContainer.push(this.reactionEmoji);
       emojiByContainer.push(this.loggedInUserName);
       await updateDoc(doc(this.channelContentRef(), id), {
         emoji: emojiContainer,
@@ -398,15 +398,14 @@ export class MainboardComponent {
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
     let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (emojiByContainer.includes(this.loggedInUserName)) {
-      debugger;
       emojiByContainer.forEach((name: string, i: number) => {
         if (name == this.loggedInUserName) {
           emojiByContainer.splice(i, 1);
           if (emojiCounterContainer[index] > 1) {
             emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
           } else {
-            emojiCounterContainer.splice(i, 1);
-            emojiContainer.splice(i, 1);
+            emojiCounterContainer.splice(index, 1);
+            emojiContainer.splice(index, 1);
           }
         }
       });
@@ -502,8 +501,6 @@ export class MainboardComponent {
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
       });
-      console.log(this.selectedChannelContent);
-
     });
   }
 
