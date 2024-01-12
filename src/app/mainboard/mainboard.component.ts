@@ -95,6 +95,8 @@ export class MainboardComponent {
   messageTextArray: any[] = [];
   messageTimeArray: any[] = [];
 
+  hoveredEmojiIndex: number | null = null;
+
   firestore: Firestore = inject(Firestore);
   unsubUsers;
   unsubChannels;
@@ -154,12 +156,14 @@ export class MainboardComponent {
   }
 
   //--Reactions-Popup--//
-  showPopupForReactions(event: MouseEvent) {
+  showPopupForReactions(event: MouseEvent, index: number): void  {
+    this.hoveredEmojiIndex = index;
     this.isPopupForReactionsVisible = true;
 
   }
 
-  hidePopupForReactions() {
+  hidePopupForReactions(): void{
+    this.hoveredEmojiIndex = null;
     this.isPopupForReactionsVisible = false;
   }
 
@@ -367,7 +371,7 @@ export class MainboardComponent {
 
   async updateEmojis() {
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
-    let id = this.selectedChannelContent[0]['id'];
+    let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (!emojiByContainer.includes(this.loggedInUserName)) {
       if (emojiContainer.includes(this.reactionEmoji)) {
         emojiContainer.forEach((element: string, id: number) => {
@@ -377,8 +381,8 @@ export class MainboardComponent {
         });
       } else {
         emojiCounterContainer.push(1);
+        emojiContainer.push(this.reactionEmoji);
       }
-      emojiContainer.push(this.reactionEmoji);
       emojiByContainer.push(this.loggedInUserName);
       await updateDoc(doc(this.channelContentRef(), id), {
         emoji: emojiContainer,
@@ -392,16 +396,17 @@ export class MainboardComponent {
 
   async removeEmoji(index: number) {
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
-    let id = this.selectedChannelContent[0]['id'];
+    let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (emojiByContainer.includes(this.loggedInUserName)) {
+      debugger;
       emojiByContainer.forEach((name: string, i: number) => {
         if (name == this.loggedInUserName) {
           emojiByContainer.splice(i, 1);
           if (emojiCounterContainer[index] > 1) {
             emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
           } else {
-            emojiCounterContainer.splice(index, 1);
-            emojiContainer.splice(index, 1);
+            emojiCounterContainer.splice(i, 1);
+            emojiContainer.splice(i, 1);
           }
         }
       });
@@ -415,9 +420,9 @@ export class MainboardComponent {
 
   referencesEmoji() {
     return {
-      emojiContainer: this.selectedChannelContent[0]['emoji'],
-      emojiByContainer: this.selectedChannelContent[0]['emojiBy'],
-      emojiCounterContainer: this.selectedChannelContent[0]['emojiCounter']
+      emojiContainer: this.selectedChannelContent[this.hoveredChannelIndex]['emoji'],
+      emojiByContainer: this.selectedChannelContent[this.hoveredChannelIndex]['emojiBy'],
+      emojiCounterContainer: this.selectedChannelContent[this.hoveredChannelIndex]['emojiCounter']
     };
   }
   //----Subscribe-Functions----//

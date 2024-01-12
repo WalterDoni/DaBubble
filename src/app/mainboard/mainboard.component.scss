@@ -903,7 +903,10 @@
     justify-content: flex-start;
     gap: 16px;
     padding: 8px 0px;
-    cursor: pointer;
+
+    span {
+        cursor: pointer;
+    }
 
     img {
         object-fit: contain;
@@ -918,7 +921,11 @@
     justify-content: flex-end;
     gap: 16px;
     padding: 8px 0px;
-    cursor: pointer;
+
+
+    span {
+        cursor: pointer;
+    }
 
     img {
         object-fit: contain;
@@ -1132,8 +1139,9 @@
     top: 0%;
 }
 
-app-popup-reactions{
+app-popup-reactions {
     position: absolute;
     bottom: 40px;
     left: 25px;
+
 }

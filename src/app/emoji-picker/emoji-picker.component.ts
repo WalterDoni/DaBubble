@@ -23,7 +23,6 @@ export class EmojiPickerComponent {
     const selectedEmoji = event.emoji.native;
     this.emojiInput$?.next(selectedEmoji);
     this.mainboard.reactionEmoji = selectedEmoji;
-    console.log(selectedEmoji);
     this.mainboard.updateEmojis();
   }
 
