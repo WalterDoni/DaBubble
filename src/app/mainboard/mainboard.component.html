@@ -104,14 +104,12 @@
                                 </div>
 
                                 <div class="reactions-container">
-
                                     <span class="reactions" (mouseenter)="showPopupForReactions($event)"
-                                        *ngFor="let emoji of channel.data.emoji; let i = index"
-                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
-                                        <app-popup-reactions
-                                            *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
+                                        *ngFor="let emoji of channel.data.emoji; let id = index"
+                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(id)">
                                         <p style="position: absolute; left: 10px">{{emoji}}</p>
-                                        <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[i]}}</p>
+                                        <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[id]}}</p>
+                                        <app-popup-reactions [emojiIndex]="id" [channelIndex]="i" *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
                                     </span>
                                 </div>
                                 <div class="answers-message-history">
@@ -163,16 +161,16 @@
                                         (click)="saveCommentChange(channel.id, i)">Speichern</button><button
                                         (click)="closeEditComment(i)">Abbrechen</button></div>
                             </div>
-
                             <div class="my-reactions-container">
-                                <span class="reactions" (mouseenter)="showPopupForReactions($event)" *ngFor="let emoji of channel.data.emoji; let i = index"
-                                    (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
-                                    <app-popup-reactions #popup
-                                        *ngIf="isPopupForReactionsVisible"></app-popup-reactions>
-                                    <p style="position: absolute; left: 10px">{{emoji}}</p>
-                                    <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[i]}}</p>
-                                </span>
-                            </div>
+                                <span class="reactions" (mouseenter)="showPopupForReactions($event)"
+                                *ngFor="let emoji of channel.data.emoji; let id = index"
+                                (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(id)">
+                                <p style="position: absolute; left: 10px">{{emoji}}</p>
+                                <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[id]}}</p>
+                                <app-popup-reactions [emojiIndex]="id" [channelIndex]="i" *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i"></app-popup-reactions>
+                            </span>
+                              </div>
+
                             <div class="answers-message-history">
                                 <div (click)="showThread()">{{channel.answers}} Antworten</div><span
                                     *ngIf="channel.answers > 0">Letzte

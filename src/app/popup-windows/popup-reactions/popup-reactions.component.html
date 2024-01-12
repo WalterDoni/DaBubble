@@ -1,5 +1,7 @@
-<div class="popup" #popupElement>
-    <span>
-       <p>{{mainboard.reactionEmoji}}</p>
-    <p><b>Sofia Müller</b><br> hat reagiert.</p></span>
- </div>
+<div class="popup">
+   <span>
+      <p>{{mainboard.selectedChannelContent[channelIndex].emoji[emojiIndex]}}</p>
+      <p>{{ mainboard.selectedChannelContent[channelIndex].emojiBy[emojiIndex]}}</p>
+      <p> hat reagiert.</p>
+   </span>
+</div>

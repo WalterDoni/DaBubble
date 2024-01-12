@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// popup-reactions.component.ts
+import { Component, Input } from '@angular/core';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 @Component({
@@ -7,6 +8,9 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
   styleUrls: ['./popup-reactions.component.scss']
 })
 export class PopupReactionsComponent {
+  @Input() emojiIndex!: number;
+  @Input() channelIndex!: number 
 
-  constructor(public mainboard: MainboardComponent){}
+  constructor(public mainboard: MainboardComponent) {}
+
 }

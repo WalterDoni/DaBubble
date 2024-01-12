@@ -911,6 +911,7 @@
 }
 
 .my-reactions-container {
+    position: relative;
     display: flex;
     height: 24px;
     align-items: center;
@@ -1129,4 +1130,10 @@
     position: absolute;
     left: 0%;
     top: 0%;
+}
+
+app-popup-reactions{
+    position: absolute;
+    bottom: 40px;
+    left: 25px;
 }

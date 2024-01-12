@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef, Input } from '@angular/core';
 import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -156,6 +156,7 @@ export class MainboardComponent {
   //--Reactions-Popup--//
   showPopupForReactions(event: MouseEvent) {
     this.isPopupForReactionsVisible = true;
+
   }
 
   hidePopupForReactions() {
@@ -256,6 +257,9 @@ export class MainboardComponent {
       answerFrom: [],
       answerText: [],
       answerTime: [],
+      emoji: [],
+      emojiBy: [],
+      emojiCounter: [],
       answers: 0,
       from: this.loggedInUserName,
       message: input,
