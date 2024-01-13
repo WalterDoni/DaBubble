@@ -75,13 +75,13 @@ export class MenuComponent {
     this.mainboard.getChannelMembersFromSelectedChannel();
   }
 
-  selectUserForDirectmessage(id: number) {
+ async  selectUserForDirectmessage(id: number) {
     this.mainboard.directMessageContent = true;
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
     this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
-    this.privateMessage.getSelectedPrivateChannelId();
+   await this.privateMessage.getSelectedPrivateChannelId(this.userArray[id].username);
   }
 
   openMenuSearchFieldOnChat() {

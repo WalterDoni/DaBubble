@@ -13,6 +13,8 @@ export class PrivateMessageComponent {
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
   channelId!: string;
 
+  displayMessages: boolean = false;
+
   privateChannelArray: any[] = [];
   messageFromArray: any[] = [];
   messageTextArray: any[] = [];
@@ -70,10 +72,10 @@ export class PrivateMessageComponent {
   }
 
   //----Get the current ID----//
-  getSelectedPrivateChannelId() {
+  getSelectedPrivateChannelId(name: string) {
     for (let i = 0; i < this.privateChannelArray.length; i++) {
       const channel = this.privateChannelArray[i];
-      if (channel.messageBetween.includes(this.mainboard.loggedInUserName) && channel.messageBetween.includes(this.mainboard.selectedUserDirectMessageName)) {
+      if (channel.messageBetween.includes(this.mainboard.loggedInUserName) && channel.messageBetween.includes(name)) {
         this.channelId = channel.id;
         this.getMessageFromArray(i);
         this.getmessageTextArrayArray(i);
@@ -92,7 +94,7 @@ export class PrivateMessageComponent {
       this.messageFromArray.push(list)
     });
     this.mainboard.messageFromArray = this.messageFromArray;
-
+   console.log(this.mainboard.messageFromArray);
   }
 
   async getmessageTextArrayArray(index: number) {
@@ -101,6 +103,7 @@ export class PrivateMessageComponent {
       this.messageTextArray.push(list)
     });
     this.mainboard.messageTextArray = this.messageTextArray;
+    console.log(this.mainboard.messageTextArray);
   }
 
   async getmessageTimeArray(index: number) {
@@ -109,6 +112,8 @@ export class PrivateMessageComponent {
       this.messageTimeArray.push(list)
     });
     this.mainboard.messageTimeArray = this.messageTimeArray;
+    console.log(this.mainboard.messageTimeArray);
+ 
   }
 
   //----Subscribe-Functions----//
