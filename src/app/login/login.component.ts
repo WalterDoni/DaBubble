@@ -51,16 +51,14 @@ export class LoginComponent {
   loginArray: Array<any> = [];
   errormessage: boolean = false;
 
-  
   //----Intro----//
   animationPlayed: boolean = false;
-  textState: string = 'hidden'; 
+  textState: string = 'hidden';
   svgTransform: string = 'middle';
   backgroundState: string = 'inital';
   setNone: boolean = false;
   moveState: string = 'middle';
   //----Intro-End----//
-
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -81,6 +79,12 @@ export class LoginComponent {
   }
 
   //----Intro----//
+
+  /**
+ * Plays the animation by changing the states and transforming elements.
+ * transformations at specific time intervals using setTimeout.
+ * 
+ */
   playAnimation() {
     this.textState = 'hidden';
     setTimeout(() => {
@@ -103,6 +107,11 @@ export class LoginComponent {
   }
   //----Intro-End----//
 
+  /**
+ * This method extracts user data from the login form, signs in using email and password,
+ * and navigates to the mainboard upon successful login.
+ * @throws {Error} If there is an error during the login process.
+ */
   loginWithEmailAndPassword() {
     let userData = Object.assign(this.loginForm.value, { email: this.emailInput.nativeElement.value, password: this.passwordInput.nativeElement.value });
     this.authService.signInWithEmailAndPassword(userData).then((res: any) => {
@@ -119,6 +128,10 @@ export class LoginComponent {
     })
   }
 
+  /**
+ * This method logs in a guest user with predefined credentials and navigates to the mainboard.
+ * @throws {Error} If there is an error during the guest login process.
+ */
   guestLogin() {
     let ref = 'MA8WjoG3lxOo7G6FZO9L'
     let userData = Object.assign(this.loginForm.value, { email: "gast@gast.at", password: "Gast1234" });
@@ -131,6 +144,10 @@ export class LoginComponent {
     })
   }
 
+  /**
+   * This method initiates the Google authentication process and navigates to the mainboard upon successful login.
+   * @throws {Error} If there is an error during the Google login process.
+   */
   loginWithGoogle() {
     this.authService.signInWithGoogle().then((res: any) => {
       this.router.navigateByUrl('mainboard');

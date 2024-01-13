@@ -22,8 +22,8 @@ export class PrivateMessageComponent {
   firestore: Firestore = inject(Firestore);
   unsubprivateChannel;
 
-  constructor(public mainboard: MainboardComponent,  private cdr: ChangeDetectorRef) {
-    this.unsubprivateChannel = this.subprivateChannel();
+  constructor(public mainboard: MainboardComponent) {
+     this.unsubprivateChannel = this.subprivateChannel();
   }
 
   //----Add-New-Message and new channel----//
@@ -50,8 +50,6 @@ export class PrivateMessageComponent {
     }
     this.newCommentValue.nativeElement.value = '';
   }
-
-
 
   async createNewPrivateChannel(input: string) {
     await this.clearArrays();
@@ -94,7 +92,6 @@ export class PrivateMessageComponent {
       this.messageFromArray.push(list)
     });
     this.mainboard.messageFromArray = this.messageFromArray;
-   console.log(this.mainboard.messageFromArray);
   }
 
   async getmessageTextArrayArray(index: number) {
@@ -103,7 +100,6 @@ export class PrivateMessageComponent {
       this.messageTextArray.push(list)
     });
     this.mainboard.messageTextArray = this.messageTextArray;
-    console.log(this.mainboard.messageTextArray);
   }
 
   async getmessageTimeArray(index: number) {
@@ -112,8 +108,6 @@ export class PrivateMessageComponent {
       this.messageTimeArray.push(list)
     });
     this.mainboard.messageTimeArray = this.messageTimeArray;
-    console.log(this.mainboard.messageTimeArray);
- 
   }
 
   //----Subscribe-Functions----//

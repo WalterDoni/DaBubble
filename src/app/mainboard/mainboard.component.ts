@@ -1,12 +1,11 @@
-import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
 import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { ElementSchemaRegistry } from '@angular/compiler';
-
+import { PrivateMessageComponent } from '../mainboard-components/private-message/private-message.component';
 
 @Component({
   selector: 'app-mainboard',
@@ -28,16 +27,17 @@ export class MainboardComponent {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
 
-  @ViewChild('uploadmessage') uploadmessage!: ElementRef;
-  displayUploadMessage: boolean = false;
-
   reactionEmoji: any;
   userId: string = '';
 
+  //-Image upload--//
   uploadedImg: any = {};
   selectedUrl: string = '';
   customizedImg: boolean = false;
+  @ViewChild('uploadmessage') uploadmessage!: ElementRef;
+  displayUploadMessage: boolean = false;
 
+  //--Toggle variables - Show and hide elements--//
   toggleMenu: boolean = true;
   toggleThread: boolean = false;
   toggleEditChannel: boolean = false;
@@ -46,147 +46,93 @@ export class MainboardComponent {
   toggleBackground: boolean = false;
   toggleProfile: boolean = false;
   toggleProfileView: boolean = false;
-
   chatContent: boolean = true;
   directMessageContent: boolean = false;
-  menuSearchfieldChat: boolean = false;
-
   isPopupForThreadVisible: boolean = false;
   editCommentPopUp: boolean = false;
-  hoveredChannelIndex!: number;
   isPopupForReactionsVisible: boolean = false;
+  displayMembers: boolean = false;
 
+  //--Variables for logged in user--//
   loggedInUserName: string = '';
   loggedInUserImg: string = '';
   loggedInUserEmail: string = '';
 
+  //--Selection for menu(sidebar)--//
   selectedChannelTitle: string = '';
   selectedChannelDescription: string = '';
   selectedChannelCreated: string = '';
   selectedUserDirectMessageImage: string = '';
   selectedUserDirectMessageName: string = '';
-
-  channelID: string = 'nq56l3iiTG4g3e1iNHHm';
-  channelsArray: any[] = [];
-
   selectedChannelContent: any[] = [];
   selectedChannelMembersArray: any[] = [];
 
+  //--new comment or commentchange--//
   newComment = new NewComment();
   showNewCommentImg: boolean = false;
-  displayMembers: boolean = false;
   errorMessageCommentChange: boolean = false;
 
-  img: string = '';
-  userArray: any[] = [];
-
+  //--Searchfiltervariables--//
   searchTerm!: string;
   filteredUserArray: any[] = [];
   filteredChannelsArray: any[] = [];
-
   searchTermChannelMember!: string;
   filteredMemberArray: any[] = [];
-
   searchTermMenu!: string;
   filteredUserArrayMenu: any[] = [];
   filteredChannelsArrayMenu: any[] = [];
+  menuSearchfieldChat: boolean = false;
 
+  //--Private-Messages--//
   messageFromArray: any[] = [];
   messageTextArray: any[] = [];
   messageTimeArray: any[] = [];
 
   hoveredEmojiIndex: number | null = null;
+  hoveredChannelIndex!: number;
 
+  //--Firestore database--//
   firestore: Firestore = inject(Firestore);
   unsubUsers;
   unsubChannels;
   unsubChannelContent;
 
+  //--arrays for database -- and standard channelID to display content--//
+  userArray: any[] = [];
+  channelID: string = 'nq56l3iiTG4g3e1iNHHm';
+  channelsArray: any[] = [];
+
   constructor(private route: ActivatedRoute, private datePipe: DatePipe, @Inject(LOCALE_ID) private locale: string, public storage: Storage, private cdr: ChangeDetectorRef) {
     this.channelContent();
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
-    this.unsubChannelContent = this.channelContent()
+    this.unsubChannelContent = this.channelContent();
   }
 
   /**
   * Returns the formatted date in the specified format.
-  *
   * @returns {string} The formatted date.
   */
   getFormattedDate(): string {
     return this.datePipe.transform(this.date, 'EEEE, d MMMM', this.locale) as string;
   }
 
+  /**
+   * @HostListener decorator for handling the 'window:resize' event.
+   * Listens for the window resize event and triggers the 'checkWindowWidth1400' method.
+   * @param {Event} $event - The event object associated with the window resize.
+   */
   @HostListener('window:resize', ['$event'])
   onResize(): void {
     this.checkWindowWidth1400();
   }
 
-  //--Thread-Popup--//
-  showPopupForThread(event: MouseEvent, index: number) {
-    this.hoveredChannelIndex = index;
-    this.isPopupForThreadVisible = true;
-  }
-
-  hidePopupForThread() {
-    this.isPopupForThreadVisible = false;
-  }
-
-  //--Thread-Menu--//
-  showThread() {
-    this.toggleThread = true;
-    if (this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
-      this.toggleMenu = false;
-    }
-  }
-
-  //--Edit-Comment-Pop-Up--//
-  showPopUpForEditComment(event: MouseEvent, index: number) {
-    this.hoveredChannelIndex = index;
-    this.editCommentPopUp = true;
-  }
-
-  hidePopUpForEditComment() {
-    this.editCommentPopUp = true;
-  }
-
-  closeEditComment(index: number) {
-    this.selectedChannelContent[index].editComment = false;
-  }
-
-  //--Reactions-Popup--//
-  showPopupForReactions(event: MouseEvent, index: number): void  {
-    this.hoveredEmojiIndex = index;
-    this.isPopupForReactionsVisible = true;
-
-  }
-
-  hidePopupForReactions(): void{
-    this.hoveredEmojiIndex = null;
-    this.isPopupForReactionsVisible = false;
-  }
-
-  //--Edit-Channel-Window--//
-  openChangeChannelPopUp() {
-    this.toggleEditChannel = true;
-  }
-
-  //--Add-Members-Window--//
-  openAddMembersPopUp() {
-    this.toggleEditMembers = true;
-  }
-
-  openAddNewMembersWindow() {
-    this.toggleAddNewMembers = true;
-  }
-
-  //--Profile--//
-  openProfile() {
-    this.toggleProfile = true;
-  }
-
   //----Search-Function----//
+
+  /**
+ * Searches for users and channels based on the provided search term.
+ * Filters user and channel arrays based on the search term, updating the corresponding filtered arrays.
+ */
   search() {
     if (this.searchTerm && this.searchTerm.length >= 1) {
       this.filteredUserArray = this.userArray.filter(user =>
@@ -201,6 +147,10 @@ export class MainboardComponent {
     }
   }
 
+  /**
+ * Adds members to a channel based on the provided search term.
+ * Filters user array for members based on the search term, updating the filtered members array.
+ */
   addMemberToChannelSearch() {
     if (this.searchTermChannelMember && this.searchTermChannelMember.length >= 1) {
       this.filteredMemberArray = this.userArray.filter(user =>
@@ -211,6 +161,10 @@ export class MainboardComponent {
     }
   }
 
+  /**
+ * Searches for users and channels in the chat menu based on the provided search term.
+ * Filters user and channel arrays in the chat menu based on the search term, updating the corresponding filtered arrays.
+ */
   searchfieldAtChat() {
     if (this.searchTermMenu && this.searchTermMenu.length >= 1) {
       this.filteredUserArrayMenu = this.userArray.filter(user =>
@@ -225,6 +179,9 @@ export class MainboardComponent {
     }
   }
 
+  /**
+ * Selects a channel in the chat based on the provided channel name.
+ */
   selectChannelSearchfield(channelName: string) {
     this.chatContent = true;
     this.directMessageContent = false;
@@ -240,6 +197,10 @@ export class MainboardComponent {
     }
   }
 
+  /**
+ * Selects a user for direct messages based on the provided username.
+ * @param {string} username - The username of the selected user.
+ */
   selectUserSearchfield(username: string) {
     this.directMessageContent = true;
     this.menuSearchfieldChat = false;
@@ -257,7 +218,12 @@ export class MainboardComponent {
 
   async newCommentInSelectedChannel() {
     let input = this.newCommentValue.nativeElement.value;
-    await addDoc(this.channelContentRef(), {
+    await addDoc(this.channelContentRef(),this.valuesForNewComment(input) );
+    this.newCommentValue.nativeElement.value = '';
+  }
+  
+  valuesForNewComment(input: string){
+    return {
       answerFrom: [],
       answerText: [],
       answerTime: [],
@@ -270,10 +236,9 @@ export class MainboardComponent {
       messageImg: this.selectedUrl,
       messageTime: new Date(),
       timestamp: this.getCurrentTimeInMEZ(),
-    });
-    this.newCommentValue.nativeElement.value = '';
+    }
   }
-
+  
   getCurrentTimeInMEZ() {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = {
@@ -435,21 +400,22 @@ export class MainboardComponent {
   subUsers() {
     return onSnapshot(this.usersRef(), (list) => {
       this.userArray = [];
+      let img = "";
       list.forEach(element => {
         if (element.data()['defaultImg'] && element.data()['defaultImg'].length >= 1) {
-          this.img = element.data()['defaultImg'];
+          img = element.data()['defaultImg'];
         } else {
-          this.img = element.data()['personalImg'];
+          img = element.data()['personalImg'];
         }
         if (element.id == this.userId) {
           this.loggedInUserName = element.data()['username'];
           this.loggedInUserEmail = element.data()['email'];
-          this.loggedInUserImg = this.img;
+          this.loggedInUserImg = img;
         } else {
           this.userArray.push({
             username: element.data()['username'],
             id: element.id,
-            img: this.img,
+            img: img,
           });
         }
       })
@@ -573,6 +539,69 @@ export class MainboardComponent {
     if (window.innerWidth <= 1400 && this.toggleMenu) {
       this.toggleThread = false;
     }
+  }
+
+  //--Thread-Popup--//
+  showPopupForThread(event: MouseEvent, index: number) {
+    this.hoveredChannelIndex = index;
+    this.isPopupForThreadVisible = true;
+  }
+
+  hidePopupForThread() {
+    this.isPopupForThreadVisible = false;
+  }
+
+  //--Thread-Menu--//
+  showThread() {
+    this.toggleThread = true;
+    if (this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
+      this.toggleMenu = false;
+    }
+  }
+
+  //--Edit-Comment-Pop-Up--//
+  showPopUpForEditComment(event: MouseEvent, index: number) {
+    this.hoveredChannelIndex = index;
+    this.editCommentPopUp = true;
+  }
+
+  hidePopUpForEditComment() {
+    this.editCommentPopUp = true;
+  }
+
+  closeEditComment(index: number) {
+    this.selectedChannelContent[index].editComment = false;
+  }
+
+  //--Reactions-Popup--//
+  showPopupForReactions(event: MouseEvent, index: number): void {
+    this.hoveredEmojiIndex = index;
+    this.isPopupForReactionsVisible = true;
+
+  }
+
+  hidePopupForReactions(): void {
+    this.hoveredEmojiIndex = null;
+    this.isPopupForReactionsVisible = false;
+  }
+
+  //--Edit-Channel-Window--//
+  openChangeChannelPopUp() {
+    this.toggleEditChannel = true;
+  }
+
+  //--Add-Members-Window--//
+  openAddMembersPopUp() {
+    this.toggleEditMembers = true;
+  }
+
+  openAddNewMembersWindow() {
+    this.toggleAddNewMembers = true;
+  }
+
+  //--Profile--//
+  openProfile() {
+    this.toggleProfile = true;
   }
 
 }
