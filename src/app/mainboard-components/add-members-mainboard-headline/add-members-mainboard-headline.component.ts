@@ -32,31 +32,42 @@ export class AddMembersMainboardHeadlineComponent {
 
   async addMemberToChannel() {
     let counter = 0;
-    let memberAlreadyExists = false;
-    let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
-    if (this.mainboard.searchTermChannelMember == undefined) {
-      alert("Bitte Nutzer auswählen!");
-    }
-    this.mainboard.channelsArray.forEach(channel => {
-      if (channel.channelId == this.mainboard.channelID) {
-        channel.members.forEach((member: any) => {
-          if (member == searchTermWithFirstLetterBig) {
-            alert("Dieser Nutzer befindet sich bereits im Channel!");
-            memberAlreadyExists = true;
+    let state = { doNotAddMember: false };
+    if (this.checkIfThereIsAValueInInput()) {
+      let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
+      this.mainboard.channelsArray.forEach(channel => {
+        if (channel.channelId == this.mainboard.channelID) {
+          this.checkIfMemberIsAllreadyInChannel(channel, searchTermWithFirstLetterBig, state);
+          this.checkIfMemberExist(counter, state, searchTermWithFirstLetterBig);
+          if (!state.doNotAddMember) {
+            channel.members.push(searchTermWithFirstLetterBig);
+            updateDoc(doc(this.mainboard.channelsRef(), this.mainboard.channelID), {
+              members: channel.members
+            });
           }
-        });
-        this.checkIfMemberExist(counter, memberAlreadyExists, searchTermWithFirstLetterBig)
-        if (!memberAlreadyExists) {
-          channel.members.push(searchTermWithFirstLetterBig);
-          updateDoc(doc(this.mainboard.channelsRef(), this.mainboard.channelID), {
-            members: channel.members
-          });
         }
-      }
-    });
+      });
+    }
   }
 
-  checkIfMemberExist(counter: number, memberAlreadyExists: boolean, searchTermWithFirstLetterBig: string) {
+  checkIfThereIsAValueInInput() {
+    if (this.mainboard.searchTermChannelMember == "" || this.mainboard.searchTermChannelMember == undefined) {
+      alert("Bitte Nutzer auswählen!");
+      return false;
+    } return true;
+  }
+
+  checkIfMemberIsAllreadyInChannel(channel: any, searchTermWithFirstLetterBig: string, state: { doNotAddMember: boolean }) {
+    channel.members.forEach((member: any) => {
+      if (member == searchTermWithFirstLetterBig) {
+        alert("Dieser Nutzer befindet sich bereits im Channel!");
+        state.doNotAddMember = true;
+      }
+    });
+    return state.doNotAddMember;
+  }
+
+  checkIfMemberExist(counter: number, state: { doNotAddMember: boolean }, searchTermWithFirstLetterBig: string) {
     this.mainboard.userArray.forEach((user) => {
       if (user['username'] === searchTermWithFirstLetterBig) {
         counter = counter + 1;
@@ -64,9 +75,9 @@ export class AddMembersMainboardHeadlineComponent {
     });
     if (counter == 0) {
       alert("Dieser Nutzer existiert nicht!");
-      memberAlreadyExists = true;
+      state.doNotAddMember = true;
     }
-    return memberAlreadyExists;
+    return state.doNotAddMember;
   }
 
   ngOnDestroy() {

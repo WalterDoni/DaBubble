@@ -32,7 +32,6 @@ import { FormsModule } from '@angular/forms';
 import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PrivateMessageComponent } from './mainboard-components/private-message/private-message.component';
 import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-picker-inputfield.component';
 
 
@@ -58,7 +57,6 @@ import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-
     EmojiPickerComponent,
     ProfilViewComponent,
     PopupEditCommentComponent,
-    PrivateMessageComponent,
     EmojiPickerInputfieldComponent,
   ],
 
@@ -77,7 +75,7 @@ import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-
     provideStorage(() => getStorage()),
   ],
 
-  providers: [PrivateMessageComponent,LoginComponent, {provide: LOCALE_ID, useValue: 'de' }],
+  providers: [LoginComponent, {provide: LOCALE_ID, useValue: 'de' }],
   bootstrap: [AppComponent],
 })
 

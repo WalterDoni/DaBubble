@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { NewComment } from '../models/newComment';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { PrivateMessageComponent } from '../mainboard-components/private-message/private-message.component';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-mainboard',
@@ -19,13 +19,13 @@ import { PrivateMessageComponent } from '../mainboard-components/private-message
 })
 
 export class MainboardComponent {
-
   date: Date = new Date(Date.now());
   @ViewChild('thread') thread!: ElementRef;
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
   @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
+  @ViewChild('newCommentValuePrivateMessage') newCommentValuePrivateMessage!: ElementRef;
 
   reactionEmoji: any;
   userId: string = '';
@@ -87,6 +87,9 @@ export class MainboardComponent {
   messageFromArray: any[] = [];
   messageTextArray: any[] = [];
   messageTimeArray: any[] = [];
+  channelIdPrivate!: string;
+  displayMessages: boolean = false;
+  privateChannelArray: any[] = [];
 
   hoveredEmojiIndex: number | null = null;
   hoveredChannelIndex!: number;
@@ -96,6 +99,7 @@ export class MainboardComponent {
   unsubUsers;
   unsubChannels;
   unsubChannelContent;
+  unsubprivateChannel;
 
   //--arrays for database -- and standard channelID to display content--//
   userArray: any[] = [];
@@ -107,6 +111,7 @@ export class MainboardComponent {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
     this.unsubChannelContent = this.channelContent();
+    this.unsubprivateChannel = this.subprivateChannel();
   }
 
   /**
@@ -216,13 +221,16 @@ export class MainboardComponent {
   //------Every necessary function at the Inputfield-----//
   //----New-Comment-Functions----// 
 
+  /**
+ * Asynchronously adds a new comment to the selected channel.
+ */
   async newCommentInSelectedChannel() {
     let input = this.newCommentValue.nativeElement.value;
-    await addDoc(this.channelContentRef(),this.valuesForNewComment(input) );
+    await addDoc(this.channelContentRef(), this.valuesForNewComment(input));
     this.newCommentValue.nativeElement.value = '';
   }
-  
-  valuesForNewComment(input: string){
+
+  valuesForNewComment(input: string) {
     return {
       answerFrom: [],
       answerText: [],
@@ -238,7 +246,11 @@ export class MainboardComponent {
       timestamp: this.getCurrentTimeInMEZ(),
     }
   }
-  
+
+  /**
+   * Gets the current time in Central European Time (MEZ/CEST).
+   * @returns {string} The current time formatted as 'HH:mm' in the Europe/Berlin time zone.
+   */
   getCurrentTimeInMEZ() {
     const now = new Date();
     const options: Intl.DateTimeFormatOptions = {
@@ -251,11 +263,19 @@ export class MainboardComponent {
   }
 
   //----Img Upload----//
+
+  /**
+ * Handles the upload of an image.
+ * @param {Object} event - The event object representing the file input change.
+ */
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
     this.saveInStorage();
   }
 
+  /**
+   * Deletes the newly added image in the comment.
+   */
   deleteNewImgInComment() {
     this.showNewCommentImg = false;
     this.selectedUrl = "";
@@ -265,6 +285,9 @@ export class MainboardComponent {
     this.fileInput.nativeElement.click();
   }
 
+  /**
+ * Saves the uploaded image in storage and updates the Inputfield based on the upload progress.
+ */
   saveInStorage() {
     let storageRef = ref(this.storage, this.uploadedImg.name);
     let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
@@ -277,10 +300,8 @@ export class MainboardComponent {
         }
         switch (snapshot.state) {
           case 'paused':
-            console.log('Upload is paused');
             break;
           case 'running':
-            console.log('Upload is running');
             break;
         }
       },
@@ -301,18 +322,126 @@ export class MainboardComponent {
     );
   }
 
-  toogleDisplayAllChannelMembers() {
-    this.displayMembers = !this.displayMembers
-  }
-
   selectedNameIntoInputfield(name: string) {
     this.displayMembers = false;
     this.newCommentValue.nativeElement.value += name;
   }
 
-  //------Every necessary function at the Inputfield-END-----//
+  //------Private-Message-Functions-----//
+
+  /**
+ * Adds a new comment to the selected private message channel.
+ * If newChannel is true, there is no created Private channel in the database and a new one will be created.
+ */
+  async newCommentInSelectedPrivateChannel() {
+    let input = this.newCommentValuePrivateMessage.nativeElement.value;
+    this.messageTextArray.push(input);
+    this.messageFromArray.push(this.loggedInUserName);
+    let timestamp = Timestamp.now();
+    this.messageTimeArray.push(timestamp);
+    let newChannel = true;
+    this.privateChannelArray.forEach(channel => {
+      this.updateSelectedPrivateMessageChannel(channel);
+      newChannel = false;
+    });
+    if (newChannel) {
+      await this.createNewPrivateChannel(input);
+    }
+    this.newCommentValuePrivateMessage.nativeElement.value = '';
+  }
+
+  /**
+   * Check if the current channel includes the loggedInUser and the choosen user. If there is a match, update the channel.
+   */
+  async updateSelectedPrivateMessageChannel(channel: any) {
+    if (channel.messageBetween.includes(this.loggedInUserName) && channel.messageBetween.includes(this.selectedUserDirectMessageName)) {
+      this.channelIdPrivate = channel.privateChannelId;
+      await updateDoc(doc(this.privateChannelRef(), this.channelIdPrivate), {
+        messageFrom: this.messageFromArray,
+        messageText: this.messageTextArray,
+        messageTime: this.messageTimeArray,
+      });
+    }
+  }
+
+  /**
+  * Triggers when in newCommentInSelectedPrivateChannel() the variable newChannel is set on true.
+  * Push the new values in the current arrays. After that add a new document in the private channel.
+  */
+  async createNewPrivateChannel(input: string) {
+    await this.clearArrays();
+    let memberArray: any[] = [];
+    memberArray.push(this.loggedInUserName);
+    memberArray.push(this.selectedUserDirectMessageName);
+    this.messageTextArray.push(input);
+    this.messageFromArray.push(this.loggedInUserName);
+    let timestamp = Timestamp.now();
+    this.messageTimeArray.push(timestamp);
+    await addDoc(this.privateChannelRef(), {
+      messageBetween: memberArray,
+      messageFrom: this.messageFromArray,
+      messageText: this.messageTextArray,
+      messageTime: this.messageTimeArray,
+    })
+  }
+
+  /**
+ * Gets the ID of the selected private channel between the logged-in user and another user.
+ * @param {string} name - The name of the other user in the private channel.
+ */
+  getSelectedPrivateChannelId(name: string) {
+    for (let i = 0; i < this.privateChannelArray.length; i++) {
+      let channel = this.privateChannelArray[i];
+      if (channel.messageBetween.includes(this.loggedInUserName) && channel.messageBetween.includes(name)) {
+        this.channelIdPrivate = channel.id;
+        this.getMessageFromArray(i);
+        this.getmessageTextArrayArray(i);
+        this.getmessageTimeArray(i);
+        break;
+      } else {
+        this.clearArrays();
+      }
+    }
+  }
+
+
+  async getMessageFromArray(index: number) {
+    let FromArray: any[] = [];
+    await this.privateChannelArray[index].messageFrom.forEach((list: any) => {
+      FromArray.push(list)
+    });
+    this.messageFromArray = FromArray;
+  }
+
+  async getmessageTextArrayArray(index: number) {
+    let TextArray: any[] = [];
+    await this.privateChannelArray[index].messageText.forEach((list: any) => {
+      TextArray.push(list)
+    });
+    this.messageTextArray = TextArray;
+  }
+
+  async getmessageTimeArray(index: number) {
+    let TimeArray: any[] = [];
+    await this.privateChannelArray[index].messageTime.forEach((list: any) => {
+      TimeArray.push(list)
+    });
+    this.messageTimeArray = TimeArray;
+  }
+
+  clearArrays() {
+    this.messageFromArray = [];
+    this.messageTextArray = [];
+    this.messageTimeArray = [];
+  }
 
   //----Change-Comment-Functions----//
+
+  /**
+ * Saves changes to a comment in the selected channel.
+ * @param {string} id - The ID of the comment to be updated.
+ * @param {number} index - The index of the comment in the array.
+ */
   async saveCommentChange(id: string, index: number) {
     if (this.newChangedMessage.nativeElement.value.length >= 1) {
       let newMessage = this.newChangedMessage.nativeElement.value;
@@ -334,20 +463,14 @@ export class MainboardComponent {
 
   //----Update-Emoji-Counter----//
 
+  /**
+ * Updates emojis for the selected channel content.
+ */
   async updateEmojis() {
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
     let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (!emojiByContainer.includes(this.loggedInUserName)) {
-      if (emojiContainer.includes(this.reactionEmoji)) {
-        emojiContainer.forEach((element: string, id: number) => {
-          if (element == this.reactionEmoji) {
-            emojiCounterContainer[id] = emojiCounterContainer[id] + 1;
-          }
-        });
-      } else {
-        emojiCounterContainer.push(1);
-      }
-      emojiContainer.push(this.reactionEmoji);
+      this.reduceAmountOrPushInEmojiContainers(emojiContainer, emojiCounterContainer);
       emojiByContainer.push(this.loggedInUserName);
       await updateDoc(doc(this.channelContentRef(), id), {
         emoji: emojiContainer,
@@ -359,27 +482,56 @@ export class MainboardComponent {
     }
   }
 
+  /**
+   * Check if the selected emoji is in the current emojiContainer. If yes add one to the current amount and if not
+   * push the new one into both necessary arrays.
+   */
+  reduceAmountOrPushInEmojiContainers(emojiContainer: any, emojiCounterContainer: any) {
+    if (emojiContainer.includes(this.reactionEmoji)) {
+      emojiContainer.forEach((element: string, id: number) => {
+        if (element == this.reactionEmoji) {
+          emojiCounterContainer[id] = emojiCounterContainer[id] + 1;
+        }
+      });
+    } else {
+      emojiCounterContainer.push(1);
+      emojiContainer.push(this.reactionEmoji);
+    }
+  }
+
+  /**
+   * Remove the selected emoji, if user has allready selected one.
+   */
   async removeEmoji(index: number) {
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
     let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (emojiByContainer.includes(this.loggedInUserName)) {
-      emojiByContainer.forEach((name: string, i: number) => {
-        if (name == this.loggedInUserName) {
-          emojiByContainer.splice(i, 1);
-          if (emojiCounterContainer[index] > 1) {
-            emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
-          } else {
-            emojiCounterContainer.splice(index, 1);
-            emojiContainer.splice(index, 1);
-          }
-        }
-      });
+      this.updateremoveEmojiContainers(emojiByContainer, emojiCounterContainer, emojiContainer, index);
     }
     await updateDoc(doc(this.channelContentRef(), id), {
       emoji: emojiContainer,
       emojiBy: emojiByContainer,
       emojiCounter: emojiCounterContainer,
     })
+  }
+
+  /**
+   * Will be called in the removeEmoji function. Iterate through the emojiByContainer.
+   * First: Check if the loggedInUser is allready in the array. Yes -> remove it.
+   * Second: Check the amount of the emoji. Remove it, if the amount is 1. If it is more then 1 reduce by 1.
+  */
+  updateremoveEmojiContainers(emojiByContainer: any, emojiCounterContainer: any, emojiContainer: any, index: number) {
+    emojiByContainer.forEach((name: string, i: number) => {
+      if (name == this.loggedInUserName) {
+        emojiByContainer.splice(i, 1);
+        if (emojiCounterContainer[index] > 1) {
+          emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
+        } else {
+          emojiCounterContainer.splice(index, 1);
+          emojiContainer.splice(index, 1);
+        }
+      }
+    });
   }
 
   referencesEmoji() {
@@ -390,6 +542,7 @@ export class MainboardComponent {
     };
   }
   //----Subscribe-Functions----//
+
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       let idParam = params.get('ref')
@@ -474,14 +627,34 @@ export class MainboardComponent {
     return collection(this.firestore, 'channels', this.channelID, 'channelContent')
   }
 
+  subprivateChannel() {
+    return onSnapshot(this.privateChannelRef(), (list) => {
+      this.privateChannelArray = [];
+      list.forEach(element => {
+        this.privateChannelArray.push({
+          messageBetween: element.data()['messageBetween'],
+          messageFrom: element.data()['messageFrom'],
+          messageText: element.data()['messageText'],
+          messageTime: element.data()['messageTime'],
+          privateChannelId: element.id,
+        })
+      });
+    })
+  }
+
+  privateChannelRef() {
+    return collection(this.firestore, 'private-channels')
+  }
 
   ngOnDestroy() {
     this.unsubUsers();
     this.unsubChannels();
     this.unsubChannelContent();
+    this.unsubprivateChannel();
   }
 
   //--Other-functions--SORT AND DESCRIPE!!!!--//
+
   getChannelMembersFromSelectedChannel() {
     this.selectedChannelMembersArray = [];
     this.channelsArray.forEach(channel => {
@@ -507,6 +680,7 @@ export class MainboardComponent {
   }
 
   //----Helpfunctions----//
+
   getImgFromAnswerUser(username: string) {
     if (this.userArray.length >= 1) {
       const user = this.userArray.find(user => user.username === username);
@@ -602,6 +776,10 @@ export class MainboardComponent {
   //--Profile--//
   openProfile() {
     this.toggleProfile = true;
+  }
+
+  toogleDisplayAllChannelMembers() {
+    this.displayMembers = !this.displayMembers
   }
 
 }

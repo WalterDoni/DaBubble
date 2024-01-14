@@ -106,7 +106,7 @@
                                 <div class="reactions-container" *ngIf="channel.data.emoji.length >= 1">
                                     <span class="reactions" *ngFor="let emoji of channel.data.emoji; let id = index"
                                         (mouseenter)="showPopupForReactions($event, id)"
-                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
+                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(id)">
                                         <p style="position: absolute; left: 10px">{{emoji}}</p>
                                         <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[id]}}</p>
                                         <app-popup-reactions [emojiIndex]="id" [channelIndex]="i" *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i && hoveredEmojiIndex === id"></app-popup-reactions>
@@ -166,7 +166,7 @@
                             <div class="my-reactions-container" *ngIf="channel.data.emoji.length >= 1">
                                     <span class="reactions" *ngFor="let emoji of channel.data.emoji; let id = index"
                                         (mouseenter)="showPopupForReactions($event, id)"
-                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(i)">
+                                        (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(id)">
                                         <p style="position: absolute; left: 10px">{{emoji}}</p>
                                         <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[id]}}</p>
                                         <app-popup-reactions [emojiIndex]="id" [channelIndex]="i" *ngIf="isPopupForReactionsVisible && hoveredChannelIndex === i && hoveredEmojiIndex === id"></app-popup-reactions>
@@ -225,7 +225,79 @@
         </div>
 
         <div class="chat" *ngIf="directMessageContent">
-            <app-private-message></app-private-message>
+            <div class="chat-headline-container">
+                <span class="headline-left-span">
+                    <img class="imgHeadline" src="{{selectedUserDirectMessageImage}}" alt="">
+                    <p>{{selectedUserDirectMessageName}}</p>
+                </span>
+            </div>
+            <div class="chat-content">   
+                <div *ngFor="let content of messageFromArray; let i = index">
+                    <div class="chat-seperator-with-date" *ngIf="messageFromArray.length >= 1">
+                        <span class="seperator-chat"></span>
+                        <span class="date-chat">{{ messageTimeArray[i].toDate() | date:'longDate' }}</span>
+                        <span class="seperator-chat"></span>
+                    </div>
+                    <div class="my-message-chat" *ngIf="content == loggedInUserName && messageFromArray.length >= 1">
+                        <div class="my-message-chat-history">
+                            <div class="my-headline-message-history">
+                                <h3>{{content}}</h3>
+                                <p> {{messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
+                            </div>
+                            <div class="my-message-history">{{messageTextArray[i]}}
+                                
+                            </div>
+                        </div>
+                        <div class="my-avatar-chat-history"><img [src]="loggedInUserImg" alt=""></div>
+                    </div>
+            
+                    <div style="display: flex;" *ngIf="content != loggedInUserName && messageFromArray.length >= 1">
+                        <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(content)" alt=""></div>
+                        <div class="message-chat-history">
+                            <div class="headline-message-history">
+                                <h3>{{content}}</h3>
+                                <p> {{messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
+                            </div>
+                            <div class="message-history">{{messageTextArray[i]}}          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="directMessageContent" *ngIf="messageFromArray.length < 1">
+                <div class="directMessageContact">
+                    <img class="imgChat" src="{{selectedUserDirectMessageImage}}" alt="">
+                    <p>{{selectedUserDirectMessageName}}</p>
+                </div>
+                <p class="description">Diese Unterhaltung findet nur zwischen <b class="colorblue">@{{selectedUserDirectMessageName}}</b>
+                    und dir statt.</p>
+            </div>
+            
+            <div class="display-Members" *ngIf="displayMembers">
+                <div *ngFor="let user of userArray; let i = index" (click)="selectedNameIntoInputfield(user.username)">
+                    <img src="{{user.img}}" alt="add">
+                    <p>{{user.username}}</p>
+                </div>
+            </div>
+            <div class="chat-message-inputfield">
+                <input type="text" placeholder="Nachricht an #{{selectedUserDirectMessageName}}" #newCommentValuePrivateMessage>
+            
+                <div class="chat-message-options">
+                    <span class="imgHoverInput">
+                        <div>
+                            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
+                            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
+                        </div>
+                        <span class="seperator-send-message"></span>
+                        <img src="/assets/img/mainboard/smile_add_message.png" alt="">
+                       
+                    </span>
+                    <span class="sendButtonImg">
+                        <img (click)="newCommentInSelectedPrivateChannel()" src="/assets/img/mainboard/send.png" alt="">
+                    </span>
+                </div>
+            </div>
         </div>
 
 

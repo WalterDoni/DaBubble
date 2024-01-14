@@ -2,9 +2,6 @@ import { Component, ElementRef, Injectable, ViewChild, inject } from '@angular/c
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
-import { PrivateMessageComponent } from '../private-message/private-message.component';
-
-
 
 
 @Component({
@@ -47,7 +44,7 @@ export class MenuComponent {
 
 
 
-  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent, private privateMessage: PrivateMessageComponent) {
+  constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers();
     this.unsubChannels = this.subChannels();
   }
@@ -81,7 +78,7 @@ export class MenuComponent {
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
     this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
-   await this.privateMessage.getSelectedPrivateChannelId(this.userArray[id].username);
+   await this.mainboard.getSelectedPrivateChannelId(this.userArray[id].username);
   }
 
   openMenuSearchFieldOnChat() {
