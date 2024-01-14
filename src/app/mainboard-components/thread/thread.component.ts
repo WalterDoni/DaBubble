@@ -45,6 +45,7 @@ export class ThreadComponent {
       answerFrom: answerFromArray,
       answerText: messageArray,
       answerTime: timeArray,
+      answers: +1,
     })
   }
 

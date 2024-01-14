@@ -287,22 +287,10 @@
 }
 
 .chat-content {
-    height: 78%;
+    height: calc(100vh - 400px);
     overflow-y: auto;
     overflow-x: hidden;
 
-
-    @media(max-height: 1000px) {
-        height: 72%;
-    }
-
-    @media(max-height: 900px) {
-        height: 70%;
-    }
-
-    @media(max-height: 800px) {
-        height: 60%;
-    }
 }
 
 .imgHeadline {

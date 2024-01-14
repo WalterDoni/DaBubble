@@ -503,6 +503,7 @@ export class MainboardComponent {
    * Remove the selected emoji, if user has allready selected one.
    */
   async removeEmoji(index: number) {
+    debugger
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
     let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
     if (emojiByContainer.includes(this.loggedInUserName)) {
