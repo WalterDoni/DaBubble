@@ -60,6 +60,10 @@ export class MenuComponent {
     this.toggleCreateChannel = true;
   }
 
+  /**
+ * Selects a channel based on the provided ID and updates the mainboard accordingly.
+ * @param {number} id - The ID of the channel to be selected.
+ */
   selectChannel(id: number) {
     this.mainboard.chatContent = true;
     this.mainboard.directMessageContent = false;
@@ -72,21 +76,31 @@ export class MenuComponent {
     this.mainboard.getChannelMembersFromSelectedChannel();
   }
 
- async  selectUserForDirectmessage(id: number) {
+  /**
+ * Selects a user for a direct message and updates the mainboard accordingly.
+ * @param {number} id - The ID of the user to be selected for direct messaging.
+ */
+  async selectUserForDirectmessage(id: number) {
     this.mainboard.directMessageContent = true;
     this.mainboard.menuSearchfieldChat = false;
     this.mainboard.chatContent = false;
     this.mainboard.selectedUserDirectMessageImage = this.userArray[id].img;
     this.mainboard.selectedUserDirectMessageName = this.userArray[id].username;
-   await this.mainboard.getSelectedPrivateChannelId(this.userArray[id].username);
+    await this.mainboard.getSelectedPrivateChannelId(this.userArray[id].username);
   }
 
+  /**
+ * Opens the search field menu on the chat.
+ */
   openMenuSearchFieldOnChat() {
     this.mainboard.menuSearchfieldChat = true;
     this.mainboard.directMessageContent = false;
     this.mainboard.chatContent = false;
   }
 
+  /**
+   * Displays channels only when the logged-in user is a member.
+   */
   displayChannelOnlyWhenUserIsMember() {
     this.channelsArray.forEach(channel => {
       channel.members.forEach((member: any) => {

@@ -46,35 +46,44 @@ export class SignupComponent {
   }
 
   //----SignUp-Function----//
+
+  /**
+ * Function for user sign-up.
+ * Check the difference between private- and standardimg. 
+ */
   async signUp() {
     let userData: any;
     if (this.selectedUrl && this.selectedUrl.length !== null) {
-      userData = Object.assign(this.registerForm.value,
-        {
-          email: this.emailInput.nativeElement.value,
-          password: this.passwordInput.nativeElement.value,
-          username: this.usernameInput.nativeElement.value,
-          personalImg: this.selectedUrl,
-        });
+      userData = Object.assign(this.registerForm.value, this.returnValueWithPrivateImg());
     } else {
-      userData = Object.assign(this.registerForm.value,
-        {
-          email: this.emailInput.nativeElement.value,
-          password: this.passwordInput.nativeElement.value,
-          username: this.usernameInput.nativeElement.value,
-          defaultImg: './assets/img/signup/' + this.selectedImg,
-        });
+      userData = Object.assign(this.registerForm.value, this.returnValueWithStandardImg());
     }
     this.authService.registerWithEmailAndPassword(userData).then(async (res: any) => {
       let user = new User(userData)
       this.newUser = user.toJSON();
-      await addDoc(this.usersRef(), this.newUser).catch((error) => {
-        console.log(error);
-      }).then(() => { })
+      await addDoc(this.usersRef(), this.newUser).then(() => { console.log('Account created'); })
     }).catch((error: any) => {
       console.log(error);
     })
     this.goToLoginPage()
+  }
+
+  returnValueWithPrivateImg() {
+    return {
+      email: this.emailInput.nativeElement.value,
+      password: this.passwordInput.nativeElement.value,
+      username: this.usernameInput.nativeElement.value,
+      personalImg: this.selectedUrl,
+    }
+  }
+
+  returnValueWithStandardImg() {
+    return {
+      email: this.emailInput.nativeElement.value,
+      password: this.passwordInput.nativeElement.value,
+      username: this.usernameInput.nativeElement.value,
+      defaultImg: './assets/img/signup/' + this.selectedImg,
+    }
   }
 
   //----Img Upload----//
@@ -83,6 +92,9 @@ export class SignupComponent {
     this.saveInStorage();
   }
 
+  /**
+   * Save the uploaded image in storage.
+   */
   saveInStorage() {
     let storageRef = ref(this.storage, this.uploadedImg.name);
     let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
@@ -92,10 +104,8 @@ export class SignupComponent {
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
           case 'paused':
-            console.log('Upload is paused');
             break;
           case 'running':
-            console.log('Upload is running');
             break;
         }
       },
@@ -146,6 +156,9 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Check the validity from the inputfields and throw a error, if something is wrong.
+   */
   checkValidity() {
     if (this.usernameInput.nativeElement.value.length >= 1) {
       this.selectedUsername = this.usernameInput.nativeElement.value;

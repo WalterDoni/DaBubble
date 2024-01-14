@@ -19,17 +19,10 @@ export class AddMembersMainboardHeadlineComponent {
     this.unsubChannelContent = this.mainboard.channelContent()
   }
 
-  closeAddNewMembersWindow(event: Event) {
-    event.stopPropagation();
-    this.mainboard.toggleAddNewMembers = false;
-    this.mainboard.toggleBackground = false;
-  }
-
-  selectMember(name: string) {
-    this.input.nativeElement.value = name;
-    this.mainboard.searchTermChannelMember = name;
-  }
-
+  /**
+ * Adds a member to the currently selected channel.
+ * Checks if the member already exists in the channel before adding.
+ */
   async addMemberToChannel() {
     let counter = 0;
     let state = { doNotAddMember: false };
@@ -88,4 +81,14 @@ export class AddMembersMainboardHeadlineComponent {
     this.sureContainer = !this.sureContainer;
   }
 
+  closeAddNewMembersWindow(event: Event) {
+    event.stopPropagation();
+    this.mainboard.toggleAddNewMembers = false;
+    this.mainboard.toggleBackground = false;
+  }
+
+  selectMember(name: string) {
+    this.input.nativeElement.value = name;
+    this.mainboard.searchTermChannelMember = name;
+  }
 }
