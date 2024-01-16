@@ -24,23 +24,22 @@ export class AddMembersMainboardHeadlineComponent {
  * Checks if the member already exists in the channel before adding.
  */
   async addMemberToChannel() {
+    debugger
     let counter = 0;
     let state = { doNotAddMember: false };
-    if (this.checkIfThereIsAValueInInput()) {
-      let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
-      this.mainboard.channelsArray.forEach(channel => {
-        if (channel.channelId == this.mainboard.channelID) {
-          this.checkIfMemberIsAllreadyInChannel(channel, searchTermWithFirstLetterBig, state);
-          this.checkIfMemberExist(counter, state, searchTermWithFirstLetterBig);
-          if (!state.doNotAddMember) {
-            channel.members.push(searchTermWithFirstLetterBig);
-            updateDoc(doc(this.mainboard.channelsRef(), this.mainboard.channelID), {
-              members: channel.members
-            });
-          }
-        }
+    if (!this.checkIfThereIsAValueInInput()) { return };
+    let searchTermWithFirstLetterBig = this.mainboard.searchTermChannelMember.charAt(0).toUpperCase() + this.mainboard.searchTermChannelMember.slice(1);
+    this.mainboard.channelsArray.forEach(channel => {
+      if (channel.channelId != this.mainboard.channelID) { return };
+      this.checkIfMemberIsAllreadyInChannel(channel, searchTermWithFirstLetterBig, state);
+      this.checkIfMemberExist(counter, state, searchTermWithFirstLetterBig);
+      if (state.doNotAddMember) { return };
+      channel.members.push(searchTermWithFirstLetterBig);
+      updateDoc(doc(this.mainboard.channelsRef(), this.mainboard.channelID), {
+        members: channel.members
       });
-    }
+    });
+
   }
 
   checkIfThereIsAValueInInput() {
