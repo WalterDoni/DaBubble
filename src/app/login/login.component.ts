@@ -3,47 +3,18 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { textAnimationTrigger, slideAnimationTrigger, backgroundAnimationTrigger, moveAnimationTrigger } from '../services/apply.animation';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('textAnimation', [
-      state('hidden', style({ opacity: 0, transform: 'translateX(-350px)' })),
-      transition('hidden => visible', [
-        animate('1.3s ease', style({ opacity: 1, transform: 'translateX(0)' })),
-      ]),
-    ]),
-    trigger('slideAnimation', [
-      state('middle', style({ transform: 'translateX(200px)' })),
-      state('left', style({ transform: 'translateX(0)' })),
-      transition('middle => left', animate('0.5s ease-in')),
-    ]),
-    trigger('backgroundAnimation', [
-      state('initial', style({ opacity: 1 })),
-      state('mid', style({ opacity: 0.5 })),
-      state('final', style({ opacity: 0 })),
-      transition('initial => mid', animate('0.5s ease-in')),
-      transition('mid => final', animate('0.2s ease-in')),
-    ]),
-    trigger('moveAnimation', [
-      state('middle', style({ transform: 'translate(-50%, -50%)' })), // Initial state (centered)
-      state(
-        'top-left',
-        style({ top: '175px', left: '375px', fontSize: '32px' })
-      ), // Target state (top-left corner)
-      transition('middle => top-left', animate('0.3s ease-out')), // Transition from middle to top-left
-    ]),
-  ],
+  animations: [textAnimationTrigger,
+    slideAnimationTrigger,
+    backgroundAnimationTrigger,
+    moveAnimationTrigger],
 })
+
 export class LoginComponent {
   loggedInUser: string = '';
   email: string = '';

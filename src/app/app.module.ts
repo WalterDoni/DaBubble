@@ -33,6 +33,7 @@ import { ProfilViewComponent } from './mainboard-components/profil-view/profil-v
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-picker-inputfield.component';
+import { EmojiPickerThreadComponent } from './emoji-picker-thread/emoji-picker-thread.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-
     ProfilViewComponent,
     PopupEditCommentComponent,
     EmojiPickerInputfieldComponent,
+    EmojiPickerThreadComponent,
   ],
 
   imports: [

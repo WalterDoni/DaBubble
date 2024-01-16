@@ -1,18 +1,20 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MainboardComponent } from '../mainboard/mainboard.component';
+import { ThreadComponent } from '../mainboard-components/thread/thread.component';
+
 @Component({
-  selector: 'app-emoji-picker-inputfield',
-  templateUrl: './emoji-picker-inputfield.component.html',
-  styleUrls: ['./emoji-picker-inputfield.component.scss']
+  selector: 'app-emoji-picker-thread',
+  templateUrl: './emoji-picker-thread.component.html',
+  styleUrls: ['./emoji-picker-thread.component.scss']
 })
-export class EmojiPickerInputfieldComponent {
+export class EmojiPickerThreadComponent {
   isOpened = false;
 
   @Input() emojiInput$: Subject<string> | undefined;
   @ViewChild("container") container: ElementRef<HTMLElement> | undefined;
 
-  constructor(private mainboard: MainboardComponent) {
+  constructor(private thread: ThreadComponent) {
   }
 
   /**
@@ -21,7 +23,7 @@ export class EmojiPickerInputfieldComponent {
   emojiSelected(event: any) {
     const selectedEmoji = event.emoji.native;
     this.emojiInput$?.next(selectedEmoji);
-    this.mainboard.newCommentValue.nativeElement.value += selectedEmoji;
+    this.thread.inputfieldValue.nativeElement.value += selectedEmoji;
   }
 
   /**
@@ -51,4 +53,5 @@ export class EmojiPickerInputfieldComponent {
       window.removeEventListener("click", this.eventHandler);
     }
   }
+
 }

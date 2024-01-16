@@ -240,34 +240,17 @@
 .chat-message-options {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 10px;
+    padding: 10px;
     cursor: pointer;
 
-    span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-    }
-
-    :first-child {
-        margin-left: 8px;
-    }
-
-    :last-child {
-        margin-right: 8px;
-        transition: transform 200ms ease-in-out;
-      
-        :hover{
-
-            transform: scale(1.2);
-        }
-
-    }
+   
 }
 
-.hoverImg:hover {
-    transition: transform 200ms ease-in-out;
-    filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
-    transform: scale(1.2);
+
+.sendButtonImg {
+    transition: transform 200ms ease-out;
+
+    img:hover {
+        transform: scale(1.1);
+    }
 }

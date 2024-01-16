@@ -97,7 +97,12 @@ export class SignupComponent {
    */
   saveInStorage() {
     let storageRef = ref(this.storage, this.uploadedImg.name);
-    let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg)
+    let uploadTask = uploadBytesResumable(storageRef, this.uploadedImg);
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if (!allowedImageTypes.includes(this.uploadedImg.type)) {
+      alert('Ungültiger Dateityp. Es sind nur JPEG, PNG und GIF erlaubt.');
+      return;
+    }
     uploadTask.on('state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

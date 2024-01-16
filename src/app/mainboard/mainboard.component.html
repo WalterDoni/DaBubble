@@ -231,7 +231,7 @@
                     <p>{{selectedUserDirectMessageName}}</p>
                 </span>
             </div>
-            <div class="chat-content">   
+            <div class="chat-content-private">   
                 <div *ngFor="let content of messageFromArray; let i = index">
                     <div class="chat-seperator-with-date" *ngIf="messageFromArray.length >= 1">
                         <span class="seperator-chat"></span>
@@ -270,7 +270,7 @@
                     <img class="imgChat" src="{{selectedUserDirectMessageImage}}" alt="">
                     <p>{{selectedUserDirectMessageName}}</p>
                 </div>
-                <p class="description">Diese Unterhaltung findet nur zwischen <b class="colorblue">@{{selectedUserDirectMessageName}}</b>
+                <p class="descriptionPrivateChat">Diese Unterhaltung findet nur zwischen <b class="colorblue">@{{selectedUserDirectMessageName}}</b>
                     und dir statt.</p>
             </div>
             
