@@ -34,6 +34,8 @@ import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/po
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-picker-inputfield.component';
 import { EmojiPickerThreadComponent } from './emoji-picker-thread/emoji-picker-thread.component';
+import { MessageFromLoggedInUserComponent } from './mainboard-components/message-from-logged-in-user/message-from-logged-in-user.component';
+import { MessageFromUserComponent } from './mainboard-components/message-from-user/message-from-user.component';
 
 
 @NgModule({
@@ -60,6 +62,8 @@ import { EmojiPickerThreadComponent } from './emoji-picker-thread/emoji-picker-t
     PopupEditCommentComponent,
     EmojiPickerInputfieldComponent,
     EmojiPickerThreadComponent,
+    MessageFromLoggedInUserComponent,
+    MessageFromUserComponent,
   ],
 
   imports: [

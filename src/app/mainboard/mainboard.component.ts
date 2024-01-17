@@ -70,7 +70,7 @@ export class MainboardComponent {
   //--new comment or commentchange--//
   newComment = new NewComment();
   showNewCommentImg: boolean = false;
-  errorMessageCommentChange: boolean = false;
+
 
   //--Searchfiltervariables--//
   searchTerm!: string;
@@ -440,31 +440,6 @@ export class MainboardComponent {
     this.messageTimeArray = [];
   }
 
-  //----Change-Comment-Functions----//
-
-  /**
- * Saves changes to a comment in the selected channel.
- * @param {string} id - The ID of the comment to be updated.
- * @param {number} index - The index of the comment in the array.
- */
-  async saveCommentChange(id: string, index: number) {
-    if (this.newChangedMessage.nativeElement.value.length >= 1) {
-      let newMessage = this.newChangedMessage.nativeElement.value;
-      let img = this.delImgEditComment.nativeElement.src
-      await updateDoc(doc(this.channelContentRef(), id), {
-        message: newMessage,
-        messageImg: img
-      })
-      this.selectedChannelContent[index].editComment = false;
-      this.errorMessageCommentChange = false;
-    } else {
-      this.errorMessageCommentChange = true;
-    }
-  }
-
-  deleteImgEditComment() {
-    this.delImgEditComment.nativeElement.src = "";
-  }
 
   //----Update-Emoji-Counter----//
 
@@ -504,41 +479,6 @@ export class MainboardComponent {
     }
   }
 
-  /**
-   * Remove the selected emoji, if user has allready selected one.
-   */
-  async removeEmoji(index: number) {
-    debugger
-    let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.referencesEmoji();
-    let id = this.selectedChannelContent[this.hoveredChannelIndex]['id'];
-    if (emojiByContainer.includes(this.loggedInUserName)) {
-      this.updateremoveEmojiContainers(emojiByContainer, emojiCounterContainer, emojiContainer, index);
-    }
-    await updateDoc(doc(this.channelContentRef(), id), {
-      emoji: emojiContainer,
-      emojiBy: emojiByContainer,
-      emojiCounter: emojiCounterContainer,
-    })
-  }
-
-  /**
-   * Will be called in the removeEmoji function. Iterate through the emojiByContainer.
-   * First: Check if the loggedInUser is allready in the array. Yes -> remove it.
-   * Second: Check the amount of the emoji. Remove it, if the amount is 1. If it is more then 1 reduce by 1.
-  */
-  updateremoveEmojiContainers(emojiByContainer: any, emojiCounterContainer: any, emojiContainer: any, index: number) {
-    emojiByContainer.forEach((name: string, i: number) => {
-      if (name == this.loggedInUserName) {
-        emojiByContainer.splice(i, 1);
-        if (emojiCounterContainer[index] > 1) {
-          emojiCounterContainer[index] = emojiCounterContainer[index] - 1;
-        } else {
-          emojiCounterContainer.splice(index, 1);
-          emojiContainer.splice(index, 1);
-        }
-      }
-    });
-  }
 
   referencesEmoji() {
     return {
@@ -719,50 +659,6 @@ export class MainboardComponent {
     if (window.innerWidth <= 1400 && this.toggleMenu) {
       this.toggleThread = false;
     }
-  }
-
-  //--Thread-Popup--//
-  showPopupForThread(event: MouseEvent, index: number) {
-    this.hoveredChannelIndex = index;
-    this.isPopupForThreadVisible = true;
-  }
-
-  hidePopupForThread() {
-    this.isPopupForThreadVisible = false;
-  }
-
-  //--Thread-Menu--//
-  showThread() {
-    this.toggleThread = true;
-    if (this.toggleMenu && this.toggleThread && window.innerWidth < 1400) {
-      this.toggleMenu = false;
-    }
-  }
-
-  //--Edit-Comment-Pop-Up--//
-  showPopUpForEditComment(event: MouseEvent, index: number) {
-    this.hoveredChannelIndex = index;
-    this.editCommentPopUp = true;
-  }
-
-  hidePopUpForEditComment() {
-    this.editCommentPopUp = true;
-  }
-
-  closeEditComment(index: number) {
-    this.selectedChannelContent[index].editComment = false;
-  }
-
-  //--Reactions-Popup--//
-  showPopupForReactions(event: MouseEvent, index: number): void {
-    this.hoveredEmojiIndex = index;
-    this.isPopupForReactionsVisible = true;
-
-  }
-
-  hidePopupForReactions(): void {
-    this.hoveredEmojiIndex = null;
-    this.isPopupForReactionsVisible = false;
   }
 
   //--Edit-Channel-Window--//
