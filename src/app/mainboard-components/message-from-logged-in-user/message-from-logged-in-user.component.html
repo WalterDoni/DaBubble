@@ -1,0 +1,60 @@
+<div *ngFor="let channel of mainboard.selectedChannelContent; let i = index"
+(mouseenter)="showPopUpForEditComment($event, i)" (mouseleave)="hidePopUpForEditComment()">
+<div class="chat-seperator-with-date" *ngIf="channel.data.from == mainboard.loggedInUserName">
+    <span class="seperator-chat"></span>
+    <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
+    <span class="seperator-chat"></span>
+</div>
+
+<div class="my-message-chat">
+    <div class="my-message-chat-history" *ngIf="channel.data.from == mainboard.loggedInUserName">
+        <div class="my-headline-message-history">
+            <div class="popUp-div"><app-popup-edit-comment
+                    *ngIf="mainboard.editCommentPopUp && mainboard.hoveredChannelIndex == i && (channel.data.from == mainboard.loggedInUserName)"></app-popup-edit-comment>
+            </div>
+            <h3>{{channel.data.from}}</h3>
+            <p> {{channel.data.timestamp}} Uhr</p>
+        </div>
+
+        <div *ngIf="!channel.editComment && (channel.data.from == mainboard.loggedInUserName)"
+            class="my-message-history">
+            {{channel.data.message}}
+            <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
+                    src="{{channel.data.messageImg}}" alt=""></div>
+        </div>
+        <div *ngIf="channel.editComment && mainboard.hoveredChannelIndex === i && (channel.data.from == mainboard.loggedInUserName)"
+            class="my-message-history">
+            <div class="editComment-div"><input required class="editCommentInputfield" type="text"
+                    value="{{channel.data.message}}" #newChangedMessage>
+                <div *ngIf="channel.data.messageImg.length > 38">
+                    <img class="message-history-img" src="{{channel.data.messageImg}}" alt=""
+                        #delImgEditComment>
+                    <button (click)="deleteImgEditComment()">X</button>
+                </div>
+            </div>
+            <p *ngIf="errorMessageCommentChange" class="error-message">Die Nachricht ist leer</p>
+            <div class="btn-container"><button
+                    (click)="saveCommentChange(channel.id, i)">Speichern</button><button
+                    (click)="closeEditComment(i)">Abbrechen</button></div>
+        </div>
+        <div class="my-reactions-container" *ngIf="channel.data.emoji.length >= 1">
+                <span class="reactions" *ngFor="let emoji of channel.data.emoji; let id = index"
+                    (mouseenter)="showPopupForReactions($event, id)"
+                    (mouseleave)="hidePopupForReactions()" (click)="removeEmoji(id)">
+                    <p style="position: absolute; left: 10px">{{emoji}}</p>
+                    <p style="position: absolute; right: 17px">{{channel.data.emojiCounter[id]}}</p>
+                    <app-popup-reactions [emojiIndex]="id" [channelIndex]="i" *ngIf="isPopupForReactionsVisible && mainboard.hoveredChannelIndex === i && mainboard.hoveredEmojiIndex === id"></app-popup-reactions>
+                </span>
+          </div>
+
+        <div class="answers-message-history">
+            <div (click)="showThread()">{{channel.answers}} Antworten</div><span
+                *ngIf="channel.answers > 0">Letzte
+                Antwort {{channel.lastAnswer}}</span>
+        </div>
+    </div>
+    <div class="my-avatar-chat-history" *ngIf="channel.data.from == mainboard.loggedInUserName"><img
+            [src]="mainboard.getImgFromAnswerUser(mainboard.selectedChannelContent[0]['data']['from'])" alt=""></div>
+</div>
+</div>
+

@@ -1,0 +1,274 @@
+.chat-seperator-with-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 0px;
+}
+
+.seperator-chat {
+    height: 1px;
+    width: 40%;
+    background: #ADB0D9;
+
+    @media(max-width: 1600px) {
+        width: 37%;
+    }
+
+    @media(max-width: 1330px) {
+        width: 33%;
+    }
+
+    @media(max-width: 1140px) {
+        width: 30%;
+    }
+
+    @media(max-width: 980px) {
+        width: 25%;
+    }
+
+    @media(max-width: 440px) {
+        width: 20%;
+    }
+
+    @media(max-width: 350px) {
+        width: 15%;
+    }
+}
+
+.date-chat {
+    display: flex;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    padding: 5px 15px
+}
+
+.my-message-chat {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.my-message-chat-history {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 35px;
+    padding-left: 10px;
+}
+
+.my-headline-message-history {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+
+}
+
+.popUp-div {
+    position: absolute;
+    left: -230px;
+    top: -30px;
+
+    @media(max-width: 1220px) {
+        left: -10px;
+    }
+}
+
+
+.my-message-history {
+    border-radius: 30px 0px 30px 30px;
+    padding: 10px 30px;
+    color: white;
+    background-color: #797EF3;
+
+}
+
+.message-history-img {
+    max-width: 300px;
+    max-height: 200px;
+    width: 90%;
+}
+
+.editComment-div {
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+
+    div {
+        display: flex;
+    }
+
+    img {
+        padding: 8px;
+        max-width: 300px;
+        max-height: 200px;
+    }
+
+    button {
+        border-style: none;
+        border-radius: 30px;
+        background-color: #ECEEFE;
+        width: 25px;
+        height: 25px;
+        margin-top: 8px;
+        cursor: pointer;
+        transition: background-color ease-in-out 200ms, color ease-in-out 200ms;
+
+        &:hover {
+            background-color: #ADB0D9;
+            color: white;
+        }
+
+    }
+}
+
+.editCommentInputfield {
+    outline: none;
+    background-color: #ECEEFE;
+    border: 1px solid #ADB0D9;
+    border-radius: 30px;
+    padding: 8px;
+    width: 900px;
+
+    @media(max-width: 1820px) {
+        width: 700px;
+    }
+
+    @media(max-width: 1530px) {
+        width: 500px;
+    }
+
+    @media(max-width: 1240px) {
+        width: 300px;
+    }
+}
+
+.error-message {
+    color: #ECEEFE;
+    font-weight: 700;
+    width: 90%;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+
+    button {
+        cursor: pointer;
+        width: 90px;
+        height: 30px;
+        font-size: 13px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ECEEFE;
+        color: black;
+        padding: 8px;
+        transition: background-color ease-in-out 200ms, color ease-in-out 200ms;
+
+        &:hover {
+            background-color: #ADB0D9;
+            color: white;
+        }
+    }
+}
+
+.my-reactions-container {
+    position: relative;
+    display: flex;
+    height: 24px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 8px 0px;
+
+
+    span {
+        cursor: pointer;
+    }
+
+    img {
+        object-fit: contain;
+    }
+}
+
+.reactions {
+    position: relative;
+    display: flex;
+    border: 1px solid #ADB0D9;
+    border-radius: 20px;
+    padding: 5px 10px;
+    gap: 8px;
+    width: 50px;
+    height: 24px;
+    transition: background-color 200ms ease-out, color 200ms ease-out;
+
+    &:hover {
+        background-color: #535AF1;
+        color: white;
+    }
+}
+
+.answers-message-history {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #535AF1;
+    gap: 16px;
+
+
+    div:hover {
+        cursor: pointer;
+        font-weight: 600;
+        color: #535AF1;
+        transform: scale(1.1);
+    }
+
+    span {
+        font-size: 14px;
+        color: #686868;
+
+        @media(max-width: 440px) {
+            font-size: 12px;
+        }
+    }
+
+    @media(max-width: 440px) {
+        font-size: 16px;
+    }
+
+    @media(max-width: 370px) {
+        flex-direction: column-reverse;
+    }
+}
+
+.my-headline-message-history {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+
+}
+
+.my-avatar-chat-history {
+    padding: 10px 65px 0px 35px;
+
+    @media(max-width: 980px) {
+        padding: 10px 10px 0px 10px;
+    }
+
+    img {
+        object-fit: cover;
+        border-radius: 100%;
+        width: 80px;
+        height: 80px;
+
+        @media(max-width: 440px) {
+            width: 60px;
+            height: 60px;
+        }
+    }
+}
