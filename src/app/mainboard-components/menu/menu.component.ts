@@ -3,7 +3,6 @@ import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -41,8 +40,6 @@ export class MenuComponent {
   @ViewChild('listDirectmessage') listDirectmessage!: ElementRef;
   openTableChannels: boolean = true;
   openTableDirectMessages: boolean = true;
-
-
 
   constructor(private route: ActivatedRoute, private mainboard: MainboardComponent) {
     this.unsubUsers = this.subUsers();

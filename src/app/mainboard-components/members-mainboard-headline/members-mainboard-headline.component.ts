@@ -12,11 +12,9 @@ export class MembersMainboardHeadlineComponent {
   userArray: any = []
 
   constructor(public mainboard: MainboardComponent){
-    
     this.loggedInUserName = this.mainboard.loggedInUserName;
     this.loggedInUserImg = this.mainboard.loggedInUserImg;
     this.userArray = this.mainboard.userArray;
-
   }
 
   handleAddMembersClick(event: Event) {
