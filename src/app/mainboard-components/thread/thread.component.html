@@ -14,7 +14,7 @@
             <div class="message-chat-history">
                 <div class="headline-message-history">
                     <h3>{{selectedChannel[selectedThreadID]['data']['from']}}</h3>
-                    <p> 16:30 Uhr</p>
+                    <p> {{selectedChannel[selectedThreadID]['data']['timestamp']}} Uhr</p>
                 </div>
                 <div class="message-history">{{selectedChannel[selectedThreadID]['data']['message']}}</div>
             </div>
@@ -39,8 +39,9 @@
         <div class="my-message-chat">
             <div class="my-message-chat-history" *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName">
                 <div class="my-headline-message-history">
-                    <p>{{selectedChannel[selectedThreadID]['data']['answerFrom'][i]}}</p>
-                    <h3>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}}</h3>
+                    <h3>{{selectedChannel[selectedThreadID]['data']['answerFrom'][i]}}</h3>
+                    <p>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
+                
                 </div>
                 <div class="my-message-history">{{answerTextMessage}}</div>
             </div>

@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { Firestore, collection, doc, updateDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
 
 @Component({
@@ -8,7 +9,7 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
   styleUrls: ['./thread.component.scss']
 })
 
-export class ThreadComponent {
+export class ThreadComponent implements OnInit{
   @ViewChild('inputfieldValue') inputfieldValue!: ElementRef;
 
   selectedThreadID!: number;
@@ -18,10 +19,14 @@ export class ThreadComponent {
   firestore: Firestore = inject(Firestore);
 
   constructor(public mainboard: MainboardComponent) {
-    this.selectedChannel = this.mainboard.selectedChannelContent;
-    this.selectedThreadID = this.mainboard.hoveredChannelIndex;
-    this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
+
   }
+
+ngOnInit(): void {
+  this.selectedChannel = this.mainboard.selectedChannelContent;
+  this.selectedThreadID = this.mainboard.hoveredChannelIndex;
+  this.selectedChannelTitle = this.mainboard.selectedChannelTitle; 
+}
 
   closeThread() {
     this.mainboard.toggleThread = false;
@@ -36,6 +41,7 @@ export class ThreadComponent {
     let answerFromArray = this.selectedChannel[this.selectedThreadID]['data']['answerFrom'];
     let messageArray = this.selectedChannel[this.selectedThreadID]['data']['answerText'];
     let timeArray = this.selectedChannel[this.selectedThreadID]['data']['answerTime'];
+    let addOne = this.selectedChannel[this.selectedThreadID]['data']['answers'] + 1;
     answerFromArray.push(this.mainboard.loggedInUserName);
     let messageValue = this.inputfieldValue.nativeElement.value;
     messageArray.push(messageValue);
@@ -45,9 +51,11 @@ export class ThreadComponent {
       answerFrom: answerFromArray,
       answerText: messageArray,
       answerTime: timeArray,
-      answers: +1,
+      answers: addOne,
     })
+    this.selectedChannel = this.mainboard.selectedChannelContent;
   }
+
 
   channelContentRef() {
     return collection(this.firestore, 'channels', this.mainboard.channelID, 'channelContent')
