@@ -7,6 +7,7 @@
     padding: 32px 30px;
     border-radius: 30px;
     width: 300px;
+    overflow: hidden;
     z-index: 12;
 
 
@@ -81,8 +82,8 @@
 
 
         @media(max-height: 960px) {
-          padding-bottom: 0px;
-    
+            padding-bottom: 0px;
+
         }
 
         span {
@@ -209,23 +210,40 @@
 .contacts-content {
     div {
         display: flex;
-        height: 40px;
         padding-bottom: 25px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        @media(max-width: 1110px) and (max-height: 980px) {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            width: 100%;
+            max-height: 240px;
+        }
+
+        @media(max-width: 1110px) and (max-height: 710px) {
+            max-height: 210px;
+        }
+
+        @media(max-width: 1110px) and (max-height: 670px) {
+            max-height: 180px;
+        }
+    }
 
 
-        span {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
+    span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
 
-            p {
-                font-size: 20px;
-                font-weight: 700;
-            }
+        p {
+            font-size: 20px;
+            font-weight: 700;
         }
     }
 }
+
 
 .contact-list {
     list-style: none;
@@ -233,27 +251,34 @@
     flex-direction: column;
     gap: 10px;
 
+    @media (max-width: 1110px) and (max-height: 960px) {
+        height: 300px !important;
+    }
 
-    @media(max-height: 1050px) {
+    @media (max-width: 1110px) and (max-height: 830px) {
         height: 300px !important;
         overflow-y: auto;
     }
 
-    @media(max-height: 960px) {
+    @media(min-width: 1110px) and (max-height: 1050px) {
+        height: 300px !important;
+        overflow-y: auto;
+    }
+
+    @media (min-width: 1110px) and (max-height: 960px) {
         height: 180px !important;
 
     }
 
-    @media(max-height: 906px) {
+    @media (min-width: 1110px) and (max-height: 906px) {
         height: 160px !important;
-
     }
 
-    @media(max-height: 775px) {
+    @media (min-width: 1110px) and (max-height: 775px) {
         height: 150px !important;
     }
 
-    @media(max-height: 676px) {
+    @media (min-width: 1110px) and (max-height: 676px) {
         height: 100px !important;
     }
 
@@ -273,7 +298,7 @@
             color: #535AF1;
         }
 
-        
+
 
 
         img {

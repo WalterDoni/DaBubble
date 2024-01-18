@@ -8,13 +8,8 @@
             <div><img src="{{loggedInUserImg}}" alt="Profil-Image"></div>
         </div>
         <div class="info">
-            <div class="info-headline" *ngIf="!changeName">
+            <div class="info-headline">
                 <h2>{{loggedInUserName}}</h2>
-                <button (click)="toggleChangeName()">Namen bearbeiten</button>
-            </div>
-            <div class="info-headline" *ngIf="changeName">
-                <input #inputValue type="text" placeholder="Namen ändern..." value="{{loggedInUserName}}">
-                <button (click)="updateName()">Speichern</button>
             </div>
             <p *ngIf="errormessage" class="error-message">Bitte geben Sie einen Namen ein.</p>
             <div class="email">

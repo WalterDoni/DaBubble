@@ -32,6 +32,8 @@ import { FormsModule } from '@angular/forms';
 import { ProfilViewComponent } from './mainboard-components/profil-view/profil-view.component';
 import { PopupEditCommentComponent } from './popup-windows/popup-edit-comment/popup-edit-comment.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InputfieldNormailChatComponent } from './mainboard-components/inputfield-normail-chat/inputfield-normail-chat.component';
+import { InputfieldPrivateChannelComponent } from './mainboard-components/inputfield-private-channel/inputfield-private-channel.component';
 import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-picker-inputfield.component';
 import { EmojiPickerThreadComponent } from './emoji-picker-thread/emoji-picker-thread.component';
 import { MessageFromLoggedInUserComponent } from './mainboard-components/message-from-logged-in-user/message-from-logged-in-user.component';
@@ -39,8 +41,7 @@ import { MessageFromUserComponent } from './mainboard-components/message-from-us
 import { PrivateMessageContentComponent } from './mainboard-components/private-message-content/private-message-content.component';
 import { HeadlineInputSearchComponent } from './headline-input-search/headline-input-search.component';
 import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.component';
-import { InputfieldNormailChatComponent } from './mainboard-components/inputfield-normail-chat/inputfield-normail-chat.component';
-import { InputfieldPrivateChannelComponent } from './mainboard-components/inputfield-private-channel/inputfield-private-channel.component';
+import { EmojiPickerPrivateInputfieldComponent } from './emoji-picker-private-inputfield/emoji-picker-private-inputfield.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { InputfieldPrivateChannelComponent } from './mainboard-components/inputf
     MenuInputSearchComponent,
     InputfieldNormailChatComponent,
     InputfieldPrivateChannelComponent,
+    EmojiPickerPrivateInputfieldComponent,
   ],
 
   imports: [

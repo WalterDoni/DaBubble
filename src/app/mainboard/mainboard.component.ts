@@ -22,6 +22,7 @@ export class MainboardComponent {
   date: Date = new Date(Date.now());
   @ViewChild('thread') thread!: ElementRef;
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
+  @ViewChild('newCommentValuePrivateMessage') newCommentValuePrivateMessage!: ElementRef;
   @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
   @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
 

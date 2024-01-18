@@ -1,0 +1,31 @@
+.emoji-picker-container {
+    z-index: 10;
+    position: relative;
+    width: 24px;
+    height: 24px;
+
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        transition: transform 200ms ease-in-out;
+
+        :hover {
+            filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
+            transform: scale(1.2);
+        }
+    }
+}
+
+.picker {
+    position: absolute;
+    top: -440px;
+    left: 25px;
+}
+
+@media only screen and (min-device-width: 1024px) {
+    .picker {
+        transform: scale(1);
+    }
+}

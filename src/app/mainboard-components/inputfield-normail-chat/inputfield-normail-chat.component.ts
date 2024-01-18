@@ -10,15 +10,17 @@ import { addDoc } from '@angular/fire/firestore';
 })
 
 export class InputfieldNormailChatComponent {
+
   showNewCommentImg: boolean = false;
+
   @ViewChild('fileInput') fileInput!: ElementRef;
   customizedImg: boolean = false;
-
+  
   //-Image upload--//
   uploadedImg: any = {};
-
   @ViewChild('uploadmessage') uploadmessage!: ElementRef;
   displayUploadMessage: boolean = false;
+  @ViewChild('newCommentValue') newCommentValue!: ElementRef;
 
   constructor(public mainboard: MainboardComponent, public storage: Storage, private cdr: ChangeDetectorRef) {
   }
@@ -91,9 +93,10 @@ export class InputfieldNormailChatComponent {
 * Asynchronously adds a new comment to the selected channel.
 */
   async newCommentInSelectedChannel() {
-    let input = this.mainboard.newCommentValue.nativeElement.value;
+    debugger
+    let input = this.newCommentValue.nativeElement.value;
     await addDoc(this.mainboard.channelContentRef(), this.valuesForNewComment(input));
-    this.mainboard.newCommentValue.nativeElement.value = '';
+    this.newCommentValue.nativeElement.value = '';
   }
 
   valuesForNewComment(input: string) {

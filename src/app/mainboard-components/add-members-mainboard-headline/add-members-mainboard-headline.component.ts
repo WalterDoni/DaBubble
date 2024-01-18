@@ -39,7 +39,6 @@ export class AddMembersMainboardHeadlineComponent {
  * Checks if the member already exists in the channel before adding.
  */
   async addMemberToChannel() {
-    debugger
     let counter = 0;
     let state = { doNotAddMember: false };
     if (!this.checkIfThereIsAValueInInput()) { return };

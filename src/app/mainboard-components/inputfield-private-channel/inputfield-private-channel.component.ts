@@ -18,7 +18,6 @@ export class InputfieldPrivateChannelComponent {
   
   privateshowNewCommentImg: boolean = false;
 
-
   privatedisplayUploadMessage: boolean = false;
   customizedImg: boolean = false;
 
@@ -50,13 +49,15 @@ export class InputfieldPrivateChannelComponent {
   * Handles the upload of an image.
   * @param {Object} event - The event object representing the file input change.
   */
+
   uploadImg(event: any) {
     this.uploadedImg = event.target.files[0];
     this.saveInStorage();
-  }  /**
+  } 
+  
+  /**
   * Deletes the newly added image in the comment.
   */
-
   deleteNewImgInComment() {
     this.privateshowNewCommentImg = false;
     this.mainboard.selectedUrl = "";

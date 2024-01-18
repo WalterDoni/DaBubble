@@ -1,19 +1,19 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MainboardComponent } from '../mainboard/mainboard.component';
-import { InputfieldNormailChatComponent } from '../mainboard-components/inputfield-normail-chat/inputfield-normail-chat.component';
+import { InputfieldPrivateChannelComponent } from '../mainboard-components/inputfield-private-channel/inputfield-private-channel.component';
+
 @Component({
-  selector: 'app-emoji-picker-inputfield',
-  templateUrl: './emoji-picker-inputfield.component.html',
-  styleUrls: ['./emoji-picker-inputfield.component.scss']
+  selector: 'app-emoji-picker-private-inputfield',
+  templateUrl: './emoji-picker-private-inputfield.component.html',
+  styleUrls: ['./emoji-picker-private-inputfield.component.scss']
 })
-export class EmojiPickerInputfieldComponent {
+export class EmojiPickerPrivateInputfieldComponent {
   isOpened = false;
 
   @Input() emojiInput$: Subject<string> | undefined;
   @ViewChild("container") container: ElementRef<HTMLElement> | undefined;
 
-  constructor(private inputChat: InputfieldNormailChatComponent) {
+  constructor(private inputChatPrivate: InputfieldPrivateChannelComponent) {
   }
 
   /**
@@ -22,7 +22,7 @@ export class EmojiPickerInputfieldComponent {
   emojiSelected(event: any) {
     const selectedEmoji = event.emoji.native;
     this.emojiInput$?.next(selectedEmoji);
-    this.inputChat.newCommentValue.nativeElement.value += selectedEmoji;
+    this.inputChatPrivate.newCommentValuePrivateMessage.nativeElement.value += selectedEmoji;
   }
 
   /**
