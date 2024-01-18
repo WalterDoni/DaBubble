@@ -4,14 +4,16 @@
         <span class="date-chat">{{ mainboard.messageTimeArray[i].toDate() | date:'longDate' }}</span>
         <span class="seperator-chat"></span>
     </div>
-    <div class="my-message-chat" *ngIf="content == mainboard.loggedInUserName && mainboard.messageFromArray.length >= 1">
+    <div class="my-message-chat"
+        *ngIf="content == mainboard.loggedInUserName && mainboard.messageFromArray.length >= 1">
         <div class="my-message-chat-history">
             <div class="my-headline-message-history">
                 <h3>{{content}}</h3>
                 <p> {{mainboard.messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
             </div>
             <div class="my-message-history">{{mainboard.messageTextArray[i]}}
-
+                <div *ngIf="mainboard.messageImgArray[i]?.length > 38"><img class="message-history-img"
+                        src="{{mainboard.messageImgArray[i]}}" alt=""></div>
             </div>
         </div>
         <div class="my-avatar-chat-history"><img [src]="mainboard.loggedInUserImg" alt=""></div>
@@ -25,6 +27,8 @@
                 <p> {{mainboard.messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
             </div>
             <div class="message-history">{{mainboard.messageTextArray[i]}}
+                <div *ngIf="mainboard.messageImgArray[i]?.length > 38"><img class="message-history-img"
+                        src="{{mainboard.messageImgArray[i]}}" alt=""></div>
             </div>
         </div>
     </div>

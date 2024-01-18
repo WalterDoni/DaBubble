@@ -1,0 +1,20 @@
+<input type="text" placeholder="Nachricht an #{{mainboard.selectedUserDirectMessageName}}"
+    #newCommentValuePrivateMessage>
+<p *ngIf="privatedisplayUploadMessage" class="upload-message" #uploadmessagePrivate style="padding-left: 2%;"></p>
+<div *ngIf="privateshowNewCommentImg" class="newImg-div"><img src="{{mainboard.selectedUrl}}" alt=""><button
+        (click)="deleteNewImgInComment()">X</button>
+</div>
+<div class="chat-message-options">
+    <span class="imgHoverInput">
+        <div>
+            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
+            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
+        </div>
+        <span class="seperator-send-message"></span>
+        <img src="/assets/img/mainboard/smile_add_message.png" alt="">
+
+    </span>
+    <span class="sendButtonImg">
+        <img (click)="newCommentInSelectedPrivateChannel()" src="/assets/img/mainboard/send.png" alt="">
+    </span>
+</div>

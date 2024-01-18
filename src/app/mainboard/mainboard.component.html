@@ -70,28 +70,7 @@
             </div>
 
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #{{selectedChannelTitle}}" #newCommentValue>
-                <p *ngIf="displayUploadMessage" class="upload-message" #uploadmessage style="padding-left: 2%;"></p>
-                <div *ngIf="showNewCommentImg" class="newImg-div"><img src="{{selectedUrl}}" alt=""><button
-                        (click)="deleteNewImgInComment()">X</button>
-                </div>
-                <div class="chat-message-options">
-                    <span class="imgHoverInput">
-                        <div>
-                            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
-                            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
-                        </div>
-                        <span class="seperator-send-message"></span>
-                        <span><app-emoji-picker-inputfield></app-emoji-picker-inputfield></span>
-                        <img (click)="toogleDisplayAllChannelMembers()"
-                            src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
-                    </span>
-                    <span class="sendButtonImg">
-                        <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
-                    </span>
-
-                </div>
-
+                <app-inputfield-normail-chat></app-inputfield-normail-chat>
             </div>
 
         </div>
@@ -114,23 +93,7 @@
                 </div>
             </div>
             <div class="chat-message-inputfield">
-                <input type="text" placeholder="Nachricht an #{{selectedUserDirectMessageName}}"
-                    #newCommentValuePrivateMessage>
-
-                <div class="chat-message-options">
-                    <span class="imgHoverInput">
-                        <div>
-                            <input type="file" class="inputImgUpload" #fileInput (change)="uploadImg($event)">
-                            <img src="/assets/img/mainboard/add_plus.png" alt="" (click)="triggerFileInput()">
-                        </div>
-                        <span class="seperator-send-message"></span>
-                        <img src="/assets/img/mainboard/smile_add_message.png" alt="">
-
-                    </span>
-                    <span class="sendButtonImg">
-                        <img (click)="newCommentInSelectedPrivateChannel()" src="/assets/img/mainboard/send.png" alt="">
-                    </span>
-                </div>
+                <app-inputfield-private-channel></app-inputfield-private-channel>
             </div>
         </div>
 

@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="message-history">{{channel.data.message}}
-            <div *ngIf="channel.data.messageImg != ''"><img class="message-history-img"
+            <div *ngIf="channel.data.messageImg > 38"><img class="message-history-img"
                     src="{{channel.data.messageImg}}" alt=""></div>
         </div>
 

@@ -39,6 +39,8 @@ import { MessageFromUserComponent } from './mainboard-components/message-from-us
 import { PrivateMessageContentComponent } from './mainboard-components/private-message-content/private-message-content.component';
 import { HeadlineInputSearchComponent } from './headline-input-search/headline-input-search.component';
 import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.component';
+import { InputfieldNormailChatComponent } from './mainboard-components/inputfield-normail-chat/inputfield-normail-chat.component';
+import { InputfieldPrivateChannelComponent } from './mainboard-components/inputfield-private-channel/inputfield-private-channel.component';
 
 
 @NgModule({
@@ -70,6 +72,8 @@ import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.
     PrivateMessageContentComponent,
     HeadlineInputSearchComponent,
     MenuInputSearchComponent,
+    InputfieldNormailChatComponent,
+    InputfieldPrivateChannelComponent,
   ],
 
   imports: [

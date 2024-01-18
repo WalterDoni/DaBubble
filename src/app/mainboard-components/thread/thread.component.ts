@@ -9,7 +9,7 @@ import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
   styleUrls: ['./thread.component.scss']
 })
 
-export class ThreadComponent implements OnInit{
+export class ThreadComponent implements OnInit {
   @ViewChild('inputfieldValue') inputfieldValue!: ElementRef;
 
   selectedThreadID!: number;
@@ -22,11 +22,11 @@ export class ThreadComponent implements OnInit{
 
   }
 
-ngOnInit(): void {
-  this.selectedChannel = this.mainboard.selectedChannelContent;
-  this.selectedThreadID = this.mainboard.hoveredChannelIndex;
-  this.selectedChannelTitle = this.mainboard.selectedChannelTitle; 
-}
+  ngOnInit(): void {
+    this.selectedChannel = this.mainboard.selectedChannelContent;
+    this.selectedThreadID = this.mainboard.hoveredChannelIndex;
+    this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
+  }
 
   closeThread() {
     this.mainboard.toggleThread = false;
@@ -37,6 +37,21 @@ ngOnInit(): void {
     return user ? user.img : '/assets/img/signup/profile.png';
   }
 
+  /**
+  * Gets the current time in Central European Time (MEZ/CEST).
+  * @returns {string} The current time formatted as 'HH:mm' in the Europe/Berlin time zone.
+  */
+  getCurrentTimeInMEZ() {
+    const now = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: 'Europe/Berlin',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return now.toLocaleTimeString('de-DE', options);
+  }
+
   async addCommentInThread() {
     let answerFromArray = this.selectedChannel[this.selectedThreadID]['data']['answerFrom'];
     let messageArray = this.selectedChannel[this.selectedThreadID]['data']['answerText'];
@@ -45,7 +60,7 @@ ngOnInit(): void {
     answerFromArray.push(this.mainboard.loggedInUserName);
     let messageValue = this.inputfieldValue.nativeElement.value;
     messageArray.push(messageValue);
-    let newTime = this.mainboard.getCurrentTimeInMEZ();
+    let newTime = this.getCurrentTimeInMEZ();
     timeArray.push(newTime);
     await updateDoc(doc(this.channelContentRef(), this.selectedChannel[this.selectedThreadID]['id']), {
       answerFrom: answerFromArray,

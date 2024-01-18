@@ -47,11 +47,6 @@
 }
 
 
-.inputImgUpload {
-    display: none;
-}
-
-
 .headline-logo-till-w110px {
     @media(max-width: 1110px) {
         display: none !important;
@@ -704,21 +699,6 @@
     flex-direction: column;
     justify-content: space-between;
 
-    input {
-        width: 95%;
-        padding: 8px;
-        margin-top: 30px;
-        margin-left: 2%;
-        height: 100%;
-        outline: none;
-        border: none;
-        border-radius: 30px;
-        font-size: 18px;
-
-        &::placeholder {
-            font-size: 18px;
-        }
-    }
 }
 
 .display-Members {
@@ -787,49 +767,6 @@
             background-color: #ADB0D9;
             color: white;
         }
-    }
-}
-
-.sendButtonImg {
-    transition: transform 200ms ease-out;
-
-    img:hover {
-        transform: scale(1.1);
-    }
-}
-
-.seperator-send-message {
-    height: 100%;
-    width: 1px;
-    background: #ADB0D9;
-}
-
-.chat-message-options {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 10px;
-
-    span {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-    }
-
-    :first-child {
-        margin-left: 8px;
-    }
-
-    :last-child {
-        margin-right: 8px;
-    }
-}
-
-.imgHoverInput {
-    img:hover {
-        filter: invert(54%) sepia(48%) saturate(4557%) hue-rotate(215deg) brightness(102%) contrast(91%);
-        transform: scale(1.2);
     }
 }
 
