@@ -38,6 +38,7 @@ import { MessageFromLoggedInUserComponent } from './mainboard-components/message
 import { MessageFromUserComponent } from './mainboard-components/message-from-user/message-from-user.component';
 import { PrivateMessageContentComponent } from './mainboard-components/private-message-content/private-message-content.component';
 import { HeadlineInputSearchComponent } from './headline-input-search/headline-input-search.component';
+import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { HeadlineInputSearchComponent } from './headline-input-search/headline-i
     MessageFromUserComponent,
     PrivateMessageContentComponent,
     HeadlineInputSearchComponent,
+    MenuInputSearchComponent,
   ],
 
   imports: [

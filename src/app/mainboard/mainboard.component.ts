@@ -70,18 +70,10 @@ export class MainboardComponent {
   //--new comment or commentchange--//
   newComment = new NewComment();
   showNewCommentImg: boolean = false;
-
-
-  //--Searchfiltervariables--//
-  searchTerm!: string;
-  filteredUserArray: any[] = [];
-  filteredChannelsArray: any[] = [];
-  searchTermChannelMember!: string;
+  
   filteredMemberArray: any[] = [];
-  searchTermMenu!: string;
-  filteredUserArrayMenu: any[] = [];
-  filteredChannelsArrayMenu: any[] = [];
   menuSearchfieldChat: boolean = false;
+  searchTermChannelMember!: string;
 
   //--Private-Messages--//
   messageFromArray: any[] = [];
@@ -132,78 +124,8 @@ export class MainboardComponent {
     this.checkWindowWidth1400();
   }
 
-  //----Search-Function----//
-
-
-  /**
- * Adds members to a channel based on the provided search term.
- * Filters user array for members based on the search term, updating the filtered members array.
- */
-  addMemberToChannelSearch() {
-    if (this.searchTermChannelMember && this.searchTermChannelMember.length >= 1) {
-      this.filteredMemberArray = this.userArray.filter(user =>
-        user.username.toLowerCase().includes(this.searchTermChannelMember.toLowerCase())
-      )
-    } else {
-      this.filteredMemberArray = [];
-    }
-  }
-
-  /**
- * Searches for users and channels in the chat menu based on the provided search term.
- * Filters user and channel arrays in the chat menu based on the search term, updating the corresponding filtered arrays.
- */
-  searchfieldAtChat() {
-    if (this.searchTermMenu && this.searchTermMenu.length >= 1) {
-      this.filteredUserArrayMenu = this.userArray.filter(user =>
-        user.username.toLowerCase().includes(this.searchTermMenu.toLocaleLowerCase())
-      );
-      this.filteredChannelsArrayMenu = this.channelsArray.filter(user =>
-        user.channelName.toLowerCase().includes(this.searchTermMenu.toLowerCase())
-      );
-    } else {
-      this.filteredChannelsArrayMenu = [];
-      this.filteredUserArrayMenu = [];
-    }
-  }
-
-  /**
- * Selects a channel in the chat based on the provided channel name.
- */
-  selectChannelSearchfield(channelName: string) {
-    this.chatContent = true;
-    this.directMessageContent = false;
-    this.menuSearchfieldChat = false;
-    for (let i = 0; i < this.channelsArray.length; i++) {
-      if (this.channelsArray[i]['channelName'] == channelName) {
-        this.selectedChannelTitle = this.channelsArray[i].channelName;
-        this.selectedChannelDescription = this.channelsArray[i].channelDescription;
-        this.selectedChannelCreated = this.channelsArray[i].channelCreated;
-        this.channelID = this.channelsArray[i].channelId;
-        this.channelContent();
-      }
-    }
-  }
-
-  /**
- * Selects a user for direct messages based on the provided username.
- * @param {string} username - The username of the selected user.
- */
-  selectUserSearchfield(username: string) {
-    this.directMessageContent = true;
-    this.menuSearchfieldChat = false;
-    this.chatContent = false;
-    for (let i = 0; i < this.userArray.length; i++) {
-      if (this.userArray[i]['username'] == username) {
-        this.selectedUserDirectMessageImage = this.userArray[i].img;
-        this.selectedUserDirectMessageName = this.userArray[i].username;
-      }
-    }
-  }
-
-  //------Every necessary function at the Inputfield-----//
+  //-----Every necessary function at the Inputfield-----//
   //----New-Comment-Functions----// 
-
   /**
  * Asynchronously adds a new comment to the selected channel.
  */
@@ -423,7 +345,6 @@ export class MainboardComponent {
     this.messageTimeArray = [];
   }
 
-
   //----Update-Emoji-Counter----//
 
   /**
@@ -462,7 +383,6 @@ export class MainboardComponent {
     }
   }
 
-
   referencesEmoji() {
     return {
       emojiContainer: this.selectedChannelContent[this.hoveredChannelIndex]['emoji'],
@@ -470,6 +390,7 @@ export class MainboardComponent {
       emojiCounterContainer: this.selectedChannelContent[this.hoveredChannelIndex]['emojiCounter']
     };
   }
+
   //----Subscribe-Functions----//
 
   ngOnInit() {
@@ -666,5 +587,4 @@ export class MainboardComponent {
   toogleDisplayAllChannelMembers() {
     this.displayMembers = !this.displayMembers
   }
-
 }

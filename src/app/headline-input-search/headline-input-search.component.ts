@@ -7,6 +7,9 @@ import { MainboardComponent } from '../mainboard/mainboard.component';
   styleUrls: ['./headline-input-search.component.scss']
 })
 export class HeadlineInputSearchComponent {
+  searchTerm!: string;
+  filteredUserArray: any[] = [];
+  filteredChannelsArray: any[] = [];
 
   constructor(public mainboard: MainboardComponent) {
 
@@ -17,16 +20,16 @@ export class HeadlineInputSearchComponent {
 * Filters user and channel arrays based on the search term, updating the corresponding filtered arrays.
 */
   search() {
-    if (this.mainboard.searchTerm && this.mainboard.searchTerm.length >= 1) {
-      this.mainboard.filteredUserArray = this.mainboard.userArray.filter(user =>
-        user.username.toLowerCase().includes(this.mainboard.searchTerm.toLowerCase())
+    if (this.searchTerm && this.searchTerm.length >= 1) {
+      this.filteredUserArray = this.mainboard.userArray.filter(user =>
+        user.username.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
-      this.mainboard.filteredChannelsArray = this.mainboard.channelsArray.filter(user =>
-        user.channelName.toLowerCase().includes(this.mainboard.searchTerm.toLowerCase())
+      this.filteredChannelsArray = this.mainboard.channelsArray.filter(user =>
+        user.channelName.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     } else {
-      this.mainboard.filteredUserArray = [];
-      this.mainboard.filteredChannelsArray = [];
+      this.filteredUserArray = [];
+      this.filteredChannelsArray = [];
     }
   }
 

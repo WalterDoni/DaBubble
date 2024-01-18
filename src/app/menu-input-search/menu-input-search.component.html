@@ -1,0 +1,30 @@
+<div class="searchfield-chat">
+    <h2>Neue Nachricht an:</h2>
+    <input type="text" placeholder="Channel,Person oder E-Mail Adresse" (keyup)="searchfieldAtChat()"
+        [(ngModel)]="searchTermMenu">
+</div>
+<div class="chat-content p40" *ngIf="searchTermMenu">
+    <h2 style="padding-bottom: 16px;">Mitglieder</h2>
+    <ul class="ls-none">
+        <li class="listSearchfieldMenuChat" *ngFor="let user of filteredUserArrayMenu"
+            (click)="selectUserSearchfield(user.username)">
+            <img class="imgHeadline" src="{{user.img}}" alt="Profile Image">
+            <p>{{ user.username }}</p>
+        </li>
+        <li
+            *ngIf="searchTermMenu && filteredUserArrayMenu && filteredUserArrayMenu.length === 0 && searchTermMenu.length >= 1">
+            Kein Mitglied gefunden
+        </li>
+    </ul>
+    <h2 style="padding-bottom: 16px;">Channels</h2>
+    <ul class="ls-none">
+        <li class="listSearchfieldMenuChat" *ngFor="let channel of filteredChannelsArrayMenu"
+            (click)="selectChannelSearchfield(channel.channelName)">
+            <p style="padding-bottom: 16px;">#{{ channel.channelName }}</p>
+        </li>
+        <li
+            *ngIf="searchTermMenu && filteredChannelsArrayMenu && filteredChannelsArrayMenu.length === 0 && searchTermMenu.length >= 1">
+            Kein Kanal gefunden
+        </li>
+    </ul>
+</div>

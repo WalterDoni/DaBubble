@@ -19,6 +19,21 @@ export class AddMembersMainboardHeadlineComponent {
     this.unsubChannelContent = this.mainboard.channelContent()
   }
 
+    
+  /**
+ * Adds members to a channel based on the provided search term.
+ * Filters user array for members based on the search term, updating the filtered members array.
+ */
+  addMemberToChannelSearch() {
+    if (this.mainboard.searchTermChannelMember && this.mainboard.searchTermChannelMember.length >= 1) {
+      this.mainboard.filteredMemberArray = this.mainboard.userArray.filter(user =>
+        user.username.toLowerCase().includes(this.mainboard.searchTermChannelMember.toLowerCase())
+      )
+    } else {
+      this.mainboard.filteredMemberArray = [];
+    }
+  }
+
   /**
  * Adds a member to the currently selected channel.
  * Checks if the member already exists in the channel before adding.
@@ -39,7 +54,6 @@ export class AddMembersMainboardHeadlineComponent {
         members: channel.members
       });
     });
-
   }
 
   checkIfThereIsAValueInInput() {
