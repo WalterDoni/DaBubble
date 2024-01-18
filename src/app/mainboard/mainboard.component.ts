@@ -134,23 +134,6 @@ export class MainboardComponent {
 
   //----Search-Function----//
 
-  /**
- * Searches for users and channels based on the provided search term.
- * Filters user and channel arrays based on the search term, updating the corresponding filtered arrays.
- */
-  search() {
-    if (this.searchTerm && this.searchTerm.length >= 1) {
-      this.filteredUserArray = this.userArray.filter(user =>
-        user.username.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-      this.filteredChannelsArray = this.channelsArray.filter(user =>
-        user.channelName.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    } else {
-      this.filteredUserArray = [];
-      this.filteredChannelsArray = [];
-    }
-  }
 
   /**
  * Adds members to a channel based on the provided search term.

@@ -38,7 +38,6 @@ export class MessageFromUserComponent {
  * Remove the selected emoji, if user has allready selected one.
  */
   async removeEmoji(index: number) {
-    debugger
     let { emojiContainer, emojiByContainer, emojiCounterContainer } = this.mainboard.referencesEmoji();
     let id = this.mainboard.selectedChannelContent[this.mainboard.hoveredChannelIndex]['id'];
     if (emojiByContainer.includes(this.mainboard.loggedInUserName)) {

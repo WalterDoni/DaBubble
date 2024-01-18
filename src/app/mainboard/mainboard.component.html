@@ -11,33 +11,9 @@
         </span>
 
         <span class="headline-span-input">
-            <input type="text" placeholder="Code learning durchsuchen" (keyup)="search()" [(ngModel)]="searchTerm">
-
-            <div class="searchResults" *ngIf="searchTerm">
-                <h2>Mitglieder</h2>
-                <ul>
-                    <li *ngFor="let user of filteredUserArray" (click)="selectUserSearchfield(user.username)">
-                        <img class="imgHeadline" src="{{user.img}}" alt="Profile Image">
-                        <p>{{ user.username }}</p>
-                    </li>
-                    <li
-                        *ngIf="searchTerm && filteredUserArray && filteredUserArray.length === 0 && searchTerm.length >= 1">
-                        Kein Mitglied gefunden
-                    </li>
-                </ul>
-                <h2>Channels</h2>
-                <ul>
-                    <li *ngFor="let channel of filteredChannelsArray"
-                        (click)="selectChannelSearchfield(channel.channelName)">
-                        <p style="padding-bottom: 8px;">#{{ channel.channelName }}</p>
-                    </li>
-                    <li
-                        *ngIf="searchTerm && filteredChannelsArray && filteredChannelsArray.length === 0 && searchTerm.length >= 1">
-                        Kein Kanal gefunden
-                    </li>
-                </ul>
-            </div>
+            <app-headline-input-search></app-headline-input-search>
         </span>
+        
         <span class="hover-img" (click)="openProfile();overlayBackroundColor()">
             <p>{{loggedInUserName}}</p><img class="logged-in-user-img" src="{{loggedInUserImg}}" alt="profile-image">
             <img class="hide-under-980px" src="./assets/img/mainboard/keyboard_arrow_down.png" alt="arrow down">
@@ -130,47 +106,7 @@
                 </span>
             </div>
             <div class="chat-content-private">
-                <div *ngFor="let content of messageFromArray; let i = index">
-                    <div class="chat-seperator-with-date" *ngIf="messageFromArray.length >= 1">
-                        <span class="seperator-chat"></span>
-                        <span class="date-chat">{{ messageTimeArray[i].toDate() | date:'longDate' }}</span>
-                        <span class="seperator-chat"></span>
-                    </div>
-                    <div class="my-message-chat" *ngIf="content == loggedInUserName && messageFromArray.length >= 1">
-                        <div class="my-message-chat-history">
-                            <div class="my-headline-message-history">
-                                <h3>{{content}}</h3>
-                                <p> {{messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
-                            </div>
-                            <div class="my-message-history">{{messageTextArray[i]}}
-
-                            </div>
-                        </div>
-                        <div class="my-avatar-chat-history"><img [src]="loggedInUserImg" alt=""></div>
-                    </div>
-
-                    <div style="display: flex;" *ngIf="content != loggedInUserName && messageFromArray.length >= 1">
-                        <div class="avatar-chat-history"><img [src]="getImgFromAnswerUser(content)" alt=""></div>
-                        <div class="message-chat-history">
-                            <div class="headline-message-history">
-                                <h3>{{content}}</h3>
-                                <p> {{messageTimeArray[i].toDate() | date:'HH:mm' }} Uhr</p>
-                            </div>
-                            <div class="message-history">{{messageTextArray[i]}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="directMessageContent" *ngIf="messageFromArray.length < 1">
-                <div class="directMessageContact">
-                    <img class="imgChat" src="{{selectedUserDirectMessageImage}}" alt="">
-                    <p>{{selectedUserDirectMessageName}}</p>
-                </div>
-                <p class="descriptionPrivateChat">Diese Unterhaltung findet nur zwischen <b
-                        class="colorblue">@{{selectedUserDirectMessageName}}</b>
-                    und dir statt.</p>
+                <app-private-message-content></app-private-message-content>
             </div>
 
             <div class="display-Members" *ngIf="displayMembers">
