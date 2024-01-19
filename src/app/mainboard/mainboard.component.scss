@@ -16,7 +16,7 @@
 
 .thread-container {
     transition: all ease-in-out 200ms;
-    z-index: 15;
+    z-index: 1;
 }
 
 .thread-container.hidden {
@@ -699,48 +699,6 @@
     flex-direction: column;
     justify-content: space-between;
 
-}
-
-.display-Members {
-    position: absolute;
-    left: 150px;
-    bottom: 50px;
-    z-index: 999;
-    width: 200px;
-    height: 200px;
-    background-color: white;
-    border-radius: 30px 30px 30px 0px;
-    border: 1px solid #ADB0D9;
-    padding: 8px;
-    overflow: hidden;
-
-    ul {
-        overflow-x: scroll;
-        height: 100%;
-    }
-
-    li {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 4px;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: background-color 200ms ease-in, 200ms ease-out;
-
-        &:hover {
-            background-color: #ECEEFE;
-            color: #535AF1;
-        }
-    }
-
-
-    img {
-        width: 30px;
-        height: 30px;
-        object-fit: cover;
-        border-radius: 30px;
-    }
 }
 
 .newImg-div {

@@ -53,20 +53,9 @@
                     <p>{{selectedChannelDescription}}</p>
                 </div>
                 <div>
-
-                    <app-message-from-user></app-message-from-user>
+                <app-message-from-user></app-message-from-user>
                 </div>
                 <app-message-from-logged-in-user></app-message-from-logged-in-user>
-
-                <div class="display-Members" *ngIf="displayMembers">
-                    <ul>
-                        <li *ngFor="let user of userArray; let i = index"
-                            (click)="selectedNameIntoInputfield(user.username)">
-                            <img src="{{user.img}}" alt="add">
-                            <p>{{user.username}}</p>
-                        </li>
-                    </ul>
-                </div>
             </div>
 
             <div class="chat-message-inputfield">
@@ -86,12 +75,6 @@
                 <app-private-message-content></app-private-message-content>
             </div>
 
-            <div class="display-Members" *ngIf="displayMembers">
-                <div *ngFor="let user of userArray; let i = index" (click)="selectedNameIntoInputfield(user.username)">
-                    <img src="{{user.img}}" alt="add">
-                    <p>{{user.username}}</p>
-                </div>
-            </div>
             <div class="chat-message-inputfield">
                 <app-inputfield-private-channel></app-inputfield-private-channel>
             </div>

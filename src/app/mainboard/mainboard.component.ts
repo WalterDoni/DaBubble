@@ -120,11 +120,6 @@ export class MainboardComponent {
     this.checkWindowWidth1400();
   }
 
-  selectedNameIntoInputfield(name: string) {
-    this.displayMembers = false;
-    this.newCommentValue.nativeElement.value += name;
-  }
-
   /**
    * Check if the current channel includes the loggedInUser and the choosen user. If there is a match, update the channel.
    */
@@ -412,6 +407,7 @@ export class MainboardComponent {
   //----Helpfunctions----//
 
   getImgFromAnswerUser(username: string) {
+   
     if (this.userArray.length >= 1) {
       const user = this.userArray.find(user => user.username === username);
       return user ? user.img : '/assets/img/signup/profile.png';

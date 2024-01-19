@@ -19,3 +19,14 @@
     </span>
 
 </div>
+
+
+<div class="display-Members" *ngIf="displayMembers">
+    <ul>
+        <li *ngFor="let user of mainboard.userArray; let i = index"
+            (click)="selectedNameIntoInputfield(user.username)">
+            <img src="{{user.img}}" alt="add">
+            <p>{{user.username}}</p>
+        </li>
+    </ul>
+</div>
