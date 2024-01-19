@@ -46,6 +46,7 @@ export class HeadlineInputSearchComponent {
       if (this.mainboard.userArray[i]['username'] == username) {
         this.mainboard.selectedUserDirectMessageImage = this.mainboard.userArray[i].img;
         this.mainboard.selectedUserDirectMessageName = this.mainboard.userArray[i].username;
+        this.mainboard.getSelectedPrivateChannelId(username);
         this.searchTerm = '';
       }
     }
