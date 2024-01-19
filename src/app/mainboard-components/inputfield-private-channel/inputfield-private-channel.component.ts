@@ -30,6 +30,7 @@ export class InputfieldPrivateChannelComponent {
  */
   async newCommentInSelectedPrivateChannel() {
     let input = this.newCommentValuePrivateMessage.nativeElement.value;
+    if(input.length == 0){ alert('Bitte eine Nachricht eingeben'); return}
     this.mainboard.messageTextArray.push(input);
     this.mainboard.messageFromArray.push(this.mainboard.loggedInUserName);
     let timestamp = Timestamp.now();

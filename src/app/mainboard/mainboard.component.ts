@@ -126,8 +126,8 @@ export class MainboardComponent {
   async updateSelectedPrivateMessageChannel(channel: any, channelInfo: { newChannel: boolean }) {
     if (channel.messageBetween.includes(this.loggedInUserName) && channel.messageBetween.includes(this.selectedUserDirectMessageName)) {
       channelInfo.newChannel = false;
-       this.channelIdPrivate = channel.privateChannelId;
-       await updateDoc(doc(this.privateChannelRef(), this.channelIdPrivate), {
+      this.channelIdPrivate = channel.privateChannelId;
+      await updateDoc(doc(this.privateChannelRef(), this.channelIdPrivate), {
         messageFrom: this.messageFromArray,
         messageText: this.messageTextArray,
         messageTime: this.messageTimeArray,
@@ -217,6 +217,16 @@ export class MainboardComponent {
     this.messageTextArray = [];
     this.messageTimeArray = [];
     this.messageImgArray = [];
+  }
+
+  checkIfLoggedInUserIsInWelcomeChannel() {
+    let member = this.channelsArray[0]['members']
+    if (!this.channelsArray[0]['members'].includes(this.loggedInUserName)) { 
+      member.push(this.loggedInUserName)
+      updateDoc(doc(this.channelsRef(), '1111e9vycY0UF2uxnAAd'), {
+        members: member
+      });
+    }
   }
 
   //----Update-Emoji-Counter----//
@@ -314,12 +324,15 @@ export class MainboardComponent {
           members: element.data()['members'],
           channelId: element.id,
         });
+        this.checkIfLoggedInUserIsInWelcomeChannel();
         this.selectedChannelTitle = this.channelsArray[0]['channelName'];
         this.selectedChannelDescription = this.channelsArray[0]['channelDescription'];
         this.selectedChannelCreated = this.channelsArray[0]['channelCreated'];
         this.channelID = this.channelsArray[0]['channelId'];
         this.getChannelMembersFromSelectedChannel();
         this.channelContent();
+        console.log(this.channelsArray);
+
       });
     });
   }
@@ -407,7 +420,7 @@ export class MainboardComponent {
   //----Helpfunctions----//
 
   getImgFromAnswerUser(username: string) {
-   
+
     if (this.userArray.length >= 1) {
       const user = this.userArray.find(user => user.username === username);
       return user ? user.img : '/assets/img/signup/profile.png';

@@ -93,8 +93,8 @@ export class InputfieldNormailChatComponent {
 * Asynchronously adds a new comment to the selected channel.
 */
   async newCommentInSelectedChannel() {
-   
     let input = this.newCommentValue.nativeElement.value;
+    if(input.length == 0){ alert('Bitte eine Nachricht eingeben'); return}
     await addDoc(this.mainboard.channelContentRef(), this.valuesForNewComment(input));
     this.newCommentValue.nativeElement.value = '';
   }

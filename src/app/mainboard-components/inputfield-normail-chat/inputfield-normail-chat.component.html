@@ -1,4 +1,4 @@
-<input type="text" placeholder="Nachricht an #{{mainboard.selectedChannelTitle}}" #newCommentValue>
+<input type="text" placeholder="Nachricht an #{{mainboard.selectedChannelTitle}}" #newCommentValue (keyup.enter)="newCommentInSelectedChannel()">
 <p *ngIf="displayUploadMessage" class="upload-message" #uploadmessage style="padding-left: 2%;"></p>
 <div *ngIf="showNewCommentImg" class="newImg-div"><img src="{{mainboard.selectedUrl}}" alt=""><button
         (click)="deleteNewImgInComment()">X</button>
@@ -14,8 +14,8 @@
         <img (click)="toogleDisplayAllChannelMembers()"
             src="/assets/img/mainboard/atsymbol_add_message.png" alt="">
     </span>
-    <span class="sendButtonImg">
-        <img (click)="newCommentInSelectedChannel()" src="/assets/img/mainboard/send.png" alt="">
+    <span class="sendButtonImg" (click)="newCommentInSelectedChannel()">
+        <img  src="/assets/img/mainboard/send.png" alt="">
     </span>
 
 </div>

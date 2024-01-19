@@ -1,5 +1,5 @@
 <input type="text" placeholder="Nachricht an #{{mainboard.selectedUserDirectMessageName}}"
-    #newCommentValuePrivateMessage>
+    #newCommentValuePrivateMessage (keyup.enter)="newCommentInSelectedPrivateChannel()">
 <p *ngIf="privatedisplayUploadMessage" class="upload-message" #uploadmessagePrivate style="padding-left: 2%;"></p>
 <div *ngIf="privateshowNewCommentImg" class="newImg-div"><img src="{{mainboard.selectedUrl}}" alt=""><button
         (click)="deleteNewImgInComment()">X</button>
@@ -14,7 +14,7 @@
         <span><app-emoji-picker-private-inputfield></app-emoji-picker-private-inputfield></span>
 
     </span>
-    <span class="sendButtonImg">
-        <img (click)="newCommentInSelectedPrivateChannel()" src="/assets/img/mainboard/send.png" alt="">
+    <span class="sendButtonImg" (click)="newCommentInSelectedPrivateChannel()" (keyup.enter)="newCommentInSelectedPrivateChannel()" >
+        <img src="/assets/img/mainboard/send.png" alt="">
     </span>
 </div>
