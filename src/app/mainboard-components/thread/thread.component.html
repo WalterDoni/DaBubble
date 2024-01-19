@@ -45,7 +45,7 @@
                 </div>
                 <div class="my-message-history">{{answerTextMessage}}</div>
             </div>
-            <div *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[selectedThreadID]['data']['answerFrom'][i])" alt=""></div>
+            <div *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="mainboard.loggedInUserImg" alt=""></div>
         </div>
         </div>
 
