@@ -7,6 +7,7 @@
     <span class="date-chat">{{ channel.data.messageTime.toDate() | date:'longDate' }}</span>
     <span class="seperator-chat"></span>
 </div>
+
 <div style="display: flex;" *ngIf="channel.data.from != mainboard.loggedInUserName">
     <div class="avatar-chat-history"><img [src]="mainboard.getImgFromAnswerUser(channel.data.from)"
             alt="">
@@ -42,4 +43,5 @@
         </div>
     </div>
 </div>
+
 </div>

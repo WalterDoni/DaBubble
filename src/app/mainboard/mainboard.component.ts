@@ -331,8 +331,6 @@ export class MainboardComponent {
         this.channelID = this.channelsArray[0]['channelId'];
         this.getChannelMembersFromSelectedChannel();
         this.channelContent();
-        console.log(this.channelsArray);
-
       });
     });
   }
@@ -357,7 +355,7 @@ export class MainboardComponent {
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
       });
-      this.selectedChannelContent.sort((a, b) => b.data.messageTime - a.data.messageTime);
+      this.selectedChannelContent.sort((a, b) => a.data.messageTime - b.data.messageTime);
     });
   }
 

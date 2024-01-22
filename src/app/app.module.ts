@@ -42,6 +42,7 @@ import { PrivateMessageContentComponent } from './mainboard-components/private-m
 import { HeadlineInputSearchComponent } from './headline-input-search/headline-input-search.component';
 import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.component';
 import { EmojiPickerPrivateInputfieldComponent } from './emoji-picker-private-inputfield/emoji-picker-private-inputfield.component';
+import { MessageContentComponent } from './message-content/message-content.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { EmojiPickerPrivateInputfieldComponent } from './emoji-picker-private-in
     InputfieldNormailChatComponent,
     InputfieldPrivateChannelComponent,
     EmojiPickerPrivateInputfieldComponent,
+    MessageContentComponent,
   ],
 
   imports: [
