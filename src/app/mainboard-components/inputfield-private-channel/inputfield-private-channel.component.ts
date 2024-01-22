@@ -44,6 +44,7 @@ export class InputfieldPrivateChannelComponent {
       await this.mainboard.createNewPrivateChannel(input);
     }
     this.newCommentValuePrivateMessage.nativeElement.value = '';
+    this.deleteNewImgInComment();
   }
 
   /**

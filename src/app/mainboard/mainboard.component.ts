@@ -357,6 +357,7 @@ export class MainboardComponent {
           lastAnswer: answerTimeArray[answerTimeArray.length - 1],
         });
       });
+      this.selectedChannelContent.sort((a, b) => b.data.messageTime - a.data.messageTime);
     });
   }
 

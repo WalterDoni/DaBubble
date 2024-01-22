@@ -97,6 +97,7 @@ export class InputfieldNormailChatComponent {
     if(input.length == 0){ alert('Bitte eine Nachricht eingeben'); return}
     await addDoc(this.mainboard.channelContentRef(), this.valuesForNewComment(input));
     this.newCommentValue.nativeElement.value = '';
+    this.deleteNewImgInComment();
   }
 
   valuesForNewComment(input: string) {

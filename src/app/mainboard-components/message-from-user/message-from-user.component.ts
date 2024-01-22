@@ -72,6 +72,9 @@ export class MessageFromUserComponent {
 
   //--Thread-Menu--//
   showThread() {
+    if(this.mainboard.toggleMenu){
+      this.mainboard.toggleMenu = false;
+    }
     this.mainboard.toggleThread = true;
     if (this.mainboard.toggleMenu && this.mainboard.toggleThread && window.innerWidth < 1400) {
       this.mainboard.toggleMenu = false;
