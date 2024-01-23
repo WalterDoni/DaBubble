@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { Firestore, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MainboardComponent } from 'src/app/mainboard/mainboard.component';
@@ -14,7 +14,6 @@ export class ThreadComponent implements OnInit {
 
   selectedThreadID!: number;
   selectedChannelTitle!: string;
-  selectedChannel: any[] = [];
 
   firestore: Firestore = inject(Firestore);
 
@@ -23,9 +22,9 @@ export class ThreadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedChannel = this.mainboard.selectedChannelContent;
     this.selectedThreadID = this.mainboard.hoveredChannelIndex;
-    this.selectedChannelTitle = this.mainboard.selectedChannelTitle;
+    this.selectedChannelTitle = this.mainboard.selectedChannelTitle; 
+
   }
 
   closeThread() {
@@ -53,22 +52,21 @@ export class ThreadComponent implements OnInit {
   }
 
   async addCommentInThread() {
-    let answerFromArray = this.selectedChannel[this.selectedThreadID]['data']['answerFrom'];
-    let messageArray = this.selectedChannel[this.selectedThreadID]['data']['answerText'];
-    let timeArray = this.selectedChannel[this.selectedThreadID]['data']['answerTime'];
-    let addOne = this.selectedChannel[this.selectedThreadID]['data']['answers'] + 1;
+    let answerFromArray = this.mainboard.selectedChannelContent[this.selectedThreadID]['data']['answerFrom'];
+    let messageArray = this.mainboard.selectedChannelContent[this.selectedThreadID]['data']['answerText'];
+    let timeArray = this.mainboard.selectedChannelContent[this.selectedThreadID]['data']['answerTime'];
+    let addOne = this.mainboard.selectedChannelContent[this.selectedThreadID]['data']['answers'] + 1;
     answerFromArray.push(this.mainboard.loggedInUserName);
     let messageValue = this.inputfieldValue.nativeElement.value;
     messageArray.push(messageValue);
     let newTime = this.getCurrentTimeInMEZ();
     timeArray.push(newTime);
-    await updateDoc(doc(this.channelContentRef(), this.selectedChannel[this.selectedThreadID]['id']), {
+    await updateDoc(doc(this.channelContentRef(), this.mainboard.selectedChannelContent[this.selectedThreadID]['id']), {
       answerFrom: answerFromArray,
       answerText: messageArray,
       answerTime: timeArray,
       answers: addOne,
     })
-    this.selectedChannel = this.mainboard.selectedChannelContent;
   }
 
 

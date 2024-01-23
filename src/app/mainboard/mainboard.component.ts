@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Inject, Injectable, ViewChild, inject, LOCALE_ID } from '@angular/core';
 import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from '@firebase/firestore';
 import { ActivatedRoute } from '@angular/router';
@@ -23,9 +23,7 @@ export class MainboardComponent {
   @ViewChild('thread') thread!: ElementRef;
   @ViewChild('newCommentValue') newCommentValue!: ElementRef;
   @ViewChild('newCommentValuePrivateMessage') newCommentValuePrivateMessage!: ElementRef;
-  @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
-  @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
-
+  
   reactionEmoji: any;
   userId: string = '';
 

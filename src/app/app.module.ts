@@ -36,8 +36,6 @@ import { InputfieldNormailChatComponent } from './mainboard-components/inputfiel
 import { InputfieldPrivateChannelComponent } from './mainboard-components/inputfield-private-channel/inputfield-private-channel.component';
 import { EmojiPickerInputfieldComponent } from './emoji-picker-inputfield/emoji-picker-inputfield.component';
 import { EmojiPickerThreadComponent } from './emoji-picker-thread/emoji-picker-thread.component';
-import { MessageFromLoggedInUserComponent } from './mainboard-components/message-from-logged-in-user/message-from-logged-in-user.component';
-import { MessageFromUserComponent } from './mainboard-components/message-from-user/message-from-user.component';
 import { PrivateMessageContentComponent } from './mainboard-components/private-message-content/private-message-content.component';
 import { HeadlineInputSearchComponent } from './headline-input-search/headline-input-search.component';
 import { MenuInputSearchComponent } from './menu-input-search/menu-input-search.component';
@@ -69,8 +67,6 @@ import { MessageContentComponent } from './message-content/message-content.compo
     PopupEditCommentComponent,
     EmojiPickerInputfieldComponent,
     EmojiPickerThreadComponent,
-    MessageFromLoggedInUserComponent,
-    MessageFromUserComponent,
     PrivateMessageContentComponent,
     HeadlineInputSearchComponent,
     MenuInputSearchComponent,

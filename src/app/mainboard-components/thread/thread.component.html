@@ -10,42 +10,42 @@
 
     <div class="thread-content">
         <div class="chat-history">
-            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[selectedThreadID]['data']['from'])" alt=""></div>
+            <div class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(mainboard.selectedChannelContent[selectedThreadID]['data']['from'])" alt=""></div>
             <div class="message-chat-history">
                 <div class="headline-message-history">
-                    <h3>{{selectedChannel[selectedThreadID]['data']['from']}}</h3>
-                    <p> {{selectedChannel[selectedThreadID]['data']['timestamp']}} Uhr</p>
+                    <h3>{{mainboard.selectedChannelContent[selectedThreadID]['data']['from']}}</h3>
+                    <p> {{mainboard.selectedChannelContent[selectedThreadID]['data']['timestamp']}} Uhr</p>
                 </div>
-                <div class="message-history">{{selectedChannel[selectedThreadID]['data']['message']}}</div>
+                <div class="message-history">{{mainboard.selectedChannelContent[selectedThreadID]['data']['message']}}</div>
             </div>
         </div>
 
         <div class="thread-seperator-container">
-            <p>{{selectedChannel[selectedThreadID]['data']['answers']}} Antworten</p> <span class="seperator-thread"></span>
+            <p>{{mainboard.selectedChannelContent[selectedThreadID]['data']['answers']}} Antworten</p> <span class="seperator-thread"></span>
         </div>
 
-        <div *ngFor="let answerTextMessage of selectedChannel[selectedThreadID]['data']['answerText']; let i = index">
+        <div *ngFor="let answerTextMessage of mainboard.selectedChannelContent[selectedThreadID]['data']['answerText']; let i = index">
         <div class="chat-history">
-            <div *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] != mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(selectedChannel[selectedThreadID]['data']['answerFrom'][i])" alt=""></div>
-            <div class="message-chat-history" *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] != mainboard.loggedInUserName">
+            <div *ngIf="mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i] != mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="getImgFromAnswerUser(mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i])" alt=""></div>
+            <div class="message-chat-history" *ngIf="mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i] != mainboard.loggedInUserName">
                 <div class="headline-message-history">
-                    <h3>{{selectedChannel[selectedThreadID]['data']['answerFrom'][i]}}</h3>
-                    <p>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
+                    <h3>{{mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i]}}</h3>
+                    <p>{{mainboard.selectedChannelContent[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
                 </div>
                 <div class="message-history">{{answerTextMessage}}</div>
             </div>
         </div>
 
         <div class="my-message-chat">
-            <div class="my-message-chat-history" *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName">
+            <div class="my-message-chat-history" *ngIf="mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName">
                 <div class="my-headline-message-history">
-                    <h3>{{selectedChannel[selectedThreadID]['data']['answerFrom'][i]}}</h3>
-                    <p>{{selectedChannel[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
+                    <h3>{{mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i]}}</h3>
+                    <p>{{mainboard.selectedChannelContent[selectedThreadID]['data']['answerTime'][i]}} Uhr</p>
                 
                 </div>
                 <div class="my-message-history">{{answerTextMessage}}</div>
             </div>
-            <div *ngIf="selectedChannel[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="mainboard.loggedInUserImg" alt=""></div>
+            <div *ngIf="mainboard.selectedChannelContent[selectedThreadID]['data']['answerFrom'][i] == mainboard.loggedInUserName" class="padding-thread-avatar"><img [src]="mainboard.loggedInUserImg" alt=""></div>
         </div>
         </div>
 

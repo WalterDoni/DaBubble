@@ -1,5 +1,5 @@
 <div *ngFor="let channel of mainboard.selectedChannelContent; let i = index"
-(mouseenter)="showPopUpForEditComment($event, i)" (mouseleave)="hidePopUpForEditComment()">
+(mouseenter)="showPopUpForEditComment($event, i)" (mouseleave)="hidePopUpForEditComment()" (mouseenter)="showPopupForThread($event, i)" (mouseleave)="hidePopupForThread()">
 
 <div class="chat-seperator-with-date">
     <span class="seperator-chat"></span>
@@ -36,7 +36,7 @@
         
 
         <div class="answers-message-history">
-            <div (click)="showThread()">{{channel.answers}} Antworten</div><span
+            <div (click)="closeThread(); showThread()">{{channel.answers}} Antworten</div><span
                 *ngIf="channel.answers > 0">Letzte
                 Antwort {{channel.lastAnswer}}</span>
         </div>
@@ -85,7 +85,7 @@
           </div>
 
         <div class="answers-message-history">
-            <div (click)="showThread()">{{channel.answers}} Antworten</div><span
+            <div (click)="closeThread(); showThread()">{{channel.answers}} Antworten</div><span
                 *ngIf="channel.answers > 0">Letzte
                 Antwort {{channel.lastAnswer}}</span>
         </div>

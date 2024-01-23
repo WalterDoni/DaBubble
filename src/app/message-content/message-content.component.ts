@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { doc, updateDoc } from '@angular/fire/firestore';
 import { MainboardComponent } from '../mainboard/mainboard.component';
 
@@ -11,6 +11,8 @@ export class MessageContentComponent {
 
   errorMessageCommentChange: boolean = false;
   isPopupForReactionsVisible: boolean = false;
+  @ViewChild('newChangedMessage') newChangedMessage!: ElementRef;
+  @ViewChild('delImgEditComment') delImgEditComment!: ElementRef;
 
   constructor(public mainboard: MainboardComponent) { }
 
@@ -36,7 +38,7 @@ export class MessageContentComponent {
   }
 
   deleteImgEditComment() {
-    this.mainboard.delImgEditComment.nativeElement.src = "";
+    this.delImgEditComment.nativeElement.src = "";
   }
   //----Change-Comment-Functions----//
 
@@ -46,13 +48,19 @@ export class MessageContentComponent {
  * @param {number} index - The index of the comment in the array.
  */
   async saveCommentChange(id: string, index: number) {
-    if (this.mainboard.newChangedMessage.nativeElement.value.length >= 1) {
-      let newMessage = this.mainboard.newChangedMessage.nativeElement.value;
-      let img = this.mainboard.delImgEditComment.nativeElement.src
-      await updateDoc(doc(this.mainboard.channelContentRef(), id), {
-        message: newMessage,
-        messageImg: img
-      })
+    if (this.newChangedMessage.nativeElement.value.length >= 1) {
+      let newMessage = this.newChangedMessage.nativeElement.value;
+      if (this.delImgEditComment != undefined) {
+        let img = this.delImgEditComment.nativeElement.src
+        await updateDoc(doc(this.mainboard.channelContentRef(), id), {
+          message: newMessage,
+          messageImg: img
+        })
+      } else {
+        await updateDoc(doc(this.mainboard.channelContentRef(), id), {
+          message: newMessage,
+        })
+      }
       this.mainboard.selectedChannelContent[index].editComment = false;
       this.errorMessageCommentChange = false;
     } else {
@@ -118,5 +126,10 @@ export class MessageContentComponent {
       this.mainboard.toggleMenu = false;
     }
   }
+
+  closeThread() {
+    this.mainboard.toggleThread = false;
+  }
+
 
 }
